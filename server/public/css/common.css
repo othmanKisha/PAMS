@@ -1,0 +1,39 @@
+body{
+  background-color:#462727;
+}
+.navbar-brand {
+padding: 0px;
+}
+.navbar-brand>img {
+width:100px;
+height:auto;
+}
+.navbar-text {
+position: absolute;
+width: 100%;
+left: 0;
+text-align: center;
+}
+.bg-dark {
+background-color: #333;
+color: #fff;
+border-bottom:1px solid white;
+}
+.partition {
+background-color:#403434;
+padding: 5px;
+display: flex;
+border-bottom:1px solid white;
+}
+.text{
+color: white;
+}
+.column {
+max-width: 98.9%;
+}
+td, .text{
+color: white;
+}
+.table {
+text-align: center;
+}  

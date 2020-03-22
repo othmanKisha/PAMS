@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>clinics</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/common.css">
+
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light">
+		<div class="navbar-header  d-flex align-items-center">
+			<a class="navbar-brand" href="/"><img src="/img/logo.png"></a>
+			<h1 class="navbar-text">All clinics</h1>
+		</div>
+	</nav>
+    <div class="bg-dark d-flex align-items-center">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Services</th>
+                    <th scope="col">Rating</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">More Info</th>
+                </tr>
+            </thead>
+            <% clinics.forEach(function(clinic){ %>
+            <tr><td><%=clinic.name%></td><td><%=clinic.services%></td><td><%=clinic.rating%></td><td><%=clinic.location%></td>
+            <td><button type="button" class="btn btn-primary" onclick="location.href='/clinic/<%=clinicy._id%>';">Show more</button></td></tr>
+            <%})%>
+        </table>
+        </div>              
+</body>
