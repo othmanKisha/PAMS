@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
+const date = require('date-and-time');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var session = require('express-session')
@@ -22,6 +23,8 @@ const User = require('./models/user');
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+const now = new Date();
 
 var announcement = require('./models/announcement');
 var doctor = require('./models/doctor');
@@ -104,6 +107,11 @@ app.post('/login', function(req, res) {
     });      
   })(req, res);
 });
+//signout
+app.get('/signout', checkAuthenticated, (req, res) => {
+  req.logOut()
+  res.redirect('/')
+})
 //Checking logic
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
@@ -117,11 +125,6 @@ function checkNotAuthenticated(req, res, next) {
   }
   next()
 }
-//signout
-app.get('/signout', checkAuthenticated, (req, res) => {
-  req.logOut()
-  res.redirect('/')
-})
 //RESTFULL ROUTES
 app.get('/clinics', function (req, res) {
   if (req.user.type =='admin')
@@ -132,7 +135,7 @@ app.get('/clinics', function (req, res) {
         res.json(clinicList);
     });
   else
-    clinic.find({'status': {"$ne":'Hidden'}},'name _id services rating location', (err, clinicList) => {
+    clinic.find({status: {"$ne":'Hidden'}},'name _id services rating location', (err, clinicList) => {
       if (err) 
         res.json({});
       else 
@@ -159,7 +162,7 @@ app.get('/doctors', function (req, res) {
         res.json(doctorList);
     });
   else
-    doctor.find({'status': {"$ne":'Hidden'}},'fname lname _id speciality rating location clinic_id experience', (err, doctorList) => {
+    doctor.find({status: {"$ne":'Hidden'}},'fname lname _id speciality rating location clinic_id experience', (err, doctorList) => {
       if (err) 
         res.json({});
       else 
@@ -177,21 +180,46 @@ app.get('/doctor/:id', function (req, res) {
         res.json(doctor);
     });
 });
+app.get('/clinic/:id/doctors', function (res,req) {
+  var id = req.params.id;
+  if(req.user.clinic_id == id)
+    doctor.find({clinic_id:id}, (err, doctorList) => {
+      if (err) 
+        res.json({});
+      else 
+        res.json(doctorList);
+    });
+    else 
+    doctor.find({clinic_id:id, status: {"$ne":'Hidden'}}, (err, doctorList) => {
+        if (err) 
+          res.json({});
+        else 
+          res.json(doctorList);
+    });
+});
 app.get('/appointments',checkAuthenticated, function (req, res) {
   if (req.user.type =='patient')
-    appointment.find({'patient_id': req.user._id}, (err, appList) => {
+    appointment.find({patient_id: req.user._id}, (err, appList) => {
       if (err) 
         res.json({});
       else 
         res.json(appList);
     });
   else if (req.user.type =='receptionist')
-  appointment.find({'clinic_id': req.user.clinic_id}, (err, appList) => {
+  appointment.find({clinic_id: req.user.clinic_id}, (err, appList) => {
     if (err) 
         res.json({});
       else 
-        res.json(doctorList);
+        res.json(appList);
     });
+});
+app.get('/annoucement', function (req, res) {
+  announcement.find({},(err,annList) => {
+    if(err)
+      res.json({});
+    else
+      res.json(annList);
+  });
 });
 app.get('/appointments/:id',checkAuthenticated, function (req, res) {
   var id = req.params.id;
@@ -222,7 +250,7 @@ app.post('/clinic', checkAuthenticated, function (req, res) {
     var newClinic = new clinic(c);
     clinic.save((err, clinic) => {
       if (err) 
-        res.send("failed");
+        res.send("failed "+err);
       else 
         res.send("success");
     });
@@ -237,7 +265,7 @@ app.post('/clinic/:id/doctor', checkAuthenticated, function (req, res) {
     var newDoctor = new doctor(d);
     doctor.save((err, doctor) => {
       if (err) 
-        res.send("failed");
+        res.send("failed " + err);
       else 
         res.send("success");
     });
@@ -248,6 +276,7 @@ app.post('/appointments', checkAuthenticated, function (req, res) {
     res.send("You don't have privilege");
   else {
     //create app
+    //check if doctor busy?
     app.patient_id = req.user._id
     var newAppointment = new appointment(app);
     appointment.save((err, app) => {
@@ -257,6 +286,22 @@ app.post('/appointments', checkAuthenticated, function (req, res) {
         res.send("success");
     });
   }
+});
+app.post('/annoucement',checkAuthenticated, function (req, res) {
+  if (req.user.type != 'admin')
+    res.send("You don't have privilege");
+    else {
+      //create announcement a from res.body
+      a.submitter = req.user.fname + " " + req.user.lname;
+      a.date = date.format(now, 'YY/MM/DD');
+      var newAnn = new announcement(a);
+      announcement.save((err, ann) => {
+        if (err) 
+          res.send("failed");
+        else 
+          res.send("success");
+      });
+    }
 });
 //put and delete remaining
 app.put("/visits/:id", checkAuthenticated, function (req, res) {
@@ -295,7 +340,6 @@ app.put("/visits/:id", checkAuthenticated, function (req, res) {
   else
     res.redirect("/visits/" + id + "/edit")
 });
-//7
 app.delete("/visits/:id", checkAuthenticated, function (req, res) {
   var id = req.params.id;
   visits.findById(id, 'owner', (err, doc) => {
@@ -328,6 +372,6 @@ app.put("/visits/:id/switch", checkAuthenticated, function (req, res) {
   });
 });
 //Start server
-app.listen(8080, function () {
+app.listen(3000, function () {
   console.log("Listening on port 3000");
 });
