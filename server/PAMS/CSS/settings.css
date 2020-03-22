@@ -1,0 +1,23 @@
+.viewPanes {
+	-fx-background-color:white;
+	-fx-border-width:  0 2 2 0;
+	-fx-border-color: white;
+}
+.cntlButtons:hover {
+-fx-background-color : #353557 
+}
+.cntlButtons {
+ -fx-padding: 14px 28px;
+ -fx-border-color:#467de4;
+ -fx-background-color: #467de4;
+ -fx-border-width: 0 0 1 0;
+ -fx-font-size: 17;
+ 
+}
+.close:hover{
+    -fx-effect:  dropshadow( two-pass-box,black, 2, 1, 0,0);
+}
+.icon {
+	-fx-fill:white;
+	-glyph-size:15;
+}

@@ -1,0 +1,65 @@
+.jfxTabPane .tab .tab-label { 
+   -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 20px; 
+    -fx-font-weight: bold;
+}
+.buttons {
+	-fx-background-color:  #00BCD4;
+	-fx-text-fill:white;
+ 	-fx-font-size: 20;
+ 	-fx-font-style: italic;
+ 	-fx-font-family: 'calibri' ;
+ 	-fx-font-weight: bold;	
+ 	
+}
+.prompt {
+	-fx-text-fill:white;
+ 	-fx-border-color:#00BCD4;
+ 	-fx-border-width: 2 0 0 0;
+ 	-fx-font-size: 20;
+ 	-fx-font-style: italic;
+ 	-fx-font-weight: bold;	
+ 	-fx-font-family:  "sans-serif";
+ 	
+}
+.textfield , .textfield:focused{
+	-fx-background-color: transparent;
+	-fx-background-insets: 0px;
+	-jfx-focus-color: transparent;
+	-jfx-unfocus-color: transparent;
+	-fx-text-fill:black;
+	-fx-font-size: 24;
+	-fx-font-weight:normal;	
+	-fx-font-family:"sans-serif";
+}
+.cname , .cname:focused{
+	-fx-background-color: transparent;
+	-fx-background-insets: 0px;
+	-jfx-focus-color: transparent;
+	-jfx-unfocus-color: transparent;
+	-fx-text-fill:black;
+	-fx-font-size: 36;
+	 -fx-font-weight:normal;	
+	 -fx-font-family:"Segoe UI";
+}
+.icon {
+	-fx-fill:white;
+	-glyph-size:15;
+}
+.hboxes {
+	-fx-border-width: 0 0 2 0;
+	-fx-border-color:  lightblue;
+}
+.list-view .list-cell:hover {
+    -fx-background-color: #003557;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #003557;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #356bc1;
+    -fx-text-fill: white;
+}

@@ -1,0 +1,3 @@
+.glyph-icon:hover{
+    -fx-effect:  dropshadow( two-pass-box,#132c5b, 1, 1, 0,0);
+}
