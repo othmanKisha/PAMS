@@ -213,7 +213,7 @@ app.get('/appointments',checkAuthenticated, function (req, res) {
         res.json(appList);
     });
 });
-app.get('/annoucement', function (req, res) {
+app.get('/announcements', function (req, res) {
   announcement.find({},(err,annList) => {
     if(err)
       res.json({});
@@ -287,7 +287,7 @@ app.post('/appointments', checkAuthenticated, function (req, res) {
     });
   }
 });
-app.post('/annoucement',checkAuthenticated, function (req, res) {
+app.post('/announcements',checkAuthenticated, function (req, res) {
   if (req.user.type != 'admin')
     res.send("You don't have privilege");
     else {
