@@ -3,7 +3,7 @@ body {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background-image: url("../../login.png");
+    background-image: url("../images/login.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,7 +16,7 @@ body {
     left: 50%;
     transform: translate(-50%,-50%);
     width: 450px;
-    height: 340px;
+    height: 350px;
     padding: 28px 20px;
     border-radius: 25px;
     box-sizing: border-box;
@@ -28,6 +28,22 @@ body {
     display: flex;
     padding-left: 20px;
     padding-right: 30px;
+}
+
+.headerButtons {
+    padding-left: 62px; 
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 62px;
+    font-size: large;
+    font-family: sans-serif;
+    color: #5bc0de;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.headerButtons:hover {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .logo {
@@ -135,11 +151,7 @@ input::-webkit-inner-spin-button {
 }
 
 .link {
-    color: white;
+    color: #5bc0de;
     font-family: sans-serif;
     text-decoration: none;
-}
-
-.link:hover {
-    text-decoration: underline;
 }

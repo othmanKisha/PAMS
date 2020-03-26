@@ -1,9 +1,5 @@
-import home from './home'
-import login from './login'
-import register from './register'
-import patient from './patient'
-import clinicManeger from './clinicManeger'
-import systemAdmin from './systemAdmin'
-import receptionist from './receptionist'
+import Login from './Login';
+import Register from './Register';
+import '../styles/Home.css';
 
-export { home, login, register, patient, clinicManeger, systemAdmin, receptionist }
+export { Login, Register }
