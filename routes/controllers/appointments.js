@@ -2,7 +2,7 @@ const appointment = require("../../models/appointment");
 const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 
-export const getAppointments = (req, res) => {
+const getAppointments = (req, res) => {
   if (req.user.type == "patient")
     appointment.aggregate(
       [
@@ -57,7 +57,7 @@ export const getAppointments = (req, res) => {
     );
   else res.redirect("/");
 };
-export const getFinishedAppointments = (req, res) => {
+const getFinishedAppointments = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.aggregate(
       [
@@ -82,7 +82,7 @@ export const getFinishedAppointments = (req, res) => {
     );
   else res.redirect("/");
 };
-export const getAppointmentById = (req, res) => {
+const getAppointmentById = (req, res) => {
   if (req.user.type == "patient")
     appointment.aggregate(
       [
@@ -116,7 +116,7 @@ export const getAppointmentById = (req, res) => {
     );
   else res.redirect("/");
 };
-export const deleteAppointment = (req, res) => {
+const deleteAppointment = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.findOne(
       { _id: req.params.id, clinic_id: req.user.clinic_id },
@@ -126,4 +126,11 @@ export const deleteAppointment = (req, res) => {
       }
     );
   else res.redirect("/");
+};
+
+module.exports = {
+  getAppointments,
+  getFinishedAppointments,
+  getAppointmentById,
+  deleteAppointment
 };

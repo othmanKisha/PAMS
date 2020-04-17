@@ -3,7 +3,7 @@ const appointment = require("../../models/appointment");
 const User = require("../../models/user");
 const doctor = require("../../models/doctor");
 
-export const sendPendingMail = (req, res) => {
+const sendPendingMail = (req, res) => {
   appointment.aggregate(
     [
       { $match: { _id: req.params.id } },
@@ -44,7 +44,7 @@ export const sendPendingMail = (req, res) => {
     }
   );
 };
-export const sendConfirmationMail = (req, res) => {
+const sendConfirmationMail = (req, res) => {
   appointment.aggregate(
     [
       { $match: { _id: req.params.id } },
@@ -85,3 +85,5 @@ export const sendConfirmationMail = (req, res) => {
     }
   );
 };
+
+module.exports = { sendPendingMail, sendConfirmationMail };

@@ -2,14 +2,14 @@ const doctor = require("../../models/doctor");
 const clinic = require("../../models/clinic");
 const appointment = require("../../models/appointment");
 
-export const getDoctors = (req, res) => {
+const getDoctors = (req, res) => {
   if (req.user.type != "patient") res.redirect("/");
   doctor.find({ status: "active" }, (err, doctorList) => {
     if (err) console.log(err);
     else res.render("/users/patient", { active: "doctors", data: doctorList });
   });
 };
-export const getDoctorById = (req, res) => {
+const getDoctorById = (req, res) => {
   var type = req.user.type;
   doctor.findOne({ _id: req.params.id }, (err, dr) => {
     if (err) console.log(err);
@@ -18,22 +18,22 @@ export const getDoctorById = (req, res) => {
     else res.render("show", { data: dr, active: "Doctor", user: type });
   });
 };
-export const getNewPage = (req, res) => {
+const getNewPage = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   res.render("new", { edited: "doctors" });
 };
-export const getEditPage = (req, res) => {
+const getEditPage = (req, res) => {
   if (req.user.type != "manager" || req.params.id != req.user.clinic_id)
     res.redirect("/");
   res.render("edit", {});
 };
-export const getHome = (_req, res) => {
+const getHome = (_req, res) => {
   doctor.find({ status: "active" }, (err, doctorList) => {
     if (err) res.json({});
     else res.json(doctorList);
   });
 };
-export const postDoctor = (req, res) => {
+const postDoctor = (req, res) => {
   if (req.user.type != "manager" || req.params.id != req.user.clinic_id)
     res.redirect("/");
   clinic.findOne({ _id: req.user.clinic_id }, (err, c) => {
@@ -58,7 +58,7 @@ export const postDoctor = (req, res) => {
       });
   });
 };
-export const createAppointment = (req, res) => {
+const createAppointment = (req, res) => {
   if (req.user.type != "patient") res.redirect("/");
   doctor.findOne({ _id: req.params.id, status: "active" }, (err, dr) => {
     if (err) console.log(err);
@@ -90,7 +90,7 @@ export const createAppointment = (req, res) => {
       );
   });
 };
-export const editDoctor = (req, res) => {
+const editDoctor = (req, res) => {
   if (req.user.type != "manager" || req.params.id != req.user.clinic_id)
     res.redirect("/");
   doctor.updateOne(
@@ -114,7 +114,7 @@ export const editDoctor = (req, res) => {
     }
   );
 };
-export const deleteDoctor = (req, res) => {
+const deleteDoctor = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   doctor.deleteOne(
     { _id: req.params.id, clinic_id: req.user.clinic_id },
@@ -127,4 +127,16 @@ export const deleteDoctor = (req, res) => {
         });
     }
   );
+};
+
+module.exports = {
+  getDoctors,
+  getDoctorById,
+  getNewPage,
+  postDoctor,
+  createAppointment,
+  getEditPage,
+  editDoctor,
+  deleteDoctor,
+  getHome
 };

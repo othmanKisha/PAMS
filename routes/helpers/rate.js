@@ -1,4 +1,4 @@
-export const rateClinicAndDoctor = (record, id, rating, next) => {
+const rateClinicAndDoctor = (record, id, rating, next) => {
   record.findOne({ _id: id }, (err, r) => {
     if (err) console.log(err);
     else
@@ -18,3 +18,5 @@ export const rateClinicAndDoctor = (record, id, rating, next) => {
 const rate = (newRating, appNum, currRating) => {
   return (appNum * currRating + newRating) / (aooNum + 1);
 };
+
+module.exports = { rateClinicAndDoctor };

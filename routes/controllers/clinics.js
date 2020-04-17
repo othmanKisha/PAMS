@@ -3,7 +3,7 @@ const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
 
-export const getClinics = (_req, res) => {
+const getClinics = (_req, res) => {
   if (req.user.type == "patient")
     clinic.find({ status: "active" }, (err, clinicList) => {
       if (err) console.log(err);
@@ -22,7 +22,7 @@ export const getClinics = (_req, res) => {
     });
   else res.redirect("/");
 };
-export const getClinicById = (req, res) => {
+const getClinicById = (req, res) => {
   var type = req.params.type;
   clinic.aggregate(
     [
@@ -45,37 +45,37 @@ export const getClinicById = (req, res) => {
     }
   );
 };
-export const getNewManager = (req, res) => {
+const getNewManager = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   res.render("register", { e_msg: "", expand: false, type: "manager" });
 };
-export const getNewReceptionist = (req, res) => {
+const getNewReceptionist = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   res.render("register", { e_msg: "", expand: false, type: "receptionist" });
 };
-export const getNewPage = (req, res) => {
+const getNewPage = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   res.render("new", { edited: "clinics" });
 };
-export const getEditPage = (req, res) => {
+const getEditPage = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   res.render("edit", {});
 };
-export const getHome = (_req, res) => {
+const getHome = (_req, res) => {
   clinic.find({ status: "active" }, (err, clinicList) => {
     if (err) res.json({});
     else res.json(clinicList);
   });
 };
-export const registerManager = (req, res) => {
+const registerManager = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   require("./registeration")(req, res, true, "manager");
 };
-export const registerReceptionist = (req, res) => {
+const registerReceptionist = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   require("./registeration")(req, res, true, "receptionist");
 };
-export const postClinic = (req, res) => {
+const postClinic = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   new clinic({
     name: req.body.name,
@@ -93,7 +93,7 @@ export const postClinic = (req, res) => {
     else res.redirect("/clinics");
   });
 };
-export const editClinic = (req, res) => {
+const editClinic = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   clinic.findOne({ _id: req.params.id }, (err, c) => {
     if (err) console.log(err);
@@ -128,7 +128,7 @@ export const editClinic = (req, res) => {
     );
   });
 };
-export const deleteClinic = (req, res) => {
+const deleteClinic = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   clinic.deleteOne({ _id: req.params.id }, (err, _cb) => {
     if (err) console.log(err);
@@ -149,4 +149,19 @@ export const deleteClinic = (req, res) => {
           });
       });
   });
+};
+
+module.exports = {
+  getClinics,
+  getClinicById,
+  getNewPage,
+  getNewManager,
+  getNewReceptionist,
+  getEditPage,
+  getHome,
+  postClinic,
+  registerManager,
+  registerReceptionist,
+  editClinic,
+  deleteClinic
 };
