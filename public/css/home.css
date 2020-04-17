@@ -1,0 +1,96 @@
+#sidebar.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#sidebar ul li a {
+  text-align: left;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+#sidebar {
+  min-width: 200px;
+  max-width: 200px;
+  min-height: 90vh;
+  max-height: 90vh;
+  /*min-height: 600px;
+    max-height: 600px;*/
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  transition: all 0.3s;
+  position: absolute;
+}
+
+#sidebar ul.components {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.6em;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #5bc0de;
+  background: #fff;
+}
+
+#sidebar ul li.active > a {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+#sidebar ul li.active > a:hover {
+  color: white;
+}
+
+#content {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
+  /*min-height: 100%;
+    max-height: 100%;*/
+  padding-left: 200px;
+}
+
+.jumbotron {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
+  opacity: 0.9;
+}
+
+table {
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 50px;
+}
+
+#searchinp {
+  width: 660px;
+  background: transparent;
+  border-color: #1e3238;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  color: #1e3238;
+}
+
+#searchinp::placeholder {
+  color: #1e3238;
+}
+
+#searchinp:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

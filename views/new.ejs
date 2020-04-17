@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% if (edited == "clinic") { %>
+    <title>Add New Clinic</title>
+    <% } if (edited == "doctor") { %>
+    <title>Add New Doctor</title>
+    <% } %>
+    <link
+      href="https://fonts.googleapis.com/css?family=Passion+One"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="icon" href="/img/icon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="bodyCard" style="height: 500px;">
+      <a href="/"
+        ><img
+          class="logo"
+          src="/img/logo.png"
+          alt="Error, image couldn't be loaded"
+      /></a>
+      <h5 class="cardTitle">Patient Appointment Management System</h5>
+      <!--<h6 class="warning-msg"><%=e_msg%></h6>-->
+      <div class="card-body">
+        <% if (edited == "clinic") { %>
+        <form action="/clinics" method="POST">
+          <%- include("./partials/new_clinic.ejs") %>
+        </form>
+        <% } if (edited == "doctor") { %>
+        <form action="/clinics/:<%= id %>/doctors" method="POST">
+          <%- include("./partials/new_doctor.ejs") %>
+        </form>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

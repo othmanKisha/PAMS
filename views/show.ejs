@@ -1,0 +1,196 @@
+<%- include('./partials/head_show.ejs') %>
+<div class="wrapper">
+  <div id="content">
+    <div class="jumbotron">
+      <div class="title">
+        <!-- Display the Name of Clinic, Doctor or Doctor and Clinic for the appointment-->
+        <% if (active == "Clinic") { %>
+        <h1 class="display-3"><%= data.name %></h1>
+        <% } if (active == "Doctor") { %>
+        <h1 class="display-3"><%= "Dr." + data.fname + " " + data.lname %></h1>
+        <% } if (active == "Appointment") { %>
+        <h1 class="display-3">
+          <%= "Dr." + data.appDoctor['fname'] + " " + data.appDoctor['lname'] +
+          " at " + data.appClinic['name'] %>
+        </h1>
+        <!-- Display the rating of Doctor or Clinic -->
+        <% } if (active != "Appointment") { if (data.rating <= 0) { %> There is
+        no rating. <% } if (data.rating > 0) for(i=0; i < data.rating; i++) { if
+        (data.rating > i+0.75) %>
+        <i class="fa fa-star checked w3-xlarge"></i> <% if (data.rating <=
+        i+0.75 && data.rating >= i+0.25) %>
+        <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
+        <span> <%= data.rating %> </span>
+        <% } %>
+      </div>
+      <div class="info">
+        <!-- What will be viewed for Clinic Page -->
+        <% if (active == "Clinic") { %>
+        <h3>Profile: <%= data.profile %></h3>
+        <h3>Website: <a href="<%= data.website %>"> <%= data.website %></a></h3>
+        <h3>Email: <%= data.email %></h3>
+        <h3>Phone number: <%= data.numbers %></h3>
+        <h3>Location: <%= data.location %></h3>
+        <h3>Services: <%= data.services %></h3>
+        <!-- What will be viewed for Doctor Page -->
+        <% } if (active == "Doctor") { %>
+        <h3>Profile: <%= data.profile %></h3>
+        <h3>Email: <%= data.email %></h3>
+        <h3>Phone number: <%= data.numbers %></h3>
+        <h3>Office: <%= data.office %>></h3>
+        <h3>Speciality: <%= data.speciality %></h3>
+        <h3>Experience: <%= data.experience %> years</h3>
+        <!-- What will be viewed for Appointment Page -->
+        <% } if (active == "Appointment") { %>
+        <h3>Date: <%= data.date %></h3>
+        <h3>Time: <%= data.time %></h3>
+        <!-- If the appointment is reviewed you can see the review and rating -->
+        <% if (data.reviewed) { %>
+        <h3>Clinic: <%= data.appClinic['name'] %></h3>
+        <% for(i=0; i < data.clinic_rating; i++) { if (data.clinic_rating >
+        i+0.75) %>
+        <i class="fa fa-star checked w3-xlarge"></i>
+        <% if (data.clinic_rating <= i+0.75 && data.clinic_rating >= i+0.25) %>
+        <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
+        <span> <%= data.clinic_rating %> </span>
+        <h3>
+          Doctor: <%= "Dr." + data.appDoctor['fname'] + " " +
+          data.appDoctor['lname'] %>
+        </h3>
+        <% for(i=0; i < data.doctor_rating; i++) { if (data.doctor_rating >
+        i+0.75) %>
+        <i class="fa fa-star checked w3-xlarge"></i>
+        <% if (data.doctor_rating <= i+0.75 && data.doctor_rating >= i+0.25) %>
+        <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
+        <span> <%= data.doctor_rating %> </span>
+        <h3>Review: <%= data.review %></h3>
+        <% } } %>
+      </div>
+      <div class="container">
+        <% if (active == "Clinic") { %>
+        <h3>Doctors List</h3>
+        <!-- Showing a table of existing doctors in clinic -->
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <th scope="col">Name</th>
+            <th scope="col">Speciality</th>
+            <th scope="col">Rating</th>
+          </thead>
+          <tbody>
+            <% data.forEach(d => { %>
+            <tr>
+              <td>
+                <a href="/doctors/:<%= d.doctors['_id'] %>">
+                  <%= d.doctors['fname'] +" "+ d.doctors['lname'] %>
+                </a>
+              </td>
+              <td>
+                <a href="/doctors/:<%= d.doctors['_id'] %>">
+                  <%= d.doctors['speciality'] %>
+                </a>
+              </td>
+              <td>
+                <a href="/doctors/:<%= d.doctors['_id'] %>">
+                  <% if (d.doctors['rating'] <= 0) { %> There is no rating. <% }
+                  %> <% if (d.doctors['rating'] > 0) for(i=0; i <
+                  d.doctors['rating']; i++) { %> <% if (d.doctors['rating'] >
+                  i+0.75) %>
+                  <i class="fa fa-star checked w3-xlarge"></i> <% if
+                  (d.doctors['rating'] <= i+0.75 && d.doctors['rating'] >=
+                  i+0.25) %>
+                  <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
+                  <span> <%= d.doctors['rating'] %> </span>
+                </a>
+              </td>
+              <% if (user == "manager") { %>
+              <td>
+                <button class="btn bg-dark btn-block btn-lg">
+                  <a href="/doctors/:<%= d.doctors['_id'] %>/edit">
+                    <i class="fa fa-toals w3-xlarge"></i>
+                  </a>
+                </button>
+              </td>
+              <td>
+                <form
+                  action="/doctors/:<%= d.doctors['_id'] %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button type="submit" class="btn bg-dark btn-block btn-lg">
+                    <a class="links">
+                      <i class="fa fa-trash w3-xlarge"></i>
+                    </a>
+                  </button>
+                </form>
+              </td>
+              <% } %>
+            </tr>
+            <% }) } %>
+          </tbody>
+        </table>
+        <div class="row">
+          <% if (user == "manager") { %>
+          <div class="col">
+            <button class="btn bg-dark btn-block btn-lg">
+              <a class="links" href="/clinics/:<%= data._id %>/edit">
+                Edit Clinic Info
+              </a>
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn bg-dark btn-block btn-lg">
+              <a class="links" href="/clinics/:<%= data._id %>/doctors/new">
+                Add New Doctor
+              </a>
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn bg-dark btn-block btn-lg">
+              <a
+                class="links"
+                href="/clinics/:<%= data._id %>/receptionist/new"
+              >
+                Add Clinic Receptionist
+              </a>
+            </button>
+          </div>
+        </div>
+        <% } } if (active == "Doctor") { if (user == "patient") { %> 
+        <%- include("./partials/new_appointment.ejs") %>
+                <form action="/doctors/:<%= data._id %>/appointments" method="POST">
+                  <button type="submit" class="btn btn-dark">Create Appointment</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div> 
+        <% } if (user == "manager") { %>
+        <div class="row">
+          <div class="col">
+            <button class="btn bg-dark btn-block btn-lg">
+              <a class="links" href="/doctors/:<%= data._id %>/edit">
+                <i class="fa-toals w3-xlarge" style="color: white;"></i> Edit
+                Doctor
+              </a>
+            </button>
+          </div>
+          <div class="col">
+            <form
+              action="/doctors/:<%= data._id %>?_method=DELETE"
+              method="POST"
+            >
+              <button class="btn bg-dark btn-block btn-lg">
+                <a class="links">
+                  <i class="fa fa-trash w3-xlarge" style="color: white;"></i>
+                  Remove Doctor
+                </a>
+              </button>
+            </form>
+          </div>
+        </div>
+        <% } } if (active == "Appointment") { if (data.status != "Done") { %>
+        <%- include('./partials/rate.ejs') %> <% } } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/foot.ejs') %>

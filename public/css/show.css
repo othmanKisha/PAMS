@@ -1,0 +1,43 @@
+#content {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
+}
+
+.title {
+  text-align: center;
+}
+
+h3 {
+  padding-bottom: 5px;
+  border-bottom: solid;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-right: 80px;
+  margin-left: 80px;
+}
+
+h3:hover {
+  font-weight: bold;
+  border-bottom-color: #5bc0de;
+}
+
+.info {
+  padding-top: 20px;
+  align-content: center;
+  padding-bottom: 35px;
+}
+
+.links button {
+  color: white;
+}
+
+.links button:hover {
+  color: white;
+}
+
+.links:hover {
+  color: white;
+  text-decoration: solid;
+}

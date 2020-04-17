@@ -1,0 +1,177 @@
+<%- include('../partials/head.ejs') %>
+<div class="wrapper">
+  <nav id="sidebar">
+    <ul class="list-unstyled components">
+      <% if (active == "clinics") { %>
+      <li>
+        <a> <i class="fa fa-sliders"></i>Clinics</a>
+      </li>
+      <li>
+        <a href="/announcements"> <i class="fa fa-sliders"></i>Announcements</a>
+      </li>
+      <% } if (active == "announcements") { %>
+      <li>
+        <a href="/clinics"> <i class="fa fa-sliders"></i>Clinics</a>
+      </li>
+      <li>
+        <a> <i class="fa fa-sliders"></i>Announcements</a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <div id="content">
+    <div class="jumbotron">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="searchinp"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+          placeholder="Search"
+        />
+        <% if (active == "clinics") { %>
+        <a href="/clinics/new">
+          <i class="fa fa-plus-square w3-xlarge"></i>
+        </a>
+        <% } if (active == "announcements") { %>
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          <i class="fa fa-plus-square w3-xlarge"></i>
+        </button>
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <form action="/announcements" method="POST">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Add New Announcement
+                  </h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="name"
+                      value="<%= content %>"
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn-outline-dark">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <% if (active == "clinics") { %>
+          <th scope="col">Name</th>
+          <th scope="col">Services</th>
+          <th scope="col">Location</th>
+          <% } if (active == "announcements") { %>
+          <th scope="col">Submitter</th>
+          <th scope="col">Date</th>
+          <th scope="col">Content</th>
+          <% } %>
+        </thead>
+        <tbody>
+          <% if (active == "clinics") { data.forEach(d => { %>
+          <tr>
+            <td>
+              <a href="/clinics/:<%= d._id %>">
+                <%= d.name %> <% if (d.status == "active") { %>
+                <i class="fa fa-award" style="color: gold;"></i>
+                <% } %>
+              </a>
+            </td>
+            <td><a href="/clinics/:<%= d._id %>"> <%= d.services %> </a></td>
+            <td><a href="/clinics/:<%= d._id %>"> <%= d.location %> </a></td>
+            <td>
+              <% if (d.status == "inactive") { %>
+              <div class="dropdown">
+                <button
+                  class="btn"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fa fa-toals w3-xlarge"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a
+                    class="dropdown-item"
+                    href="/clinics/:<%= d._id %>/manager/new"
+                  >
+                    Assign Clinic Manager
+                  </a>
+                </div>
+              </div>
+              <% } %>
+              <form
+                action="/clinics/:<%= d._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button type="submit">
+                  <i class="fa fa-trash w3-xlarge"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) } if (active == "announcements") { data.forEach(d => { %>
+          <tr>
+            <td><a> <%= d.submitter %> </a></td>
+            <td><a> <%= d.date %> </a></td>
+            <td><a> <%= d.content %> </a></td>
+            <td>
+              <form
+                action="/announcements/:<%= d._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button type="submit">
+                  <i class="fa fa-trash w3-xlarge"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot.ejs') %>

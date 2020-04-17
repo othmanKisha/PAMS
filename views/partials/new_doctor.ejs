@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt">First Name</p>
+      <input
+        name="fname"
+        type="text"
+        class="input"
+        required="required"
+        pattern="[A-Za-z]{1,15}"
+        title="Please use only characters"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+  </div>
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt">Last Name</p>
+      <input
+        name="lname"
+        type="text"
+        class="input"
+        required="required"
+        pattern="^[A-Za-z]{1,15}"
+        title="Please use only characters"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+    </label>
+  </div>
+</div>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Profile</p>
+  <input
+    name="profile"
+    type="text"
+    class="input"
+    required="required"
+    pattern="^[A-Za-z]{1,15}"
+    title="Please use only characters"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Experience (years)</p>
+  <input
+    name="experience"
+    type="text"
+    class="input"
+    required="required"
+    pattern="^[A-Za-z]{1,15}"
+    title="Please use only characters"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Speciality</p>
+  <input
+    name="speciality"
+    type="text"
+    class="input"
+    required="required"
+    pattern="^[A-Za-z]{1,15}"
+    title="Please use only characters"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Office</p>
+  <input
+    name="office"
+    type="text"
+    class="input"
+    required="required"
+    pattern="^[A-Za-z]{1,15}"
+    title="Please use only characters"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Email</p>
+  <input
+    name="email"
+    type="email"
+    class="input"
+    required="required"
+    pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+    title="Invalid email"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<div style="height: 15px;"></div>
+<label>
+  <p class="label-txt">Phone Number</p>
+  <input
+    placeholder="05xxxxxxxx"
+    name="numbers"
+    type="text"
+    class="input"
+    required="required"
+    pattern="[0]{1}[5]{1}[0-9]{8}"
+    ,
+    title="Invalid number"
+  />
+  <div class="line-box">
+    <div class="line"></div>
+  </div>
+</label>
+<button type="submit" class="btn btn-primary">
+  Add Doctor
+</button>

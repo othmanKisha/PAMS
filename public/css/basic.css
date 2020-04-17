@@ -1,0 +1,55 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: cursive;
+  background-image: url("../img/login.png");
+  background-size: cover;
+  /* maybe not needed */
+  overflow: hidden;
+}
+
+.wrapper {
+  display: block;
+  width: 100%;
+  align-items: stretch;
+}
+
+#nav {
+  background-color: rgba(0, 0, 0, 0.2);
+  max-height: 10vh;
+}
+
+.jumbotron {
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 90vh;
+  max-height: 90vh;
+  /*min-height: 600px;
+    max-height: 600px;*/
+  opacity: 0.9;
+}
+
+td a {
+  display: block;
+  color: black;
+}
+
+td a:hover {
+  text-decoration: none;
+  color: black;
+}
+
+#logos {
+  padding-left: 30px;
+}
+
+#prof {
+  color: white;
+  padding-right: 25px;
+}
+
+#dropdownMenuButton {
+  border: none;
+  background: transparent;
+}

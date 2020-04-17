@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% if (type == "patient") { %>
+    <title>Register</title>
+    <% } if (type == "receptionist") { %>
+    <title>Register Receptionist</title>
+    <% } if (type == "manager") { %>
+    <title>Register Manager</title>
+    <% } %>
+    <link
+      href="https://fonts.googleapis.com/css?family=Passion+One"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="icon" href="/img/icon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/js/register.js"></script>
+  </head>
+
+  <body>
+    <div class="bodyCard" style="height : <%= expand==true ? 530 : 500 %>px">
+      <a href="/"
+        ><img
+          class="logo"
+          src="/img/logo.png"
+          alt="Error, image couldn't be loaded"
+      /></a>
+      <h5 class="cardTitle">Patient Appointment Management System</h5>
+      <h6 class="warning-msg"><%=e_msg%></h6>
+      <div class="card-body">
+        <form class="form" method="post" action="/register">
+          <div class="row">
+            <div class="d-flex align-items-center col-6">
+              <label>
+                <p class="label-txt">First Name</p>
+                <input
+                  name="fname"
+                  type="text"
+                  class="input"
+                  required="required"
+                  pattern="[A-Za-z]{1,15}"
+                  title="Please use only characters"
+                />
+                <div class="line-box">
+                  <div class="line"></div>
+                </div>
+              </label>
+            </div>
+            <div class="d-flex align-items-center col-6">
+              <label>
+                <p class="label-txt">Last Name</p>
+                <input
+                  name="lname"
+                  type="text"
+                  class="input"
+                  required="required"
+                  pattern="^[A-Za-z]{1,15}"
+                  title="Please use only characters"
+                />
+                <div class="line-box">
+                  <div class="line"></div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div style="height: 15px;"></div>
+          <label>
+            <p class="label-txt">Email</p>
+            <input
+              name="email"
+              type="email"
+              class="input"
+              required="required"
+              pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+              title="Invalid email"
+            />
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+          <div style="height: 15px;"></div>
+          <label>
+            <p class="label-txt">Phone Number</p>
+            <input
+              placeholder="05xxxxxxxx"
+              name="number"
+              type="text"
+              class="input"
+              required="required"
+              pattern="[0]{1}[5]{1}[0-9]{8}"
+              ,
+              title="Invalid number"
+            />
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+          <div style="height: 15px;"></div>
+          <label>
+            <p class="label-txt">Password</p>
+            <input
+              name="password"
+              id="password"
+              type="password"
+              class="input"
+              required="required"
+              minlength="3"
+            />
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+          <div style="height: 15px;"></div>
+          <label>
+            <p class="label-txt" id="confirmtext">Confirm Password</p>
+            <input
+              name="confirm"
+              id="confirm"
+              type="password"
+              class="input"
+              required="required"
+            />
+            <div class="line-box">
+              <div class="line"></div>
+            </div>
+          </label>
+          <div>
+            <button type="submit" id="btnSubmit" class="btn btn-primary">
+              <% if (type == "patient") { %> Register <% } if (type ==
+              "receptionist") { %> Add Receptionist <% } if (type == "manager")
+              { %> Add Manager <% } %>
+            </button>
+          </div>
+          <% if (type == "patient") { %>
+          <a href="/login" style="color:white">Have an account? Login!</a>
+          <% } %>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

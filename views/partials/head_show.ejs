@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <link rel="icon" href="/img/icon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/basic.css" />
+    <link rel="stylesheet" href="/css/show.css" />
+    <title>PAMS Home</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg " id="nav">
+      <div>
+        <a href="/">
+          <button type="button" class="btn btn-outline-light">
+            <i class="fa fa-home"></i>
+          </button>
+        </a>
+        <a class="navbar-brand" href="#" id="logos">
+          <img src="/img/logo.png" />
+        </a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav navbar-nav mr-auto"></ul>
+        <ul class="nav navbar-nav navbar-right">
+          <button
+            type="button"
+            class="btn"
+            data-toggle="modal"
+            data-target="#exampleModalLong"
+          >
+            <i class="fa fa-bell w3-xlarge" id="prof"></i>
+          </button>
+          <div class="dropdown">
+            <button
+              class="btn"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fa fa-user-circle w3-xxlarge" id="prof"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="/users/profile"> Profile </a>
+              <a class="dropdown-item" href="/signout"> Signout </a>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </nav>
+  </body>
+</html>
