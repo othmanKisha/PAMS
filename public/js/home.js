@@ -2,7 +2,7 @@ var pdlft = "200px";
 var hide = true;
 var announcements;
 
-fetch("http://localhost:3000/Home/announcements")
+fetch("http://localhost:3000/announcements/Home")
   .then(response => {
     return response.json();
   })

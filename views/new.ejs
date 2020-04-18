@@ -38,7 +38,7 @@
           <%- include("./partials/new_clinic.ejs") %>
         </form>
         <% } if (edited == "doctor") { %>
-        <form action="/clinics/:<%= id %>/doctors" method="POST">
+        <form action="/doctors" method="POST">
           <%- include("./partials/new_doctor.ejs") %>
         </form>
         <% } %>

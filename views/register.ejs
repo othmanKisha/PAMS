@@ -134,12 +134,12 @@
           </label>
           <div>
             <button type="submit" id="btnSubmit" class="btn btn-primary">
-              <% if (type == "new") { %> Register <% } if (type ==
+              <% if (type == "patient") { %> Register <% } if (type ==
               "receptionist") { %> Add Receptionist <% } if (type == "manager")
               { %> Add Manager <% } %>
             </button>
           </div>
-          <% if (type == "new") { %>
+          <% if (type == "patient") { %>
           <a href="/auth/login" style="color: white;"
             >Have an account? Login!</a
           >

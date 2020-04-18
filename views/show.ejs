@@ -188,7 +188,17 @@
           </div>
         </div>
         <% } } if (active == "Appointment") { if (data.status != "Done") { %>
-        <%- include('./partials/rate.ejs') %> <% } } %>
+        <%- include('./partials/rate.ejs') %>
+              <form action="/appointments/:<%= data._id %>?_method=PUT" method="POST">
+                  <button type="submit" class="btn btn-outline-dark">
+                    Submit
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div> 
+        <% } } %>
       </div>
     </div>
   </div>

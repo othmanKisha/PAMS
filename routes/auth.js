@@ -5,7 +5,7 @@ const router = express.Router();
 
 //Register logic
 router.get("/register", checkNotAuth, (_req, res) => {
-  res.render("register", { e_msg: "", expand: false, type: "new" });
+  res.render("register", { e_msg: "", expand: false, type: "patient" });
 });
 router.post("/register", (req, res) => {
   require("./controllers/registeration")(req, res, false, "patient");
