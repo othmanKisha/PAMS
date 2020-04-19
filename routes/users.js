@@ -4,7 +4,7 @@ const { checkAuth } = require("./middleware/auth");
 const router = express.Router();
 
 // REST routes for profile
-router.get("/profile", checkAuth, (_req, res) => {
+router.get("/profile", checkAuth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, user) => {
     if (err) console.log(err);
     res.render("profile", { data: user });
