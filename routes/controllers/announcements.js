@@ -6,7 +6,7 @@ const getAnnouncements = (req, res) => {
   announcement.find({}, (err, annList) => {
     if (err) console.log(err);
     else
-      res.render("/users/admin", {
+      res.render("admin", {
         data: annList,
         active: "announcements",
         content: ""

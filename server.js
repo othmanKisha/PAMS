@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
     else if (req.user.type == "manager")
       res.redirect(`/clinics/:${req.user.clinic_id}`);
     else res.render("error", { error: "Unauthorized user type!" });
-  else res.sendFile("./public/home.html");
+  else res.sendFile(__dirname + "/public/home.html");
 });
 app.use("/auth", require("./routes/auth"));
 app.use("/users", require("./routes/users"));
