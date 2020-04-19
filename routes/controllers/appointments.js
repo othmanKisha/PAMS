@@ -26,11 +26,7 @@ const getAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else
-          res.render("/users/patient", {
-            data: appList,
-            active: "appointments"
-          });
+        else res.render("patient", { data: appList, active: "appointments" });
       }
     );
   else if (req.user.type == "receptionist")
@@ -48,11 +44,7 @@ const getAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else
-          res.render("/users/receptionist", {
-            data: appList,
-            active: "pending"
-          });
+        else res.render("receptionist", { data: appList, active: "pending" });
       }
     );
   else res.redirect("/");
@@ -73,11 +65,7 @@ const getFinishedAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else
-          res.render("/users/receptionist", {
-            data: appList,
-            active: "finished"
-          });
+        else res.render("receptionist", { data: appList, active: "finished" });
       }
     );
   else res.redirect("/");

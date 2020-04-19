@@ -59,13 +59,14 @@ module.exports = (req, res, inClinic, type) => {
     }),
     p,
     (err, _cb) => {
-      if (err)
+      if (err) {
+        console.log(err);
         res.render("register", {
           e_msg: "Email is already used",
           expand: true,
           type: type
         });
-      else
+      } else
         passport.authenticate("local")(req, res, () => {
           if (type == "receptionist")
             clinic.updateOne(

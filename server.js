@@ -22,17 +22,25 @@ require("./config/database")(require("mongoose"));
 require("./config/passport")(passport);
 
 // REST Routes
-app.get("/", (req, res) => {
-  if (req.isAuthenticated())
-    if (req.user.type == "patient" || req.user.type == "admin")
-      res.redirect("/clinics");
-    else if (req.user.type == "receptionist") res.redirect("/appointments");
-    else if (req.user.type == "manager")
-      res.redirect(`/clinics/:${req.user.clinic_id}`);
-    else res.render("error", { error: "Unauthorized user type!" });
-  else res.render("index.html");
-});
-
+app.use(
+  "/",
+  express.Router().get("/", (req, res) => {
+    console.log("req to root");
+    console.log(req.isAuthenticated());
+    if (req.isAuthenticated())
+      if (req.user.type == "patient" || req.user.type == "admin")
+        res.redirect("/clinics");
+      else if (req.user.type == "receptionist") res.redirect("/appointments");
+      else if (req.user.type == "manager")
+        res.redirect(`/clinics/:${req.user.clinic_id}`);
+      else res.render("error", { error: "Unauthorized user type!" });
+    else {
+      console.log("req to root");
+      console.log(req.isAuthenticated());
+      res.sendfile("home.html");
+    }
+  })
+);
 app.use("/auth", require("./routes/auth"));
 app.use("/users", require("./routes/users"));
 app.use("/clinics", require("./routes/clinics"));

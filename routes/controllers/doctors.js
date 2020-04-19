@@ -6,7 +6,7 @@ const getDoctors = (req, res) => {
   if (req.user.type != "patient") res.redirect("/");
   doctor.find({ status: "active" }, (err, doctorList) => {
     if (err) console.log(err);
-    else res.render("/users/patient", { active: "doctors", data: doctorList });
+    else res.render("patient", { active: "doctors", data: doctorList });
   });
 };
 const getDoctorById = (req, res) => {

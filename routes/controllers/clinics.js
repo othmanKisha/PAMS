@@ -3,18 +3,17 @@ const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
 
-const getClinics = (_req, res) => {
+const getClinics = (req, res) => {
   if (req.user.type == "patient")
     clinic.find({ status: "active" }, (err, clinicList) => {
       if (err) console.log(err);
-      else
-        res.render(`/users/patient`, { active: "clinics", data: clinicList });
+      else res.render(`patient`, { active: "clinics", data: clinicList });
     });
   else if (req.user.type == "admin")
     clinic.find({}, (err, clinicList) => {
       if (err) console.log(err);
       else
-        res.render(`/users/admin`, {
+        res.render(`admin`, {
           active: "clinics",
           data: clinicList,
           content: ""
@@ -61,7 +60,7 @@ const getEditPage = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   res.render("edit", {});
 };
-const getHome = (_req, res) => {
+const getHome = (req, res) => {
   clinic.find({ status: "active" }, (err, clinicList) => {
     if (err) res.json({});
     else res.json(clinicList);
@@ -88,7 +87,7 @@ const postClinic = (req, res) => {
     appointments: 0,
     rating: -1,
     status: "inactive"
-  }).save((err, _clinic) => {
+  }).save((err, cb) => {
     if (err) console.log(err);
     else res.redirect("/clinics");
   });
