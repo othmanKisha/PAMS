@@ -21,13 +21,13 @@ $(document).ready(() => {
     pdlft = pdlft == "200px" ? "0px" : "200px";
     $("#content").css("padding-left", pdlft);
   });
-
-  announcements.forEach(a => {
-    $(".annBody").append(
-      `<tr><td> ${a.content}</td>`,
-      `<td> ${a.submitter} at ${a.date}</td></tr>`
-    );
-  });
+  if (announcements != undefined)
+    announcements.forEach(a => {
+      $(".annBody").append(
+        `<tr><td> ${a.content}</td>`,
+        `<td> ${a.submitter} at ${a.date}</td></tr>`
+      );
+    });
 
   // Search Functionality should be added
 });

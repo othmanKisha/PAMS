@@ -35,14 +35,15 @@ const viewClinics = cs => {
   var h3 = $("<th scope='col'></th>").text("Servics");
   var h4 = $("<th scope='col'></th>").text("Rating");
   $("#tableHead").append("<tr>", h1, h2, h3, h4, "</tr>");
-  cs.forEach(c => {
-    $("#tableBody").append(
-      `<tr><td><a href="/auth/login">${c.name}</a></td>`,
-      `<td><a href="/auth/login">${c.profile}</a></td>`,
-      `<td><a href="/auth/login">${c.services}</a></td>`,
-      `<td><a href="/auth/login">${c.rating}</a></td></tr>`
-    );
-  });
+  if (cs != undefined)
+    cs.forEach(c => {
+      $("#tableBody").append(
+        `<tr><td><a href="/auth/login">${c.name}</a></td>`,
+        `<td><a href="/auth/login">${c.profile}</a></td>`,
+        `<td><a href="/auth/login">${c.services}</a></td>`,
+        `<td><a href="/auth/login">${c.rating}</a></td></tr>`
+      );
+    });
 };
 
 const viewDoctors = ds => {
