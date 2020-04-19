@@ -1,6 +1,4 @@
 const appointment = require("../../models/appointment");
-const clinic = require("../../models/clinic");
-const doctor = require("../../models/doctor");
 
 const getAppointments = (req, res) => {
   if (req.user.type == "patient")
@@ -9,18 +7,18 @@ const getAppointments = (req, res) => {
         { $match: { patient_id: req.user._id } },
         {
           $lookup: {
-            from: clinic,
-            localFeild: clinic_id,
-            foreignFeild: _id,
-            as: appClinic
+            from: "clinic",
+            localField: "clinic_id",
+            foreignField: "_id",
+            as: "appClinic"
           }
         },
         {
           $lookup: {
-            from: doctor,
-            localFeild: doctor_id,
-            foreignFeild: _id,
-            as: appDoctor
+            from: "doctor",
+            localField: "doctor_id",
+            foreignField: "_id",
+            as: "appDoctor"
           }
         }
       ],
@@ -35,10 +33,10 @@ const getAppointments = (req, res) => {
         { $match: { clinic_id: req.user.clinic_id, status: "Pending" } },
         {
           $lookup: {
-            from: doctor,
-            localFeild: doctor_id,
-            foreignFeild: _id,
-            as: appDoctor
+            from: "doctor",
+            localField: "doctor_id",
+            foreignField: "_id",
+            as: "appDoctor"
           }
         }
       ],
@@ -56,10 +54,10 @@ const getFinishedAppointments = (req, res) => {
         { $match: { clinic_id: req.user.clinic_id, status: "Done" } },
         {
           $lookup: {
-            from: doctor,
-            localFeild: doctor_id,
-            foreignFeild: _id,
-            as: appDoctor
+            from: "doctor",
+            localField: "doctor_id",
+            foreignField: "_id",
+            as: "appDoctor"
           }
         }
       ],
@@ -77,18 +75,18 @@ const getAppointmentById = (req, res) => {
         { $match: { _id: req.params.id, patient_id: req.user._id } },
         {
           $lookup: {
-            from: clinic,
-            localFeild: clinic_id,
-            foreignFeild: _id,
-            as: appClinic
+            from: "clinic",
+            localField: "clinic_id",
+            foreignField: "_id",
+            as: "appClinic"
           }
         },
         {
           $lookup: {
-            from: doctor,
-            localFeild: doctor_id,
-            foreignFeild: _id,
-            as: appDoctor
+            from: "doctor",
+            localField: "doctor_id",
+            foreignField: "_id",
+            as: "appDoctor"
           }
         }
       ],

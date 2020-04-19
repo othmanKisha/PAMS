@@ -28,10 +28,10 @@ const getClinicById = (req, res) => {
       { $match: { _id: req.params.id } },
       {
         $lookup: {
-          from: doctor,
-          localFeild: _id,
-          foreignFeild: clinic_id,
-          as: doctors
+          from: "doctor",
+          localField: "_id",
+          foreignField: "clinic_id",
+          as: "doctors"
         }
       }
     ],

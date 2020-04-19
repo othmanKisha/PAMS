@@ -1,4 +1,4 @@
-var pdlft = "200px";
+var pdlft = "250px";
 var hide = true;
 var announcements;
 
@@ -18,7 +18,7 @@ $(document).ready(() => {
     if (hide) $("#sidebar").hide();
     else $("#sidebar").show();
     hide = hide ? false : true;
-    pdlft = pdlft == "200px" ? "0px" : "200px";
+    pdlft = pdlft == "250px" ? "0px" : "250px";
     $("#content").css("padding-left", pdlft);
   });
   if (announcements != undefined)
