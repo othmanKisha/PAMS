@@ -23,8 +23,6 @@ require("./config/passport")(passport);
 
 // REST Routes
 app.get("/", (req, res) => {
-  console.log("req to root");
-  console.log(req.isAuthenticated());
   if (req.isAuthenticated())
     if (req.user.type == "patient" || req.user.type == "admin")
       res.redirect("/clinics");
@@ -32,11 +30,7 @@ app.get("/", (req, res) => {
     else if (req.user.type == "manager")
       res.redirect(`/clinics/:${req.user.clinic_id}`);
     else res.render("error", { error: "Unauthorized user type!" });
-  else {
-    console.log("req to root");
-    console.log(req.isAuthenticated());
-    res.sendfile("./public/home.html");
-  }
+  else res.sendfile("./public/home.html");
 });
 app.use("/auth", require("./routes/auth"));
 app.use("/users", require("./routes/users"));
