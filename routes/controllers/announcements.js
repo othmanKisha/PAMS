@@ -1,6 +1,5 @@
 const announcement = require("../../models/announcement");
 const date = require("date-and-time");
-var {ObjectId} = require('mongodb');
 
 const getAnnouncements = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
