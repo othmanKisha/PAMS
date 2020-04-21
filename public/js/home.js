@@ -21,7 +21,8 @@ const getAnnouncements = ann => {
       $(".annBody").append(
         `<tr>`,
         `<td> ${a.content}</td>`,
-        `<td> ${a.submitter} at ${a.date}</td>`,
+        `<td> ${a.submitter}</td>`,
+        `<td> ${a.date}</td>`,
         `</tr>`
       );
     });

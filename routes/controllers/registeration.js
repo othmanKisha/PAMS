@@ -55,7 +55,7 @@ module.exports = (req, res, inClinic, type) => {
       fname: f,
       type: type,
       numbers: n,
-      regDate: date.format(new Date(), "YY/MM/DD"),
+      regDate: date.format(new Date(), "MMMM DD, YYYY"),
       status: "verified",
       clinic_id: clinic_id
     }),

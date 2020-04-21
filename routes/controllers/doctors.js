@@ -117,11 +117,11 @@ const editDoctor = (req, res) => {
 const deleteDoctor = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   doctor.deleteOne(
-    { _id: req.params.id, clinic_id: req.user.clinic_id },
+    { _id: req.params.id.substring(1), clinic_id: req.user.clinic_id.substring(1) },
     (err, _cb) => {
       if (err) console.log(err);
       else
-        appointment.deleteOne({ doctor_id: req.params.id }, (err, _cb) => {
+        appointment.deleteOne({ doctor_id: req.params.id.substring(1) }, (err, _cb) => {
           if (err) console.log(err);
           else res.redirect("/");
         });
