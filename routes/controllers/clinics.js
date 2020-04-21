@@ -15,8 +15,7 @@ const getClinics = (req, res) => {
       else
         res.render(`admin`, {
           active: "clinics",
-          data: clinicList,
-          content: ""
+          data: clinicList
         });
     });
   else res.redirect("/");

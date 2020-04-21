@@ -20,14 +20,19 @@
     />
     <link rel="stylesheet" href="/css/basic.css" />
     <link rel="stylesheet" href="/css/show.css" />
+    <script defer src="/js/home.js"></script>
     <title>PAMS Home</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg " id="nav">
       <div>
         <a href="/">
-          <button type="button" class="btn btn-outline-light">
-            <i class="fa fa-home"></i>
+          <button
+            type="button"
+            class="btn btn-primary"
+            style="background-color: transparent; border: none;"
+          >
+            <i class="fa fa-home w3-xlarge"></i>
           </button>
         </a>
         <a class="navbar-brand" href="#" id="logos">
@@ -40,6 +45,7 @@
           <button
             type="button"
             class="btn"
+            id="announce"
             data-toggle="modal"
             data-target="#exampleModalLong"
           >
@@ -64,5 +70,3 @@
         </ul>
       </div>
     </nav>
-  </body>
-</html>

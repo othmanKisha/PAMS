@@ -13,6 +13,20 @@ fetch("http://localhost:3000/announcements/Home")
     console.log(err);
   });
 
+const getAnnouncements = ann => {
+  $(".annBody").remove();
+  $("#annTable").append('<tbody class="annBody"></tbody>');
+  if (ann != undefined)
+    ann.forEach(a => {
+      $(".annBody").append(
+        `<tr>`,
+        `<td> ${a.content}</td>`,
+        `<td> ${a.submitter} at ${a.date}</td>`,
+        `</tr>`
+      );
+    });
+};
+
 $(document).ready(() => {
   $("#sidebarCollapse").on("click", () => {
     if (hide) $("#sidebar").hide();
@@ -21,13 +35,10 @@ $(document).ready(() => {
     pdlft = pdlft == "250px" ? "0px" : "250px";
     $("#content").css("padding-left", pdlft);
   });
-  if (announcements != undefined)
-    announcements.forEach(a => {
-      $(".annBody").append(
-        `<tr><td> ${a.content}</td>`,
-        `<td> ${a.submitter} at ${a.date}</td></tr>`
-      );
-    });
+
+  $("#announce").on("click", () => {
+    getAnnouncements(announcements);
+  });
 
   // Search Functionality should be added
 });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% if (edited == "clinic") { %>
+    <% if (edited == "clinics") { %>
     <title>Add New Clinic</title>
     <% } if (edited == "doctor") { %>
     <title>Add New Doctor</title>
@@ -33,7 +33,7 @@
       <h5 class="cardTitle">Patient Appointment Management System</h5>
       <!--<h6 class="warning-msg"><%=//e_msg%></h6>-->
       <div class="card-body">
-        <% if (edited == "clinic") { %>
+        <% if (edited == "clinics") { %>
         <form action="/clinics" method="POST">
           <%- include("./partials/new_clinic.ejs") %>
         </form>

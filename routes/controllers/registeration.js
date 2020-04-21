@@ -2,6 +2,7 @@ const User = require("../../models/user");
 const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const passport = require("passport");
+const date = require('date-and-time');
 
 module.exports = (req, res, inClinic, type) => {
   e = req.body.email;
@@ -54,6 +55,7 @@ module.exports = (req, res, inClinic, type) => {
       fname: f,
       type: type,
       numbers: n,
+      regDate: date.format(new Date(), "YY/MM/DD"),
       status: "verified",
       clinic_id: clinic_id
     }),

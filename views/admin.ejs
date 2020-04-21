@@ -3,18 +3,26 @@
   <nav id="sidebar">
     <ul class="list-unstyled components">
       <% if (active == "clinics") { %>
-      <li>
-        <a> <i class="fa fa-sliders"></i>Clinics</a>
+      <li class="active">
+        <a> <i class="fa fa-medkit" style="margin-right: 10px;"></i>Clinics</a>
       </li>
       <li>
-        <a href="/announcements"> <i class="fa fa-sliders"></i>Announcements</a>
+        <a href="/announcements">
+          <i class="fa fa-info-circle" style="margin-right: 10px;"></i
+          >Announcements</a
+        >
       </li>
       <% } if (active == "announcements") { %>
       <li>
-        <a href="/clinics"> <i class="fa fa-sliders"></i>Clinics</a>
+        <a href="/clinics">
+          <i class="fa fa-medkit" style="margin-right: 10px;"></i>Clinics</a
+        >
       </li>
-      <li>
-        <a> <i class="fa fa-sliders"></i>Announcements</a>
+      <li class="active">
+        <a>
+          <i class="fa fa-info-circle" style="margin-right: 10px;"></i
+          >Announcements</a
+        >
       </li>
       <% } %>
     </ul>
@@ -32,67 +40,20 @@
         />
         <% if (active == "clinics") { %>
         <a href="/clinics/new">
-          <i class="fa fa-plus-square w3-xlarge"></i>
+          <i
+            class="fa fa-plus-square w3-xxlarge"
+            style="margin-left: 20px;"
+          ></i>
         </a>
         <% } if (active == "announcements") { %>
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          data-toggle="modal"
-          data-target="#exampleModal"
-        >
-          <i class="fa fa-plus-square w3-xlarge"></i>
-        </button>
-        <div
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <form action="/announcements" method="POST">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">
-                    Add New Announcement
-                  </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="name"
-                      value="<%= content %>"
-                    />
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button type="submit" class="btn-outline-dark">
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
+        <a href="#">
+          <i
+            class="fa fa-plus-square w3-xxlarge"
+            style="margin-left: 20px;"
+            data-toggle="modal"
+            data-target="#newModal"
+          ></i>
+        </a>
         <% } %>
       </div>
       <table class="table table-striped">
@@ -162,8 +123,12 @@
                 action="/announcements/:<%= d._id %>?_method=DELETE"
                 method="POST"
               >
-                <button type="submit">
-                  <i class="fa fa-trash w3-xlarge"></i>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  style="background: transparent; border: transparent;"
+                >
+                  <i class="fa fa-trash w3-xlarge" style="color: black;"></i>
                 </button>
               </form>
             </td>
@@ -174,4 +139,5 @@
     </div>
   </div>
 </div>
-<%- include('./partials/foot.ejs') %>
+<%- include('./partials/new_announcement.ejs') %> <%-
+include('./partials/foot.ejs') %>

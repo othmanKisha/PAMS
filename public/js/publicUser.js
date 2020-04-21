@@ -38,10 +38,12 @@ const viewClinics = cs => {
   if (cs != undefined)
     cs.forEach(c => {
       $("#tableBody").append(
-        `<tr><td><a href="/auth/login">${c.name}</a></td>`,
+        `<tr>`,
+        `<td><a href="/auth/login">${c.name}</a></td>`,
         `<td><a href="/auth/login">${c.profile}</a></td>`,
         `<td><a href="/auth/login">${c.services}</a></td>`,
-        `<td><a href="/auth/login">${c.rating}</a></td></tr>`
+        `<td><a href="/auth/login">${c.rating}</a></td>`,
+        `</tr>`
       );
     });
 };
@@ -60,11 +62,13 @@ const viewDoctors = ds => {
   $("#tableHead").append("<tr>", h1, h2, h3, h4, h5, "</tr>");
   ds.forEach(d => {
     $("#tableBody").append(
-      `<tr><td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
+      `<tr>`,
+      `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
       `<td><a href="/auth/login">${d.profile}</a></td>`,
       `<td><a href="/auth/login">${d.speciality}</a></td>`,
       `<td><a href="/auth/login">${d.experience}</a></td>`,
-      `<td><a href="/auth/login">${d.rating}</a></td></tr>`
+      `<td><a href="/auth/login">${d.rating}</a></td>`,
+      `</tr>`
     );
   });
 };
