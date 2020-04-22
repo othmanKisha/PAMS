@@ -1,0 +1,55 @@
+<% if (doctors == "yes") { %>
+<h3>Doctors List</h3>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <th scope="col">Name</th>
+    <th scope="col">Speciality</th>
+    <th scope="col">Rating</th>
+  </thead>
+  <tbody>
+    <% data.doctors.forEach(d => { %>
+    <tr>
+      <td>
+        <a href="/doctors/<%= d._id %>">
+          <%= d.fname +" "+ d.lname %>
+        </a>
+      </td>
+      <td>
+        <a href="/doctors/<%= d._id %>">
+          <%= d.speciality %>
+        </a>
+      </td>
+      <td>
+        <a href="/doctors/<%= d._id %>">
+          <% if (d.rating <= 0) { %> There is no rating yet <% } %> <% if
+          (d.rating > 0) { for(i=0; i < d.rating; i++) { %> <% if (d.rating >
+          i+0.75) %> <i class="fa fa-star checked w3-xlarge"></i> <% if
+          (d.rating <= i+0.75 && d.rating >= i+0.25) %>
+          <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
+          <span> <%= d.rating %> </span>
+          <% } %>
+        </a>
+      </td>
+      <% if (user == "manager") { %>
+      <td>
+        <button class="btn bg-dark btn-block btn-lg">
+          <a href="/doctors/<%= d._id %>/edit">
+            <i class="fa fa-toals w3-xlarge"></i>
+          </a>
+        </button>
+      </td>
+      <td>
+        <form action="/doctors/<%= d._id %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn bg-dark btn-block btn-lg">
+            <a class="links">
+              <i class="fa fa-trash w3-xlarge"></i>
+            </a>
+          </button>
+        </form>
+      </td>
+      <% } %>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+<% } %>

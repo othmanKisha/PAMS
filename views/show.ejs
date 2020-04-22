@@ -1,11 +1,14 @@
+<!-- Header for the page -->
 <%- include('./partials/head_show.ejs') %>
 <div class="wrapper">
   <div id="content">
     <div class="jumbotron">
+      <!-- Display the Name of Clinic, Doctor or Doctor and Clinic for the appointment-->
       <div class="title">
-        <!-- Display the Name of Clinic, Doctor or Doctor and Clinic for the appointment-->
         <% if (active == "Clinic") { %>
-        <h1 class="display-3"><i class="fa fa-ambulance w3-xxxlarge"></i> <%= data.name %></h1>
+        <h1 class="display-3">
+          <i class="fa fa-ambulance w3-xxxlarge"></i> <%= data.name %>
+        </h1>
         <% } if (active == "Doctor") { %>
         <h1 class="display-3"><%= "Dr." + data.fname + " " + data.lname %></h1>
         <% } if (active == "Appointment") { %>
@@ -15,59 +18,20 @@
         </h1>
         <!-- Display the rating of Doctor or Clinic -->
         <% } if (active != "Appointment") { if (data.rating <= 0) { %> There is
-        no rating yet <% } if (data.rating > 0) { for(i=0; i < data.rating; i++) { if
-        (data.rating > i+0.75) %>
+        no rating yet <% } if (data.rating > 0) { for(i=0; i < data.rating; i++)
+        { if (data.rating > i+0.75) %>
         <i class="fa fa-star checked w3-xlarge"></i> <% if (data.rating <=
         i+0.75 && data.rating >= i+0.25) %>
         <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
         <span> <%= data.rating %> </span>
         <% } } %>
       </div>
-      <div class="info">
-        <!-- What will be viewed for Clinic Page -->
-        <% if (active == "Clinic") { %>
-        <h3><i class="fa fa-lightbulb-o w3-xlarge"></i> <%= data.profile %></h3>
-        <h3><i class="fa fa-globe w3-xlarge"></i> <a href="<%= data.website %>"> <%= data.website %></a></h3>
-        <h3><i class="fa fa-envelope w3-xlarge"></i> <%= data.email %></h3>
-        <h3><i class="fa fa-phone w3-xlarge"></i> <%= data.numbers %></h3>
-        <h3><i class="fa fa-map-marker w3-xlarge"></i> <%= data.location %></h3>
-        <h3><i class="fa fa-tags w3-xlarge"></i> <%= data.services %></h3>
-        <!-- What will be viewed for Doctor Page -->
-        <% } if (active == "Doctor") { %>
-        <h3>Profile: <%= data.profile %></h3>
-        <h3>Email: <%= data.email %></h3>
-        <h3>Phone number: <%= data.numbers %></h3>
-        <h3>Office: <%= data.office %>></h3>
-        <h3>Speciality: <%= data.speciality %></h3>
-        <h3>Experience: <%= data.experience %> years</h3>
-        <!-- What will be viewed for Appointment Page -->
-        <% } if (active == "Appointment") { %>
-        <h3>Date: <%= data.date %></h3>
-        <h3>Time: <%= data.time %></h3>
-        <!-- If the appointment is reviewed you can see the review and rating -->
-        <% if (data.reviewed) { %>
-        <h3>Clinic: <%= data.appClinic['name'] %></h3>
-        <% for(i=0; i < data.clinic_rating; i++) { if (data.clinic_rating >
-        i+0.75) %>
-        <i class="fa fa-star checked w3-xlarge"></i>
-        <% if (data.clinic_rating <= i+0.75 && data.clinic_rating >= i+0.25) %>
-        <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
-        <span> <%= data.clinic_rating %> </span>
-        <h3>
-          Doctor: <%= "Dr." + data.appDoctor['fname'] + " " +
-          data.appDoctor['lname'] %>
-        </h3>
-        <% for(i=0; i < data.doctor_rating; i++) { if (data.doctor_rating >
-        i+0.75) %>
-        <i class="fa fa-star checked w3-xlarge"></i>
-        <% if (data.doctor_rating <= i+0.75 && data.doctor_rating >= i+0.25) %>
-        <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
-        <span> <%= data.doctor_rating %> </span>
-        <h3>Review: <%= data.review %></h3>
-        <% } } %>
-      </div>
+      <!-- To show the info -->
+      <%- include('./partials/info.ejs') %>
       <div class="container">
         <% if (active == "Clinic") { %>
+        <!-- If there are doctors show them -->
+        <%- include('./partials/doctor_list.ejs') %>
         <div class="row">
           <% if (user == "manager") { %>
           <div class="col">
@@ -86,62 +50,41 @@
           </div>
           <div class="col">
             <button class="btn bg-dark btn-block btn-lg">
-              <a
-                class="links"
-                href="/clinics/<%= data._id %>/receptionist/new"
-              >
+              <a class="links" href="/clinics/<%= data._id %>/receptionist/new">
                 Add Clinic Receptionist
               </a>
             </button>
           </div>
         </div>
-        <% } } if (active == "Doctor") { if (user == "patient") { %> 
-        <%- include("./partials/new_appointment.ejs") %>
-                <form action="/doctors/:<%= data._id %>/appointments" method="POST">
-                  <button type="submit" class="btn btn-dark">Create Appointment</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div> 
-        <% } if (user == "manager") { %>
-        <div class="row">
-          <div class="col">
-            <button class="btn bg-dark btn-block btn-lg">
-              <a class="links" href="/doctors/:<%= data._id %>/edit">
-                <i class="fa-toals w3-xlarge" style="color: white;"></i> Edit
-                Doctor
-              </a>
-            </button>
-          </div>
-          <div class="col">
-            <form
-              action="/doctors/:<%= data._id %>?_method=DELETE"
-              method="POST"
-            >
-              <button class="btn bg-dark btn-block btn-lg">
-                <a class="links">
-                  <i class="fa fa-trash w3-xlarge" style="color: white;"></i>
-                  Remove Doctor
-                </a>
-              </button>
-            </form>
-          </div>
-        </div>
+        <% } } if (active == "Doctor") { if (user == "patient") { %>
+        <button
+          class="btn bg-dark btn-block btn-lg"
+          data-toggle="modal"
+          data-target="#newApp"
+        >
+          <a class="links" href="">
+            <i class="fa fa-calander w3-xlarge" style="color: white;"></i>
+            Create Appointment
+          </a>
+        </button>
         <% } } if (active == "Appointment") { if (data.status != "Done") { %>
-        <%- include('./partials/rate.ejs') %>
-              <form action="/appointments/:<%= data._id %>?_method=PUT" method="POST">
-                  <button type="submit" class="btn btn-outline-dark">
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div> 
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#rateApp"
+        >
+          <i class="fa-check-circle w3-xlarge" style="color: white;"></i>
+          Complete Appointment
+        </button>
         <% } } %>
       </div>
     </div>
   </div>
 </div>
+<!-- Adding New Appointment -->
+<%- include("./partials/new_appointment.ejs") %>
+<!-- For Rating The Appointments -->
+<%- include('./partials/rate.ejs') %>
+<!-- The Footer -->
 <%- include('./partials/foot.ejs') %>
