@@ -62,10 +62,12 @@
           <th scope="col">Name</th>
           <th scope="col">Services</th>
           <th scope="col">Location</th>
+          <th scope="col">Delete</th>
           <% } if (active == "announcements") { %>
           <th scope="col">Submitter</th>
-          <th scope="col">Date</th>
           <th scope="col">Content</th>
+          <th scope="col">Date</th>
+          <th scope="col">Delete</th>
           <% } %>
         </thead>
         <tbody>
@@ -116,8 +118,8 @@
           <% }) } if (active == "announcements") { data.forEach(d => { %>
           <tr>
             <td><a> <%= d.submitter %> </a></td>
-            <td><a> <%= d.date %> </a></td>
             <td><a> <%= d.content %> </a></td>
+            <td><a> <%= d.date %> </a></td>
             <td>
               <form
                 action="/announcements/:<%= d._id %>?_method=DELETE"

@@ -10,7 +10,7 @@ const getAnnouncements = (req, res) => {
 };
 const deleteAnnouncement = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
-  announcement.deleteOne({ _id: req.params.id }, (err, _cb) => {
+  announcement.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
     if (err) console.log(err);
     else res.redirect("/");
   });
@@ -20,7 +20,7 @@ const createAnnouncement = (req, res) => {
   else
     new announcement({
       content: req.body.content,
-      date: date.format(new Date(), "YY/MM/DD"),
+      date: date.format(new Date(), "MMMM DD, YYYY"),
       submitter: req.user.fname + " " + req.user.lname
     }).save((err, _cb) => {
       if (err) console.log(err);

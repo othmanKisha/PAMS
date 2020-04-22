@@ -128,7 +128,7 @@ const editClinic = (req, res) => {
 };
 const deleteClinic = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
-  clinic.deleteOne({ _id: req.params.id }, (err, _cb) => {
+  clinic.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
     if (err) console.log(err);
     else
       User.deleteMany({ clinic_id: req.params.id }, (err, _cb) => {
