@@ -74,14 +74,14 @@
           <% if (active == "clinics") { data.forEach(d => { %>
           <tr>
             <td>
-              <a href="/clinics/:<%= d._id %>">
+              <a href="/clinics/<%= d._id %>">
                 <%= d.name %> <% if (d.status == "active") { %>
                 <i class="fa fa-award" style="color: gold;"></i>
                 <% } %>
               </a>
             </td>
-            <td><a href="/clinics/:<%= d._id %>"> <%= d.services %> </a></td>
-            <td><a href="/clinics/:<%= d._id %>"> <%= d.location %> </a></td>
+            <td><a href="/clinics/<%= d._id %>"> <%= d.services %> </a></td>
+            <td><a href="/clinics/<%= d._id %>"> <%= d.location %> </a></td>
             <td>
               <% if (d.status == "inactive") { %>
               <div class="dropdown">
@@ -98,17 +98,14 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a
                     class="dropdown-item"
-                    href="/clinics/:<%= d._id %>/manager/new"
+                    href="/clinics/<%= d._id %>/manager/new"
                   >
                     Assign Clinic Manager
                   </a>
                 </div>
               </div>
               <% } %>
-              <form
-                action="/clinics/:<%= d._id %>?_method=DELETE"
-                method="POST"
-              >
+              <form action="/clinics/<%= d._id %>?_method=DELETE" method="POST">
                 <button type="submit">
                   <i class="fa fa-trash w3-xlarge"></i>
                 </button>

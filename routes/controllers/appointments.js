@@ -96,7 +96,8 @@ const getAppointmentById = (req, res) => {
           res.render("show", {
             data: appList,
             active: "Appointment",
-            user: "patient"
+            user: "patient",
+            doctors: ""
           });
       }
     );

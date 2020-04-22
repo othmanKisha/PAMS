@@ -12,7 +12,7 @@ const deleteAnnouncement = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   announcement.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
     if (err) console.log(err);
-    else res.redirect("/");
+    else res.redirect("/announcements");
   });
 };
 const createAnnouncement = (req, res) => {
@@ -24,7 +24,7 @@ const createAnnouncement = (req, res) => {
       submitter: req.user.fname + " " + req.user.lname
     }).save((err, _cb) => {
       if (err) console.log(err);
-      else res.redirect("/");
+      else res.redirect("/announcements");
     });
 };
 const getHome = (_req, res) => {

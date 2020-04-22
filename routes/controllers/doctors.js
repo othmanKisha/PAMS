@@ -15,7 +15,13 @@ const getDoctorById = (req, res) => {
     if (err) console.log(err);
     else if (req.user.type == "patient" && dr.status != "active")
       res.redirect("/");
-    else res.render("show", { data: dr, active: "Doctor", user: type });
+    else
+      res.render("show", {
+        data: dr,
+        active: "Doctor",
+        user: type,
+        doctors: ""
+      });
   });
 };
 const getNewPage = (req, res) => {
@@ -117,14 +123,20 @@ const editDoctor = (req, res) => {
 const deleteDoctor = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
   doctor.deleteOne(
-    { _id: req.params.id.substring(1), clinic_id: req.user.clinic_id.substring(1) },
+    {
+      _id: req.params.id.substring(1),
+      clinic_id: req.user.clinic_id.substring(1)
+    },
     (err, _cb) => {
       if (err) console.log(err);
       else
-        appointment.deleteOne({ doctor_id: req.params.id.substring(1) }, (err, _cb) => {
-          if (err) console.log(err);
-          else res.redirect("/");
-        });
+        appointment.deleteOne(
+          { doctor_id: req.params.id.substring(1) },
+          (err, _cb) => {
+            if (err) console.log(err);
+            else res.redirect("/");
+          }
+        );
     }
   );
 };

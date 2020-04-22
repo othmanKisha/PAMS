@@ -22,26 +22,51 @@ const getClinics = (req, res) => {
 };
 const getClinicById = (req, res) => {
   var type = req.params.type;
-  clinic.aggregate(
-    [
-      { $match: { _id: req.params.id } },
-      {
-        $lookup: {
-          from: "doctor",
-          localField: "_id",
-          foreignField: "clinic_id",
-          as: "doctors"
+  console.log(req.params.id);
+  doctor.findOne({ clinic_id: req.params.id }, (err, doc) => {
+    if (err) console.log(err);
+    else if (!doc)
+      clinic.findOne({ _id: req.params.id }, (err, clinicList) => {
+        if (err) console.log(err);
+        else if (type == "patient" && clinicList.status == "inactive")
+          res.redirect("/clinics");
+        else {
+          console.log(clinicList);
+          res.render("show", {
+            data: clinicList,
+            active: "Clinic",
+            user: type,
+            doctors: "no"
+          });
         }
-      }
-    ],
-    (err, clinicList) => {
-      if (err) console.log(err);
-      else if (type == "patient" && clinicList.status == "inactive")
-        res.redirect("/");
-      else
-        res.render("show", { data: clinicList, active: "Clinic", user: type });
-    }
-  );
+      });
+    else
+      clinic.aggregate(
+        [
+          { $match: { _id: req.params.id } },
+          {
+            $lookup: {
+              from: "doctor",
+              localField: "_id",
+              foreignField: "clinic_id",
+              as: "doctors"
+            }
+          }
+        ],
+        (err, clinicList) => {
+          if (err) console.log(err);
+          else if (type == "patient" && clinicList.status == "inactive")
+            res.redirect("/clinics");
+          else
+            res.render("show", {
+              data: clinicList,
+              active: "Clinic",
+              user: type,
+              doctors: "yes"
+            });
+        }
+      );
+  });
 };
 const getNewManager = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
