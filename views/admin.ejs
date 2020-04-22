@@ -63,7 +63,7 @@
           <th scope="col">Name</th>
           <th scope="col">Services</th>
           <th scope="col">Location</th>
-          <th scope="col">Delete</th>
+          <th scope="col">Actions</th>
           <% } if (active == "announcements") { %>
           <th scope="col">Submitter</th>
           <th scope="col">Content</th>
@@ -74,43 +74,34 @@
         <tbody>
           <% if (active == "clinics") { data.forEach(d => { %>
           <tr>
-            <td>
-              <!-- If the clinic is active -->
-              <% if (d.status == "active") { %> <%= d.name %>
-              <i class="fa fa-award" style="color: gold;"></i>
-              <% } %>
-              <!-- If the clinic is not active -->
-              <% if (d.status == "inactive") { %>
-              <div class="dropdown">
-                <button
-                  class="btn"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <%= d.name %>
-                  <i
-                    class="fa fa-wrench w3-large"
-                    style="padding-left: 10px;"
-                  ></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a
-                    class="dropdown-item"
-                    href="/clinics/<%= d._id %>/manager/new"
-                  >
-                    Assign Clinic Manager
-                  </a>
-                </div>
-              </div>
-              <% } %>
-            </td>
+            <td><a href="/clinics/<%= d._id %>"> <%= d.name %> </a></td>
             <td><a href="/clinics/<%= d._id %>"> <%= d.services %> </a></td>
             <td><a href="/clinics/<%= d._id %>"> <%= d.location %> </a></td>
             <td>
               <form action="/clinics/<%= d._id %>?_method=DELETE" method="POST">
+                <div class="dropdown">
+                  <button
+                    class="btn"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i
+                      class="fa fa-wrench w3-large"
+                      style="padding-left: 10px;"
+                    ></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a
+                      class="dropdown-item"
+                      href="/clinics/<%= d._id %>/manager/new"
+                    >
+                      Assign Clinic Manager
+                    </a>
+                  </div>
+                </div>
                 <button
                   class="btn"
                   type="submit"
