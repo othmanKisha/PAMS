@@ -8,17 +8,17 @@
       </li>
       <li>
         <a href="/appointments/finished">
-          <i class="fa fa-calendar-check"></i> Finished Appointments
+          <i class="fa fa-calendar-check-o"></i> Finished Appointments
         </a>
       </li>
       <% } if (active == "finished") { %>
       <li>
         <a href="/appointments">
-          <i class="fa fa-calendar"></i>Pending Appointments</a
+          <i class="fa fa-calendar"></i> Pending Appointments</a
         >
       </li>
       <li class="active">
-        <a> <i class="fa fa-calendar-check"></i>Finished Appointments</a>
+        <a> <i class="fa fa-calendar-check-o"></i> Finished Appointments</a>
       </li>
       <% } %>
     </ul>
@@ -52,14 +52,14 @@
           <tr>
             <td>
               <a>
-                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname']</a
-              >
+                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname'] %>
+              </a>
             </td>
             <td><a> <%= d.date %> </a></td>
             <td><a> <%= d.time %> </a></td>
             <td>
               <form
-                action="/appointments/:<%= d._id %>?_method=PUT"
+                action="/appointments/<%= d._id %>?_method=PUT"
                 method="POST"
               >
                 <button type="submit">
@@ -70,7 +70,7 @@
                 </button>
               </form>
               <form
-                action="/appointments/:<%= d._id %>?_method=DELETE"
+                action="/appointments/<%= d._id %>?_method=DELETE"
                 method="POST"
               >
                 <button type="submit">
@@ -86,8 +86,8 @@
           <tr>
             <td>
               <a>
-                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname']</a
-              >
+                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname'] %>
+              </a>
             </td>
             <td><a> <%= d.date %> </a></td>
             <td><a> <%= d.time %> </a></td>

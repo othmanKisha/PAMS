@@ -1,45 +1,60 @@
-<%- include("./partials/head_show.ejs") %>
+<%- include("./partials/head.ejs") %>
 <div class="wrapper">
   <div id="content">
     <div class="jumbotron text-center">
       <div>
-        <span>
-          <% if (data.type == "admin"){ %>
-            <i class="fa fa-gears w3-xxxlarge">
-            <% } if (data.type == "manager") { %>
-            <i class="fa fa-hospital-user w3-xxxlarge" style="color: green;">
-            <% } if (data.type == "receptionist") { %>
-            <i class="fa fa-notes-medical w3-xxxlarge" style="color: blue;">
-            <% } if (data.type == "patient") { %>
-            <i class="fa fa-user w3-xxxlarge" style="color: black;">
-            <% } %>
-            <i> Hello, </i>
-            <%= data.fname + " " + data.lname %>
-          </i>
-        </span>
+        <img src="/img/<%= data.type %>.png" width="250" height="250" />
+      </div>
+      <div style="font-size: xx-large;">
+        Hello, <%= data.fname + " " + data.lname %>
       </div>
       <div class="info">
         <h3>
-          <i class="fa fa-envelope w3-xlarge" style="color: black; margin-right: 10px;"></i><%= data.email %>
+          <i
+            class="fa fa-envelope w3-xlarge"
+            style="color: black; margin-right: 10px;"
+          ></i
+          ><%= data.email %>
         </h3>
         <h3>
-          <i class="fa fa-phone w3-xlarge" style="color: black; margin-right: 10px;"></i><%= data.numbers %>
+          <i
+            class="fa fa-phone w3-xlarge"
+            style="color: black; margin-right: 10px;"
+          ></i
+          ><%= data.numbers %>
         </h3>
         <h3>
-          <i class="fa fa-calendar w3-xlarge" style="color: black; margin-right: 10px;"></i><%= data.regDate%>
+          <i
+            class="fa fa-calendar w3-xlarge"
+            style="color: black; margin-right: 10px;"
+          ></i
+          ><%= data.regDate%>
         </h3>
-      </div class="text-center">
-      <button class="btn bg-dark btn-lg" style="color: white;" data-toggle="modal"
-        data-target="#editProfile">
-        <i class="fa fa-edit w3-xlarge" style="color: white; margin-right: 10px;"></i>
+      </div>
+      <button
+        class="btn bg-dark btn-lg"
+        style="color: white;"
+        data-toggle="modal"
+        data-target="#editProfile"
+      >
+        <i
+          class="fa fa-edit w3-xlarge"
+          style="color: white; margin-right: 10px;"
+        ></i>
         Edit Profile
       </button>
     </div>
   </div>
 </div>
 <!-- Edit Profile -->
-<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="editProfileLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="editProfile"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editProfileLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <form action="/users/profile?_method=PUT" method="POST">
@@ -47,7 +62,12 @@
           <h5 class="modal-title" id="editProfileLabel">
             Edit Profile
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

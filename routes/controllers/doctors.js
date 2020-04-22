@@ -6,7 +6,15 @@ const getDoctors = (req, res) => {
   if (req.user.type != "patient") res.redirect("/");
   doctor.find({ status: "active" }, (err, doctorList) => {
     if (err) console.log(err);
-    else res.render("patient", { active: "doctors", data: doctorList });
+    else
+      res.render("patient", {
+        active: "doctors",
+        data: doctorList,
+        title: "Doctors",
+        page_type: "home",
+        base: "/users/profile",
+        base_page: "Profile"
+      });
   });
 };
 const getDoctorById = (req, res) => {
@@ -20,7 +28,11 @@ const getDoctorById = (req, res) => {
         data: dr,
         active: "Doctor",
         user: type,
-        doctors: ""
+        doctors: "",
+        title: "Doctor",
+        page_type: "show",
+        base: "/users/profile",
+        base_page: "Profile"
       });
   });
 };

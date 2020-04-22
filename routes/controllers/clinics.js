@@ -7,7 +7,15 @@ const getClinics = (req, res) => {
   if (req.user.type == "patient")
     clinic.find({ status: "active" }, (err, clinicList) => {
       if (err) console.log(err);
-      else res.render(`patient`, { active: "clinics", data: clinicList });
+      else
+        res.render(`patient`, {
+          active: "clinics",
+          data: clinicList,
+          title: "Clinics",
+          page_type: "home",
+          base: "/users/profile",
+          base_page: "Profile"
+        });
     });
   else if (req.user.type == "admin")
     clinic.find({}, (err, clinicList) => {
@@ -15,13 +23,17 @@ const getClinics = (req, res) => {
       else
         res.render(`admin`, {
           active: "clinics",
-          data: clinicList
+          data: clinicList,
+          title: "Clinics",
+          page_type: "home",
+          base: "/users/profile",
+          base_page: "Profile"
         });
     });
   else res.redirect("/");
 };
 const getClinicById = (req, res) => {
-  var type = req.params.type;
+  var type = req.user.type;
   console.log(req.params.id);
   doctor.findOne({ clinic_id: req.params.id }, (err, doc) => {
     if (err) console.log(err);
@@ -36,7 +48,11 @@ const getClinicById = (req, res) => {
             data: clinicList,
             active: "Clinic",
             user: type,
-            doctors: "no"
+            doctors: "no",
+            title: "Clinic",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
           });
         }
       });
@@ -62,7 +78,11 @@ const getClinicById = (req, res) => {
               data: clinicList,
               active: "Clinic",
               user: type,
-              doctors: "yes"
+              doctors: "yes",
+              title: "Clinic",
+              page_type: "show",
+              base: "/users/profile",
+              base_page: "Profile"
             });
         }
       );
@@ -70,11 +90,23 @@ const getClinicById = (req, res) => {
 };
 const getNewManager = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
-  res.render("register", { e_msg: "", expand: false, type: "manager" });
+  res.render("register", {
+    e_msg: "",
+    expand: false,
+    route: `/clinics/${req.params.id}/manager`,
+    type: "manager",
+    id: req.params.id
+  });
 };
 const getNewReceptionist = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
-  res.render("register", { e_msg: "", expand: false, type: "receptionist" });
+  res.render("register", {
+    e_msg: "",
+    expand: false,
+    route: `/clinics/${req.params.id}/receptionist`,
+    type: "receptionist",
+    id: req.params.id
+  });
 };
 const getNewPage = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
@@ -92,11 +124,23 @@ const getHome = (req, res) => {
 };
 const registerManager = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
-  require("./registeration")(req, res, true, "manager");
+  require("./registeration")(
+    req,
+    res,
+    `/clinics/${req.params.id}/manager`,
+    "manager",
+    req.params.id
+  );
 };
 const registerReceptionist = (req, res) => {
   if (req.user.type != "manager") res.redirect("/");
-  require("./registeration")(req, res, true, "receptionist");
+  require("./registeration")(
+    req,
+    res,
+    `/clinics/${req.params.id}/receptionist`,
+    "receptionist",
+    req.params.id
+  );
 };
 const postClinic = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");

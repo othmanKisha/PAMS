@@ -28,8 +28,15 @@ app.get("/", (req, res) => {
       res.redirect("/clinics");
     else if (req.user.type == "receptionist") res.redirect("/appointments");
     else if (req.user.type == "manager")
-      res.redirect(`/clinics/:${req.user.clinic_id}`);
-    else res.render("error", { error: "Unauthorized user type!" });
+      res.redirect(`/clinics/${req.user.clinic_id}`);
+    else
+      res.render("error", {
+        error: "Unauthorized user type!",
+        title: "Error",
+        page_type: "show",
+        base: "/auth/login",
+        base_page: "Login"
+      });
   else res.sendFile(__dirname + "/public/home.html");
 });
 app.use("/auth", require("./routes/auth"));

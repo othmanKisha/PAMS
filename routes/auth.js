@@ -5,10 +5,22 @@ const router = express.Router();
 
 //Register logic
 router.get("/register", checkNotAuth, (_req, res) => {
-  res.render("register", { e_msg: "", expand: false, type: "patient" });
+  res.render("register", {
+    e_msg: "",
+    expand: false,
+    route: `/auth/register`,
+    type: "patient",
+    id: null
+  });
 });
 router.post("/register", (req, res) => {
-  require("./controllers/registeration")(req, res, false, "patient");
+  require("./controllers/registeration")(
+    req,
+    res,
+    `/auth/register`,
+    "patient",
+    null
+  );
 });
 //Login logic
 router.get("/login", checkNotAuth, (_req, res) => {

@@ -93,22 +93,29 @@
                       style="padding-left: 10px;"
                     ></i>
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <!-- To check if the clinic is active or not -->
+                    <% if (d.status == "inactive") { %>
                     <a
                       class="dropdown-item"
                       href="/clinics/<%= d._id %>/manager/new"
                     >
+                      <i class="fa fa-user-plus w3-large"></i>
                       Assign Clinic Manager
                     </a>
+                    <% } %>
+                    <button
+                      class="dropdown-item"
+                      type="submit"
+                      style="background: transparent;"
+                    >
+                      <i class="fa fa-trash w3-large"></i> Delete Clinic
+                    </button>
                   </div>
                 </div>
-                <button
-                  class="btn"
-                  type="submit"
-                  style="background: transparent;"
-                >
-                  <i class="fa fa-trash w3-xlarge"></i>
-                </button>
               </form>
             </td>
           </tr>

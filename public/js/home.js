@@ -2,29 +2,27 @@ var pdlft = "250px";
 var hide = true;
 var announcements;
 
-fetch("http://localhost:3000/announcements/Home")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    announcements = data;
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-const getAnnouncements = ann => {
-  $(".annBody").remove();
-  $("#annTable").append('<tbody class="annBody"></tbody>');
-  if (ann != undefined)
-    ann.forEach(a => {
-      $(".annBody").append(
-        `<tr>`,
-        `<td> ${a.content}</td>`,
-        `<td> ${a.submitter}</td>`,
-        `<td> ${a.date}</td>`,
-        `</tr>`
-      );
+const getAnnouncements = () => {
+  fetch("http://localhost:3000/announcements/Home")
+    .then(response => {
+      return response.json();
+    })
+    .then(ann => {
+      $(".annBody").remove();
+      $("#annTable").append('<tbody class="annBody"></tbody>');
+      if (ann != undefined)
+        ann.forEach(a => {
+          $(".annBody").append(
+            `<tr>`,
+            `<td> ${a.content}</td>`,
+            `<td> ${a.submitter}</td>`,
+            `<td> ${a.date}</td>`,
+            `</tr>`
+          );
+        });
+    })
+    .catch(err => {
+      console.log(err);
     });
 };
 
@@ -38,7 +36,7 @@ $(document).ready(() => {
   });
 
   $("#announce").on("click", () => {
-    getAnnouncements(announcements);
+    getAnnouncements();
   });
 
   // Search Functionality should be added

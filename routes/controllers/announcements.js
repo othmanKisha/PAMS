@@ -5,7 +5,15 @@ const getAnnouncements = (req, res) => {
   if (req.user.type != "admin") res.redirect("/");
   announcement.find({}, (err, annList) => {
     if (err) console.log(err);
-    else res.render("admin", { data: annList, active: "announcements" });
+    else
+      res.render("admin", {
+        data: annList,
+        active: "announcements",
+        title: "Announcements",
+        page_type: "home",
+        base: "/users/profile",
+        base_page: "Profile"
+      });
   });
 };
 const deleteAnnouncement = (req, res) => {

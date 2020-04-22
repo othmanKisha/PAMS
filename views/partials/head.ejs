@@ -18,14 +18,19 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/css/home.css" />
     <link rel="stylesheet" href="/css/basic.css" />
+    <% if (page_type == "home") { %>
+    <link rel="stylesheet" href="/css/home.css" />
+    <% } if (page_type == "show") { %>
+    <link rel="stylesheet" href="/css/show.css" />
+    <% } %>
     <script defer src="/js/home.js"></script>
-    <title>PAMS Home</title>
+    <title><%= title %></title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg " id="nav">
       <div>
+        <% if (page_type == "home") { %>
         <button
           type="button"
           id="sidebarCollapse"
@@ -34,6 +39,7 @@
         >
           <i class="fa fa-bars w3-xlarge"></i>
         </button>
+        <% } %>
         <a class="navbar-brand" href="#" id="logos">
           <img src="/img/logo.png" />
         </a>
@@ -50,7 +56,7 @@
           >
             <i class="fa fa-bell w3-xlarge" id="prof"></i>
           </button>
-          <div class="dropdown">
+          <div class="btn-group dropleft">
             <button
               class="btn"
               type="button"
@@ -62,8 +68,18 @@
               <i class="fa fa-user-circle w3-xxlarge" id="prof"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="/users/profile"> Profile </a>
-              <a class="dropdown-item" href="/auth/signout"> Signout </a>
+              <a class="dropdown-item" href="<%= base %>">
+                <!-- Icon for dashboard -->
+                <% if (base_page == "Dashboard") { %>
+                <i class="fa fa-tachometer w3-large"></i>
+                <!-- Icon for profile -->
+                <% } if (base_page == "Profile") { %>
+                <i class="fa fa-id-badge w3-large"></i>
+                <% } %> <%= base_page %>
+              </a>
+              <a class="dropdown-item" href="/auth/signout">
+                <i class="fa fa-sign-out w3-large"></i> Signout
+              </a>
             </div>
           </div>
         </ul>

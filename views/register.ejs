@@ -20,6 +20,11 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link rel="stylesheet" href="/css/index.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/js/register.js"></script>
@@ -36,11 +41,13 @@
       <h5 class="cardTitle">Patient Appointment Management System</h5>
       <h6 class="warning-msg"><%=e_msg%></h6>
       <div class="card-body">
-        <form class="form" method="post" action="/auth/register">
+        <form class="form" method="post" action="<%= route %>">
           <div class="row">
             <div class="d-flex align-items-center col-6">
               <label>
-                <p class="label-txt">First Name</p>
+                <p class="label-txt">
+                  <i class="fa fa-address-book-o w3-large"></i> First Name
+                </p>
                 <input
                   name="fname"
                   type="text"
@@ -73,7 +80,9 @@
           </div>
           <div style="height: 15px;"></div>
           <label>
-            <p class="label-txt">Email</p>
+            <p class="label-txt">
+              <i class="fa fa-envelope w3-large"></i> Email
+            </p>
             <input
               name="email"
               type="email"
@@ -88,7 +97,9 @@
           </label>
           <div style="height: 15px;"></div>
           <label>
-            <p class="label-txt">Phone Number</p>
+            <p class="label-txt">
+              <i class="fa fa-phone w3-large"></i> Phone Number
+            </p>
             <input
               placeholder="05xxxxxxxx"
               name="number"
@@ -105,7 +116,7 @@
           </label>
           <div style="height: 15px;"></div>
           <label>
-            <p class="label-txt">Password</p>
+            <p class="label-txt"><i class="fa fa-key w3-large"></i> Password</p>
             <input
               name="password"
               id="password"
@@ -120,7 +131,9 @@
           </label>
           <div style="height: 15px;"></div>
           <label>
-            <p class="label-txt" id="confirmtext">Confirm Password</p>
+            <p class="label-txt" id="confirmtext">
+              <i class="fa fa-key w3-large"></i> Confirm Password
+            </p>
             <input
               name="confirm"
               id="confirm"
@@ -134,9 +147,14 @@
           </label>
           <div>
             <button type="submit" id="btnSubmit" class="btn btn-primary">
-              <% if (type == "patient") { %> Register <% } if (type ==
-              "receptionist") { %> Add Receptionist <% } if (type == "manager")
-              { %> Add Manager <% } %>
+              <% if (type == "patient") { %>
+              <i class="fa fa-user-plus w3-xlarge"></i> Register
+              <!--What to write when adding recep.-->
+              <% } if (type == "receptionist") { %>
+              <i class="fa fa-user-plus w3-xlarge"></i> Add Receptionist
+              <!-- What to write when adding manager -->
+              <% } if (type == "manager"){ %>
+              <i class="fa fa-user-plus w3-xlarge"></i> Add Manager <% } %>
             </button>
           </div>
           <% if (type == "patient") { %>

@@ -24,7 +24,15 @@ const getAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else res.render("patient", { data: appList, active: "appointments" });
+        else
+          res.render("patient", {
+            data: appList,
+            active: "appointments",
+            title: "Appointments",
+            page_type: "home",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
       }
     );
   else if (req.user.type == "receptionist")
@@ -42,7 +50,15 @@ const getAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else res.render("receptionist", { data: appList, active: "pending" });
+        else
+          res.render("receptionist", {
+            data: appList,
+            active: "pending",
+            title: "Appointments",
+            page_type: "home",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
       }
     );
   else res.redirect("/");
@@ -63,7 +79,15 @@ const getFinishedAppointments = (req, res) => {
       ],
       (err, appList) => {
         if (err) console.log(err);
-        else res.render("receptionist", { data: appList, active: "finished" });
+        else
+          res.render("receptionist", {
+            data: appList,
+            active: "finished",
+            title: "Appointments",
+            page_type: "home",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
       }
     );
   else res.redirect("/");
@@ -97,7 +121,11 @@ const getAppointmentById = (req, res) => {
             data: appList,
             active: "Appointment",
             user: "patient",
-            doctors: ""
+            doctors: "",
+            title: "Appointment",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
           });
       }
     );
