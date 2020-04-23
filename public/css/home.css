@@ -19,8 +19,12 @@ a:focus {
   max-width: 250px;
   min-height: 90vh;
   max-height: 90vh;
-  /*min-height: 600px;
-    max-height: 600px;*/
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
   transition: all 0.3s;
@@ -28,7 +32,8 @@ a:focus {
 }
 
 #sidebar ul.components {
-  padding: 20px 0;
+  padding: 0px;
+  cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
