@@ -34,7 +34,6 @@ const getClinics = (req, res) => {
 };
 const getClinicById = (req, res) => {
   var type = req.user.type;
-  console.log(req.params.id);
   doctor.findOne({ clinic_id: req.params.id }, (err, doc) => {
     if (err) console.log(err);
     else if (!doc)
