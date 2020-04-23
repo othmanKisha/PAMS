@@ -10,7 +10,7 @@ const getAppointments = (req, res) => {
         res.render("patient", {
           data: appList,
           active: "appointments",
-          title: "Appointments",
+          title: "Appointments Page",
           page_type: "home",
           base: "/users/profile",
           base_page: "Profile"
@@ -25,14 +25,21 @@ const getAppointments = (req, res) => {
           res.render("receptionist", {
             data: appList,
             active: "pending",
-            title: "Appointments",
+            title: "Pending Appointments",
             page_type: "home",
             base: "/users/profile",
             base_page: "Profile"
           });
       }
     );
-  else res.redirect("/");
+  else
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
 };
 const getFinishedAppointments = (req, res) => {
   if (req.user.type == "receptionist")
@@ -44,14 +51,21 @@ const getFinishedAppointments = (req, res) => {
           res.render("receptionist", {
             data: appList,
             active: "finished",
-            title: "Appointments",
+            title: "Finished Appointments",
             page_type: "home",
             base: "/users/profile",
             base_page: "Profile"
           });
       }
     );
-  else res.redirect("/");
+  else
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
 };
 const getAppointmentById = (req, res) => {
   if (req.user.type == "patient")
@@ -74,7 +88,7 @@ const getAppointmentById = (req, res) => {
                   active: "Appointment",
                   user: "patient",
                   doctors: "",
-                  title: "Appointment",
+                  title: "Appointment Info",
                   page_type: "show",
                   base: "/users/profile",
                   base_page: "Profile"
@@ -82,7 +96,14 @@ const getAppointmentById = (req, res) => {
             });
         });
     });
-  else res.redirect("/");
+  else
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
 };
 const deleteAppointment = (req, res) => {
   if (req.user.type == "receptionist")
@@ -90,7 +111,14 @@ const deleteAppointment = (req, res) => {
       { _id: req.params.id, clinic_id: req.user.clinic_id },
       (err, app) => {
         if (err) console.log(err);
-        else if (!app) console.log(app);
+        else if (!app)
+          res.render("error", {
+            error: "Error: There is no appointment with this id.",
+            title: "Error",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
         else
           appointment.deleteOne(
             { _id: req.params.id, clinic_id: req.user.clinic_id },
@@ -101,7 +129,14 @@ const deleteAppointment = (req, res) => {
           );
       }
     );
-  else res.redirect("/");
+  else
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
 };
 
 module.exports = {

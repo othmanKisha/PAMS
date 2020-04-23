@@ -11,18 +11,19 @@ const getDoctors = (req, res) => {
       base: "/users/profile",
       base_page: "Profile"
     });
-  doctor.find({ status: "active" }, (err, doctorList) => {
-    if (err) console.log(err);
-    else
-      res.render("patient", {
-        active: "doctors",
-        data: doctorList,
-        title: "Doctors",
-        page_type: "home",
-        base: "/users/profile",
-        base_page: "Profile"
-      });
-  });
+  else
+    doctor.find({ status: "active" }, (err, doctorList) => {
+      if (err) console.log(err);
+      else
+        res.render("patient", {
+          active: "doctors",
+          data: doctorList,
+          title: "Doctors",
+          page_type: "home",
+          base: "/users/profile",
+          base_page: "Profile"
+        });
+    });
 };
 const getDoctorById = (req, res) => {
   var type = req.user.type;
@@ -140,7 +141,8 @@ const createAppointment = (req, res) => {
                 doctor_id: req.params.id,
                 clinic_id: dr.clinic_id,
                 doctor_rating: 0,
-                clinic_rating: 0
+                clinic_rating: 0,
+                status: "Pending"
               }).save((err, _newApp) => {
                 if (err) console.log(err);
                 else res.redirect("/");

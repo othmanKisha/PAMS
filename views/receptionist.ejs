@@ -37,7 +37,6 @@
       </div>
       <table class="table table-striped">
         <thead class="thead-dark">
-          <th scope="col">Doctor</th>
           <th scope="col">Date</th>
           <th scope="col">Time</th>
           <% if (active == "pending") { %>
@@ -50,61 +49,65 @@
         <tbody>
           <% if (active == "pending") { data.forEach(d => { %>
           <tr>
-            <td>
-              <a>
-                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname'] %>
-              </a>
-            </td>
             <td><a> <%= d.date %> </a></td>
             <td><a> <%= d.time %> </a></td>
             <td>
-              <form
-                action="/appointments/<%= d._id %>?_method=PUT"
-                method="POST"
-              >
-                <button type="submit">
-                  <i
-                    class="fa fa-check-circle w3-xlarge"
-                    style="color: green;"
-                  ></i>
-                </button>
-              </form>
-              <form
-                action="/appointments/<%= d._id %>?_method=DELETE"
-                method="POST"
-              >
-                <button type="submit">
-                  <i
-                    class="fa fa-minus-circle w3-xlarge"
-                    style="color: red;"
-                  ></i>
-                </button>
-              </form>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <form
+                  action="/appointments/<%= d._id %>?_method=PUT"
+                  method="POST"
+                >
+                  <button
+                    class="btn"
+                    type="submit"
+                    style="background: transparent;"
+                  >
+                    <i
+                      class="fa fa-check-circle w3-xlarge"
+                      style="color: green;"
+                    ></i>
+                  </button>
+                </form>
+                <form
+                  action="/appointments/<%= d._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button
+                    class="btn"
+                    type="submit"
+                    style="background: transparent;"
+                  >
+                    <i
+                      class="fa fa-minus-circle w3-xlarge"
+                      style="color: red;"
+                    ></i>
+                  </button>
+                </form>
+              </div>
             </td>
           </tr>
           <% }) } if (active == "finished") { data.forEach(d => { %>
           <tr>
-            <td>
-              <a>
-                <%= "Dr."+ d.appDoctor['fname'] + " " + d.appDoctor['lname'] %>
-              </a>
-            </td>
             <td><a> <%= d.date %> </a></td>
             <td><a> <%= d.time %> </a></td>
             <td>
               <a>
                 <% if (d.doctor_rating <= 0) { %> There is no rating. <% } %> <%
-                if (d.doctor_rating > 0) for(i=0; i < d.doctor_rating; i++) { %>
+                if (d.doctor_rating > 0) { for(i=0; i < d.doctor_rating; i++) {
+                %>
                 <i class="fa fa-star checked w3-xlarge"></i><% } %>
                 <span> <%= d.doctor_rating %> </span>
+                <% } %>
               </a>
             </td>
             <td>
               <a>
                 <% if (d.clinic_rating <= 0) { %> There is no rating. <% } %> <%
-                if (d.clinic_rating > 0) for(i=0; i < d.clinic_rating; i++) { %>
+                if (d.clinic_rating > 0) { for(i=0; i < d.clinic_rating; i++) {
+                %>
                 <i class="fa fa-star checked w3-xlarge"></i><% } %>
                 <span> <%= d.clinic_rating %> </span>
+                <% } %>
               </a>
             </td>
           </tr>

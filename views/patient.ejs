@@ -58,11 +58,8 @@
           <th scope="col">Name</th>
           <th scope="col">Speciality</th>
           <th scope="col">Experience</th>
-          <th scope="col">Location</th>
           <th scope="col">Rating</th>
           <% } %> <% if (active == "appointments") { %>
-          <th scope="col">Doctor</th>
-          <th scope="col">Clinic</th>
           <th scope="col">Date</th>
           <th scope="col">Time</th>
           <th scope="col">Status</th>
@@ -91,16 +88,15 @@
           <tr>
             <td>
               <a href="/doctors/<%= d._id %>">
-                <%= d.fname +" "+ d.lname %>
+                Dr. <%= d.fname %> <%= d.lname %>
               </a>
             </td>
             <td><a href="/doctors/<%= d._id %>"> <%= d.speciality %> </a></td>
             <td>
               <a href="/doctors/<%= d._id %>">
-                <%= d.experience + " years" %>
+                <%= d.experience %> years
               </a>
             </td>
-            <td><a href="/doctors/<%= d._id %>"> <%= d.location %> </a></td>
             <td>
               <a href="/doctors/<%= d._id %>">
                 <% if (d.rating <= 0) { %> There is no rating. <% } %> <% if

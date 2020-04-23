@@ -77,5 +77,12 @@ module.exports = (req, res) => {
           );
       }
     );
-  else res.redirect("/");
+  else
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
 };

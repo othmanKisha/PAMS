@@ -2,29 +2,52 @@ const announcement = require("../../models/announcement");
 const date = require("date-and-time");
 
 const getAnnouncements = (req, res) => {
-  if (req.user.type != "admin") res.redirect("/");
-  announcement.find({}, (err, annList) => {
-    if (err) console.log(err);
-    else
-      res.render("admin", {
-        data: annList,
-        active: "announcements",
-        title: "Announcements",
-        page_type: "home",
-        base: "/users/profile",
-        base_page: "Profile"
-      });
-  });
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    announcement.find({}, (err, annList) => {
+      if (err) console.log(err);
+      else
+        res.render("admin", {
+          data: annList,
+          active: "announcements",
+          title: "Announcements Page",
+          page_type: "home",
+          base: "/users/profile",
+          base_page: "Profile"
+        });
+    });
 };
 const deleteAnnouncement = (req, res) => {
-  if (req.user.type != "admin") res.redirect("/");
-  announcement.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
-    if (err) console.log(err);
-    else res.redirect("/announcements");
-  });
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    announcement.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
+      if (err) console.log(err);
+      else res.redirect("/announcements");
+    });
 };
 const createAnnouncement = (req, res) => {
-  if (req.user.type != "admin") res.redirect("/");
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
   else
     new announcement({
       content: req.body.content,

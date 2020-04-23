@@ -3,7 +3,7 @@ var dctr = false;
 var clinics, doctors;
 
 const viewClinics = () => {
-  fetch("http://localhost:3000/clinics/Home")
+  fetch("https://pams-habboush-kisha.azurewebsites.net/clinics/Home")
     .then(response => {
       return response.json();
     })
@@ -56,7 +56,7 @@ const viewClinics = () => {
 };
 
 const viewDoctors = () => {
-  fetch("http://localhost:3000/doctors/Home")
+  fetch("https://pams-habboush-kisha.azurewebsites.net/doctors/Home")
     .then(response => {
       return response.json();
     })
@@ -77,18 +77,18 @@ const viewDoctors = () => {
           $("#tableBody").append(`<tr id="trow">`);
           if (d.rating <= 0)
             $("#trow").append(
-              `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
-              `<td><a href="/auth/login">${d.experience}</a></td>`,
+              `<td><a href="/auth/login">${d.experience} years </a></td>`,
               `<td><a href="/auth/login"> There is no rating yet. </a></td>`
             );
           else {
             $("#trow").append(
-              `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
-              `<td><a href="/auth/login">${d.experience}</a></td>`,
+              `<td><a href="/auth/login">${d.experience} years</a></td>`,
               `<td><a href="/auth/login" id="tcol"></a></td>`
             );
             for (i = 0; i < d.rating; i++) {

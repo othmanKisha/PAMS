@@ -10,7 +10,10 @@
           <i class="fa fa-ambulance w3-xxxlarge"></i> <%= data.name %>
         </h1>
         <% } if (active == "Doctor") { %>
-        <h1 class="display-3"><%= "Dr." + data.fname + " " + data.lname %></h1>
+        <h1 class="display-3">
+          <i class="fa fa-stethoscope w3-xxxlarge"></i>
+          Dr. <%= data.fname %> <%= data.lname %>
+        </h1>
         <% } if (active == "Appointment") { %>
         <h1 class="display-3">
           <%= "Dr." + addData.d_fname + " " + addData.d_lname + " at " +
@@ -45,18 +48,6 @@
               </a>
             </button>
           </div>
-          <div class="col">
-            <button
-              class="btn bg-dark btn-block btn-lg"
-              data-toggle="modal"
-              data-target="#dctlst"
-            >
-              <a class="links" href="#" style="color: white;">
-                <i class="fa fa-user-md w3-xlarge"></i>
-                Show Doctors List
-              </a>
-            </button>
-          </div>
           <% if (data.status != "active") { %>
           <div class="col">
             <button class="btn bg-dark btn-block btn-lg">
@@ -70,27 +61,41 @@
               </a>
             </button>
           </div>
-          <% } %>
+          <% } } %>
+          <div class="col">
+            <button
+              class="btn bg-dark btn-block btn-lg"
+              data-toggle="modal"
+              data-target="#dctlst"
+            >
+              <a class="links" href="#" style="color: white;">
+                <i class="fa fa-user-md w3-xlarge"></i>
+                Show Doctors List
+              </a>
+            </button>
+          </div>
         </div>
-        <% } } if (active == "Doctor") { if (user == "patient") { %>
+        <% } if (active == "Doctor") { if (user == "patient") { %>
         <button
           class="btn bg-dark btn-block btn-lg text-white"
           data-toggle="modal"
           data-target="#newApp"
         >
-          <a class="links" href="">
-            <i class="fa fa-calander w3-xlarge" style="color: white;"></i>
+          <a class="links" href="#" style="color: white;">
+            <i class="fa fa-calendar w3-xlarge"></i>
             Create Appointment
           </a>
         </button>
-        <% } } if (active == "Appointment") { if (data.status != "Done") { %>
+        <% } } if (active == "Appointment") { if (data.status == "Confirmed" ) {
+        %>
         <button
           type="button"
           class="btn btn-primary"
           data-toggle="modal"
           data-target="#rateApp"
+          style="color: white;"
         >
-          <i class="fa-check-circle w3-xlarge" style="color: white;"></i>
+          <i class="fa fa-check-circle w3-xlarge"></i>
           Complete Appointment
         </button>
         <% } } %>

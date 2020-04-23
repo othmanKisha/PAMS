@@ -45,14 +45,16 @@
             <th scope="col">Name</th>
             <th scope="col">Speciality</th>
             <th scope="col">Rating</th>
+            <% if (user == "manager") { %>
             <th scope="col">Action</th>
+            <% } %>
           </thead>
           <tbody>
             <% addData.forEach(d => { %>
             <tr>
               <td>
                 <a href="/doctors/<%= d._id %>">
-                  <%= d.fname +" "+ d.lname %>
+                  Dr. <%= d.fname %> <%= d.lname %>
                 </a>
               </td>
               <td>
