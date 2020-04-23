@@ -42,8 +42,7 @@ const getClinicById = (req, res) => {
         if (err) console.log(err);
         else if (type == "patient" && clinicList.status == "inactive")
           res.redirect("/clinics");
-        else {
-          console.log(clinicList);
+        else
           res.render("show", {
             data: clinicList,
             active: "Clinic",
@@ -54,7 +53,6 @@ const getClinicById = (req, res) => {
             base: "/users/profile",
             base_page: "Profile"
           });
-        }
       });
     else
       clinic.aggregate(
