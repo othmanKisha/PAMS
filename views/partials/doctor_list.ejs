@@ -1,55 +1,124 @@
-<% if (doctors == "yes") { %>
-<h3>Doctors List</h3>
-<table class="table table-striped">
-  <thead class="thead-dark">
-    <th scope="col">Name</th>
-    <th scope="col">Speciality</th>
-    <th scope="col">Rating</th>
-  </thead>
-  <tbody>
-    <% data.doctors.forEach(d => { %>
-    <tr>
-      <td>
-        <a href="/doctors/<%= d._id %>">
-          <%= d.fname +" "+ d.lname %>
-        </a>
-      </td>
-      <td>
-        <a href="/doctors/<%= d._id %>">
-          <%= d.speciality %>
-        </a>
-      </td>
-      <td>
-        <a href="/doctors/<%= d._id %>">
-          <% if (d.rating <= 0) { %> There is no rating yet <% } %> <% if
-          (d.rating > 0) { for(i=0; i < d.rating; i++) { %> <% if (d.rating >
-          i+0.75) %> <i class="fa fa-star checked w3-xlarge"></i> <% if
-          (d.rating <= i+0.75 && d.rating >= i+0.25) %>
-          <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
-          <span> <%= d.rating %> </span>
-          <% } %>
-        </a>
-      </td>
-      <% if (user == "manager") { %>
-      <td>
-        <button class="btn bg-dark btn-block btn-lg">
-          <a href="/doctors/<%= d._id %>/edit">
-            <i class="fa fa-toals w3-xlarge"></i>
+<!-- Add New Announcement -->
+<div
+  class="modal fade"
+  id="dctlst"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dctlstLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="dctlstLabel">
+          Doctors List
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% if (doctors != "yes") { %>
+        <h3>No doctors yet</h3>
+        <% if (user == "manager") { %>
+        <button class="btn btn-primary bg-dark btn-block">
+          <a class="links" href="/doctors/new" style="color: white;">
+            <i class="fa fa-user-md w3-xlarge"></i>
+            Add doctor
           </a>
         </button>
-      </td>
-      <td>
-        <form action="/doctors/<%= d._id %>?_method=DELETE" method="POST">
-          <button type="submit" class="btn bg-dark btn-block btn-lg">
-            <a class="links">
-              <i class="fa fa-trash w3-xlarge"></i>
-            </a>
-          </button>
-        </form>
-      </td>
-      <% } %>
-    </tr>
-    <% }) %>
-  </tbody>
-</table>
-<% } %>
+        <% } } %>
+        <!-- In case there are doctors-->
+        <% if (doctors == "yes") { %>
+        <h3>
+          Doctors List <% if (user == "manager") { %>
+          <a href="/doctors/new"><i class="fa fa-plus-square w3-xlarge"></i></a>
+          <% } %>
+        </h3>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <th scope="col">Name</th>
+            <th scope="col">Speciality</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Action</th>
+          </thead>
+          <tbody>
+            <% addData.forEach(d => { %>
+            <tr>
+              <td>
+                <a href="/doctors/<%= d._id %>">
+                  <%= d.fname +" "+ d.lname %>
+                </a>
+              </td>
+              <td>
+                <a href="/doctors/<%= d._id %>">
+                  <%= d.speciality %>
+                </a>
+              </td>
+              <td>
+                <a href="/doctors/<%= d._id %>">
+                  <% if (d.rating <= 0) { %> There is no rating yet <% } %> <%
+                  if (d.rating > 0) { for(i=0; i < d.rating; i++) { %> <% if
+                  (d.rating > i+0.75) %>
+                  <i class="fa fa-star checked w3-xlarge"></i> <% if (d.rating
+                  <= i+0.75 && d.rating >= i+0.25) %>
+                  <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
+                  <span> <%= d.rating %> </span>
+                  <% } %>
+                </a>
+              </td>
+              <% if (user == "manager") { %>
+              <td>
+                <form
+                  action="/doctors/<%= d._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <div class="btn-group dropleft">
+                    <button
+                      class="btn"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i
+                        class="fa fa-wrench w3-large"
+                        style="padding-left: 10px;"
+                      ></i>
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      <a
+                        class="dropdown-item"
+                        href="/doctors/<%= d._id %>/edit"
+                      >
+                        <i class="fa fa-edit w3-xlarge"></i> edit
+                      </a>
+                      <button type="submit" class="dropdown-item">
+                        <a class="links">
+                          <i class="fa fa-trash w3-xlarge"></i> remove
+                        </a>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </td>
+              <% } %>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>

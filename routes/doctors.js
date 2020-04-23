@@ -16,8 +16,8 @@ const {
 // REST Routes for doctors
 router.get("/", checkAuth, getDoctors);
 router.get("/Home", getHome);
-router.get("/:id", checkAuth, getDoctorById);
 router.get("/new", checkAuth, getNewPage);
+router.get("/:id", checkAuth, getDoctorById);
 router.get("/:id/edit", checkAuth, getEditPage);
 router.post("/", checkAuth, postDoctor);
 router.post("/:id/appointments", checkAuth, createAppointment);
