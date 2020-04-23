@@ -20,14 +20,34 @@ const viewClinics = () => {
       $("#tableHead").append("<tr>", h1, h2, h3, h4, "</tr>");
       if (cs != undefined)
         cs.forEach(c => {
-          $("#tableBody").append(
-            `<tr>`,
-            `<td><a href="/auth/login">${c.name}</a></td>`,
-            `<td><a href="/auth/login">${c.profile}</a></td>`,
-            `<td><a href="/auth/login">${c.services}</a></td>`,
-            `<td><a href="/auth/login">${c.rating}</a></td>`,
-            `</tr>`
-          );
+          $("#tableBody").append(`<tr id="trow">`);
+          if (c.rating <= 0)
+            $("#trow").append(
+              `<td><a href="/auth/login">${c.name}</a></td>`,
+              `<td><a href="/auth/login">${c.profile}</a></td>`,
+              `<td><a href="/auth/login">${c.services}</a></td>`,
+              `<td><a href="/auth/login"> There is no rating yet. </a></td>`
+            );
+          else {
+            $("#trow").append(
+              `<td><a href="/auth/login">${c.name}</a></td>`,
+              `<td><a href="/auth/login">${c.profile}</a></td>`,
+              `<td><a href="/auth/login">${c.services}</a></td>`,
+              `<td><a href="/auth/login" id="tcol"></a></td>`
+            );
+            for (i = 0; i < c.rating; i++) {
+              if (c.rating - i > 0.75) {
+                $("#tcol").append(
+                  `<i class="fa fa-star checked w3-xlarge"></i>`
+                );
+              } else if (c.rating - i <= 0.75 && c.rating - i >= 0.25) {
+                $("#tcol").append(
+                  `<i class="fa fa-star-half checked w3-xlarge"></i>`
+                );
+              }
+            }
+            $("#tcol").append(` ${c.rating} `);
+          }
         });
     })
     .catch(err => {
@@ -52,17 +72,39 @@ const viewDoctors = () => {
       var h4 = $("<th scope='col'></th>").text("Experience");
       var h5 = $("<th scope='col'></th>").text("Rating");
       $("#tableHead").append("<tr>", h1, h2, h3, h4, h5, "</tr>");
-      ds.forEach(d => {
-        $("#tableBody").append(
-          `<tr>`,
-          `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
-          `<td><a href="/auth/login">${d.profile}</a></td>`,
-          `<td><a href="/auth/login">${d.speciality}</a></td>`,
-          `<td><a href="/auth/login">${d.experience}</a></td>`,
-          `<td><a href="/auth/login">${d.rating}</a></td>`,
-          `</tr>`
-        );
-      });
+      if (ds != undefined)
+        ds.forEach(d => {
+          $("#tableBody").append(`<tr id="trow">`);
+          if (d.rating <= 0)
+            $("#trow").append(
+              `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">${d.profile}</a></td>`,
+              `<td><a href="/auth/login">${d.speciality}</a></td>`,
+              `<td><a href="/auth/login">${d.experience}</a></td>`,
+              `<td><a href="/auth/login"> There is no rating yet. </a></td>`
+            );
+          else {
+            $("#trow").append(
+              `<td><a href="/auth/login">${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">${d.profile}</a></td>`,
+              `<td><a href="/auth/login">${d.speciality}</a></td>`,
+              `<td><a href="/auth/login">${d.experience}</a></td>`,
+              `<td><a href="/auth/login" id="tcol"></a></td>`
+            );
+            for (i = 0; i < d.rating; i++) {
+              if (d.rating > i + 0.75) {
+                $("#tcol").append(
+                  `<i class="fa fa-star checked w3-xlarge"></i>`
+                );
+              } else if (d.rating <= i + 0.75 && d.rating >= i + 0.25) {
+                $("#tcol").append(
+                  `<i class="fa fa-star-half checked w3-xlarge"></i>`
+                );
+              }
+            }
+            $("#tcol").append(` ${d.rating} `);
+          }
+        });
     })
     .catch(err => {
       console.log(err);

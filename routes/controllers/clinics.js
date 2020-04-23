@@ -34,7 +34,6 @@ const getClinics = (req, res) => {
 };
 const getClinicById = (req, res) => {
   var type = req.user.type;
-  console.log(req.params.id);
   doctor.findOne({ clinic_id: req.params.id }, (err, doc) => {
     if (err) console.log(err);
     else if (!doc)
@@ -42,10 +41,10 @@ const getClinicById = (req, res) => {
         if (err) console.log(err);
         else if (type == "patient" && clinicList.status == "inactive")
           res.redirect("/clinics");
-        else {
-          console.log(clinicList);
+        else
           res.render("show", {
             data: clinicList,
+            addData: null,
             active: "Clinic",
             user: type,
             doctors: "no",
@@ -54,38 +53,29 @@ const getClinicById = (req, res) => {
             base: "/users/profile",
             base_page: "Profile"
           });
-        }
       });
     else
-      clinic.aggregate(
-        [
-          { $match: { _id: req.params.id } },
-          {
-            $lookup: {
-              from: "doctor",
-              localField: "_id",
-              foreignField: "clinic_id",
-              as: "doctors"
-            }
-          }
-        ],
-        (err, clinicList) => {
-          if (err) console.log(err);
-          else if (type == "patient" && clinicList.status == "inactive")
-            res.redirect("/clinics");
-          else
-            res.render("show", {
-              data: clinicList,
-              active: "Clinic",
-              user: type,
-              doctors: "yes",
-              title: "Clinic",
-              page_type: "show",
-              base: "/users/profile",
-              base_page: "Profile"
-            });
-        }
-      );
+      clinic.findOne({ _id: req.params.id }, (err, clinicList) => {
+        if (err) console.log(err);
+        else if (type == "patient" && clinicList.status == "inactive")
+          res.redirect("/clinics");
+        else
+          doctor.find({ clinic_id: req.params.id }, (err, doctList) => {
+            if (err) console.log(err);
+            else
+              res.render("show", {
+                data: clinicList,
+                addData: doctList,
+                active: "Clinic",
+                user: type,
+                doctors: "yes",
+                title: "Clinic",
+                page_type: "show",
+                base: "/users/profile",
+                base_page: "Profile"
+              });
+          });
+      });
   });
 };
 const getNewManager = (req, res) => {

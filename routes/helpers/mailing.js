@@ -4,86 +4,63 @@ const User = require("../../models/user");
 const doctor = require("../../models/doctor");
 
 const sendPendingMail = (req, res) => {
-  appointment.aggregate(
-    [
-      { $match: { _id: req.params.id } },
-      {
-        $lookup: {
-          from: User,
-          localFeild: clinic_id,
-          foreignFeild: clinic_id,
-          as: users
-        }
-      },
-      {
-        $lookup: {
-          from: doctor,
-          localFeild: doctor_id,
-          foreignFeild: _id,
-          as: doctors
-        }
-      }
-    ],
-    (err, appUsers) => {
-      if (err) console.log(err);
-      else {
-        appUsers.users.forEach(u => {
-          mail.sendMail({
-            from: "pams.Habboush.Kisha@gmail.com",
-            to: u.email,
-            subject: `A New Appointment Pending`,
-            text: `Dear Mr. ${u.name},\n
-                A new appointment is pending for Dr.${appUsers.doctors[0].lname} 
-                at ${appUsers.date} ${appUsers.time}.\n
-                regards,\n
-                PAMS Team`
+  appointment.findOne({ _id: req.params.id }, (err, app) => {
+    if (err) console.log(err);
+    else
+      User.find({ clinic_id: app.clinic_id }, (err, users) => {
+        if (err) console.log(err);
+        else
+          doctor.findOne({ _id: app.doctor_id }, (err, doc) => {
+            if (err) console.log(err);
+            else {
+              users.forEach(u => {
+                mail.sendMail({
+                  from: "pams.Habboush.Kisha@gmail.com",
+                  to: u.email,
+                  subject: `A New Appointment Pending`,
+                  text: `Dear Mr. ${u.name},\n
+                  A new appointment is pending for Dr.${doc.lname} 
+                  at ${app.date} ${app.time}.\n
+                  regards,\n
+                  PAMS Team`
+                });
+              });
+              res.redirect("/");
+            }
           });
-        });
-        res.redirect("/");
-      }
-    }
-  );
+      });
+  });
 };
 const sendConfirmationMail = (req, res) => {
-  appointment.aggregate(
-    [
-      { $match: { _id: req.params.id } },
-      {
-        $lookup: {
-          from: User,
-          localFeild: patient_id,
-          foreignFeild: _id,
-          as: users
-        }
-      },
-      {
-        $lookup: {
-          from: doctor,
-          localFeild: doctor_id,
-          foreignFeild: _id,
-          as: doctors
-        }
-      }
-    ],
-    (err, appUsers) => {
-      if (err) console.log(err);
-      else {
-        appUsers.users.forEach(u => {
-          mail.sendMail({
-            from: "pams.Habboush.Kisha@gmail.com",
-            to: u.email,
-            subject: `Appointment Confirmed`,
-            text: `Dear Mr. ${u.name},\n
-                    Your appointment with Dr.${appUsers.doctors[0].lname} at 
-                    ${appUsers.date} ${appUsers.time} has been confirmed.\n
+  appointment.findOne({ _id: req.params.id }, (err, app) => {
+    if (err) console.log(err);
+    else
+      User.find(
+        { $or: [{ _id: app.patient_id }, { clinic_id: app.clinic_id }] },
+        (err, users) => {
+          if (err) console.log(err);
+          else
+            doctor.findOne({ _id: app.doctor_id }, (err, doc) => {
+              if (err) console.log(err);
+              else {
+                users.forEach(u => {
+                  mail.sendMail({
+                    from: "pams.Habboush.Kisha@gmail.com",
+                    to: u.email,
+                    subject: `Appointment Confirmed`,
+                    text: `Dear Mr. ${u.name},\n
+                    Your appointment with Dr.${doc.lname} at 
+                    ${app.date} ${app.time} has been confirmed.\n
                     regards,\n
                     PAMS Team`
-          });
-        });
-        res.redirect("/");
-      }
-    }
-  );
+                  });
+                });
+                res.redirect("/");
+              }
+            });
+        }
+      );
+  });
 };
 
 module.exports = { sendPendingMail, sendConfirmationMail };

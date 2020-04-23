@@ -65,7 +65,7 @@
   <% if (data.reviewed) { %>
   <h3>
     <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
-    <%= data.appClinic['name'] %>
+    <%= addData.c_name %>
   </h3>
   <% for(i=0; i < data.clinic_rating; i++) { if (data.clinic_rating > i+0.75) %>
   <i class="fa fa-star checked w3-xlarge"></i>
@@ -74,7 +74,7 @@
   <span> <%= data.clinic_rating %> </span>
   <h3>
     <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
-    <%= "Dr." + data.appDoctor['fname'] + " " + data.appDoctor['lname'] %>
+    <%= "Dr." + addData.d_fname + " " + addData.d_lname %>
   </h3>
   <% for(i=0; i < data.doctor_rating; i++) { if (data.doctor_rating > i+0.75) %>
   <i class="fa fa-star checked w3-xlarge"></i>

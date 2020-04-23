@@ -116,16 +116,6 @@
           </tr>
           <% }) } if (active == "appointments") { %> <% data.forEach(d => { %>
           <tr>
-            <td>
-              <a href="/appointments/<%= d._id %>">
-                <%= "Dr." + d.appDoctor['fname'] + " " + d.appDoctor['lname'] %>
-              </a>
-            </td>
-            <td>
-              <a href="/appointments/<%= d._id %>">
-                <%= d.appClinic['name'] %>
-              </a>
-            </td>
             <td><a href="/appointments/<%= d._id %>"> <%= d.date %> </a></td>
             <td><a href="/appointments/<%= d._id %>"> <%= d.time %> </a></td>
             <td><a href="/appointments/<%= d._id %>"> <%= d.status %> </a></td>

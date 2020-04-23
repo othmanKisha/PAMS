@@ -1,7 +1,9 @@
 <div class="row">
   <div class="d-flex align-items-center col-6">
     <label>
-      <p class="label-txt">First Name</p>
+      <p class="label-txt">
+        <i class="fa fa-address-book-o w3-large"></i> First Name
+      </p>
       <input
         name="fname"
         type="text"
@@ -13,6 +15,7 @@
       <div class="line-box">
         <div class="line"></div>
       </div>
+      <div style="height: 15px;"></div>
     </label>
   </div>
   <div class="d-flex align-items-center col-6">
@@ -29,72 +32,88 @@
       <div class="line-box">
         <div class="line"></div>
       </div>
+      <div style="height: 15px;"></div>
     </label>
   </div>
 </div>
-<div style="height: 15px;"></div>
-<label>
-  <p class="label-txt">Profile</p>
-  <input
-    name="profile"
-    type="text"
-    class="input"
-    required="required"
-    pattern="^[A-Za-z]{1,15}"
-    title="Please use only characters"
-  />
-  <div class="line-box">
-    <div class="line"></div>
+<div class="row">
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt">
+        <i class="fa fa-lightbulb-o w3-large"></i> Profile
+      </p>
+      <input
+        name="profile"
+        type="text"
+        class="input"
+        required="required"
+        pattern="^[A-Za-z]{1,15}"
+        title="Please use only characters"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+      <div style="height: 15px;"></div>
+    </label>
   </div>
-</label>
-<div style="height: 15px;"></div>
-<label>
-  <p class="label-txt">Experience (years)</p>
-  <input
-    name="experience"
-    type="text"
-    class="input"
-    required="required"
-    pattern="^[A-Za-z]{1,15}"
-    title="Please use only characters"
-  />
-  <div class="line-box">
-    <div class="line"></div>
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt">
+        <i class="	fa fa-certificate w3-large"></i> Experience (years)
+      </p>
+      <input
+        name="experience"
+        type="number"
+        class="input"
+        required="required"
+        title="Please use numbers only"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+      <div style="height: 15px;"></div>
+    </label>
   </div>
-</label>
-<div style="height: 15px;"></div>
-<label>
-  <p class="label-txt">Speciality</p>
-  <input
-    name="speciality"
-    type="text"
-    class="input"
-    required="required"
-    pattern="^[A-Za-z]{1,15}"
-    title="Please use only characters"
-  />
-  <div class="line-box">
-    <div class="line"></div>
+</div>
+<div class="row">
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt">
+        <i class="fa fa-handshake-o w3-large"></i> Speciality
+      </p>
+      <input
+        name="speciality"
+        type="text"
+        class="input"
+        required="required"
+        pattern="^[A-Za-z]{1,15}"
+        title="Please use only characters"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+      <div style="height: 15px;"></div>
+    </label>
   </div>
-</label>
-<div style="height: 15px;"></div>
-<label>
-  <p class="label-txt">Office</p>
-  <input
-    name="office"
-    type="text"
-    class="input"
-    required="required"
-    pattern="^[A-Za-z]{1,15}"
-    title="Please use only characters"
-  />
-  <div class="line-box">
-    <div class="line"></div>
+  <div class="d-flex align-items-center col-6">
+    <label>
+      <p class="label-txt"><i class="fa fa-hospital-o w3-large"></i> Office</p>
+      <input
+        name="office"
+        type="text"
+        class="input"
+        required="required"
+        title="Please use only characters"
+      />
+      <div class="line-box">
+        <div class="line"></div>
+      </div>
+      <div style="height: 15px;"></div>
+    </label>
   </div>
-</label>
-<div style="height: 15px;"></div>
+</div>
 <label>
-  <p class="label-txt">Email</p>
+  <p class="label-txt"><i class="fa fa-envelope w3-large"></i> Email</p>
   <input
     name="email"
     type="email"
@@ -106,10 +125,10 @@
   <div class="line-box">
     <div class="line"></div>
   </div>
+  <div style="height: 15px;"></div>
 </label>
-<div style="height: 15px;"></div>
 <label>
-  <p class="label-txt">Phone Number</p>
+  <p class="label-txt"><i class="fa fa-phone w3-large"></i> Phone Number</p>
   <input
     placeholder="05xxxxxxxx"
     name="numbers"
@@ -117,13 +136,13 @@
     class="input"
     required="required"
     pattern="[0]{1}[5]{1}[0-9]{8}"
-    ,
     title="Invalid number"
   />
   <div class="line-box">
     <div class="line"></div>
   </div>
+  <div style="height: 15px;"></div>
 </label>
 <button type="submit" class="btn btn-primary">
-  Add Doctor
+  <i class="fa fa-user-md"></i> Add Doctor
 </button>

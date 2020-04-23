@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
         title: "Error",
         page_type: "show",
         base: "/auth/login",
-        base_page: "Login"
+        base_page: `<i class="fa fa-sign-in w3-large"></i> Login`
       });
   else res.sendFile(__dirname + "/public/home.html");
 });
