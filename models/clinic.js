@@ -9,6 +9,7 @@ const clinic = new mongoose.Schema({
   location: { type: String, unique: true, uniqueCaseInsensitive: true },
   website: { type: String, unique: true, uniqueCaseInsensitive: true },
   rating: Number,
+  reviews: [String],
   appointments: Number,
   status: String
 });

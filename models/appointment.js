@@ -3,10 +3,6 @@ const beautifyUnique = require("mongoose-beautiful-unique-validation");
 const appointment = new mongoose.Schema({
   date: String,
   time: String,
-  doctor_rating: Number,
-  clinic_rating: Number,
-  review: String,
-  reviewd: Boolean,
   patient_id: String,
   doctor_id: String,
   clinic_id: String,

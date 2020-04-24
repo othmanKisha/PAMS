@@ -11,6 +11,7 @@ const doctor = new mongoose.Schema({
   experience: Number,
   appointments: Number,
   rating: Number,
+  reviews: [String],
   office: String,
   clinic_id: String
 });

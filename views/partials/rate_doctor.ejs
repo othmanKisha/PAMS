@@ -1,17 +1,20 @@
 <div
   class="modal fade"
-  id="rateApp"
+  id="rateDoc"
   tabindex="-1"
   role="dialog"
-  aria-labelledby="rateAppLabel"
+  aria-labelledby="rateDocLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="/appointments/<%= data._id %>?_method=PUT" method="POST">
+      <form
+        action="/doctors/<%= data.doctor_id %>/edit?_method=PUT"
+        method="POST"
+      >
         <div class="modal-header">
-          <h5 class="modal-title" id="rateAppLabel">
-            Rate and Review
+          <h5 class="modal-title" id="rateDocLabel">
+            Rate and Review Doctor
           </h5>
           <button
             type="button"
@@ -28,29 +31,15 @@
             <textarea
               class="form-control"
               id="message-text"
-              name="review"
+              name="doctor_review"
               placeholder="place your review here"
             ></textarea>
           </div>
           <div class="clrate">
-            <label for="exampleFormControlSelect1">Rate Clinic</label>
+            <label for="exampleFormControlSelect1">Rate Doctor</label>
             <select
               class="form-control"
               id="exampleFormControlSelect1"
-              name="clinic_rating"
-            >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-          <div class="drrate">
-            <label for="exampleFormControlSelect2">Rate Doctor</label>
-            <select
-              class="form-control"
-              id="exampleFormControlSelect2"
               name="doctor_rating"
             >
               <option value="1">1</option>

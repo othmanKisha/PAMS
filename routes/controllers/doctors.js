@@ -153,13 +153,39 @@ const createAppointment = (req, res) => {
     });
 };
 const editDoctor = (req, res) => {
-  if (req.user.type != "manager")
+  if (req.user.type != "manager" && req.user.type != "patient")
     res.render("error", {
       error: "Error: You are not autherized.",
       title: "Error",
       page_type: "show",
       base: "/users/profile",
       base_page: "Profile"
+    });
+  else if (req.user.type == "patient")
+    doctor.findOne({ _id: req.params.id }, (err, d) => {
+      if (err) console.log(err);
+      else
+        doctor.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              rating: (
+                (d.appointments * d.rating + Number(req.body.doctor_rating)) /
+                (d.appointments + 1)
+              ).toFixed(3)
+            },
+            $push: {
+              reviews: ` Reviewer: ${req.user.fname} ${req.user.lname}, Rating: ${req.body.doctor_rating}, Review: ${req.body.doctor_review}`
+            },
+            $inc: {
+              appointments: 1
+            }
+          },
+          (err, _cb) => {
+            if (err) console.log(err);
+            else res.redirect("/");
+          }
+        );
     });
   else
     doctor.updateOne(

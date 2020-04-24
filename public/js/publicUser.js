@@ -3,7 +3,7 @@ var dctr = false;
 var clinics, doctors;
 
 const viewClinics = () => {
-  fetch("https://pams-habboush-kisha.azurewebsites.net/clinics/Home")
+  fetch("http://localhost:3000/clinics/Home")
     .then(response => {
       return response.json();
     })
@@ -56,7 +56,7 @@ const viewClinics = () => {
 };
 
 const viewDoctors = () => {
-  fetch("https://pams-habboush-kisha.azurewebsites.net/doctors/Home")
+  fetch("http://localhost:3000/doctors/Home")
     .then(response => {
       return response.json();
     })

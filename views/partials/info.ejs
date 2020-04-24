@@ -54,36 +54,12 @@
   <!-- What will be viewed for Appointment Page -->
   <% } if (active == "Appointment") { %>
   <h3>
-    <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
+    <i class="fa fa-calendar w3-xlarge" style="margin-right: 10px;"></i>
     <%= data.date %>
   </h3>
   <h3>
-    <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
+    <i class="fa fa-clock-o w3-xlarge" style="margin-right: 10px;"></i>
     <%= data.time %>
   </h3>
-  <!-- If the appointment is reviewed you can see the review and rating -->
-  <% if (data.reviewed) { %>
-  <h3>
-    <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
-    <%= addData.c_name %>
-  </h3>
-  <% for(i=0; i < data.clinic_rating; i++) { if (data.clinic_rating > i+0.75) %>
-  <i class="fa fa-star checked w3-xlarge"></i>
-  <% if (data.clinic_rating <= i+0.75 && data.clinic_rating >= i+0.25) %>
-  <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
-  <span> <%= data.clinic_rating %> </span>
-  <h3>
-    <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
-    <%= "Dr." + addData.d_fname + " " + addData.d_lname %>
-  </h3>
-  <% for(i=0; i < data.doctor_rating; i++) { if (data.doctor_rating > i+0.75) %>
-  <i class="fa fa-star checked w3-xlarge"></i>
-  <% if (data.doctor_rating <= i+0.75 && data.doctor_rating >= i+0.25) %>
-  <i class="fa fa-star-half checked w3-xlarge"></i><% } %>
-  <span> <%= data.doctor_rating %> </span>
-  <h3>
-    <i class="fa fa-lightbulb-o w3-xlarge" style="margin-right: 10px;"></i>
-    <%= data.review %>
-  </h3>
-  <% } } %>
+  <% } %>
 </div>

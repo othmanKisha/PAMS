@@ -1,0 +1,65 @@
+<div
+  class="modal fade"
+  id="rateCl"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="rateClLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form
+        action="/clinics/<%= data.clinic_id %>/edit?_method=PUT"
+        method="POST"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="rateClLabel">
+            Rate and Review Clinic
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="review-box">
+            <h3>Write your review:</h3>
+            <textarea
+              class="form-control"
+              id="message-text"
+              name="clinic_review"
+              placeholder="place your review here"
+            ></textarea>
+          </div>
+          <div class="clrate">
+            <label for="exampleFormControlSelect1">Rate Clinic</label>
+            <select
+              class="form-control"
+              id="exampleFormControlSelect1"
+              name="clinic_rating"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

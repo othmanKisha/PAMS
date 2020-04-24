@@ -2,6 +2,7 @@ const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
+const { sendPendingMail, sendConfirmationMail } = require("../helpers/mailing");
 
 const getClinics = (req, res) => {
   if (req.user.type == "patient")
@@ -97,52 +98,11 @@ const getClinicById = (req, res) => {
       });
   });
 };
-const getNewManager = (req, res) => {
-  if (req.user.type != "admin")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else
-    res.render("register", {
-      e_msg: "",
-      expand: false,
-      route: `/clinics/${req.params.id}/manager`,
-      type: "manager",
-      id: req.params.id
-    });
-};
-const getNewReceptionist = (req, res) => {
-  if (req.user.type != "manager")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else
-    res.render("register", {
-      e_msg: "",
-      expand: false,
-      route: `/clinics/${req.params.id}/receptionist`,
-      type: "receptionist",
-      id: req.params.id
-    });
-};
-const getNewPage = (req, res) => {
-  if (req.user.type != "admin")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else res.render("new", { edited: "clinics" });
+const getHome = (req, res) => {
+  clinic.find({ status: "active" }, (err, clinicList) => {
+    if (err) res.json({});
+    else res.json(clinicList);
+  });
 };
 const getEditPage = (req, res) => {
   if (req.user.type != "manager")
@@ -154,48 +114,6 @@ const getEditPage = (req, res) => {
       base_page: "Profile"
     });
   else res.render("edit", {});
-};
-const getHome = (req, res) => {
-  clinic.find({ status: "active" }, (err, clinicList) => {
-    if (err) res.json({});
-    else res.json(clinicList);
-  });
-};
-const registerManager = (req, res) => {
-  if (req.user.type != "admin")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else
-    require("./registeration")(
-      req,
-      res,
-      `/clinics/${req.params.id}/manager`,
-      "manager",
-      req.params.id
-    );
-};
-const registerReceptionist = (req, res) => {
-  if (req.user.type != "manager")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else
-    require("./registeration")(
-      req,
-      res,
-      `/clinics/${req.params.id}/receptionist`,
-      "receptionist",
-      req.params.id
-    );
 };
 const postClinic = (req, res) => {
   if (req.user.type != "admin")
@@ -224,13 +142,39 @@ const postClinic = (req, res) => {
     });
 };
 const editClinic = (req, res) => {
-  if (req.user.type != "manager")
+  if (req.user.type != "manager" && req.user.type != "patient")
     res.render("error", {
       error: "Error: You are not autherized.",
       title: "Error",
       page_type: "show",
       base: "/users/profile",
       base_page: "Profile"
+    });
+  else if (req.user.type == "patient")
+    clinic.findOne({ _id: req.params.id }, (err, c) => {
+      if (err) console.log(err);
+      else
+        clinic.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              rating: (
+                (c.appointments * c.rating + Number(req.body.clinic_rating)) /
+                (c.appointments + 1)
+              ).toFixed(3)
+            },
+            $push: {
+              reviews: ` Reviewer: ${req.user.fname} ${req.user.lname}, Rating: ${req.body.clinic_rating}, Review: ${req.body.clinic_review}`
+            },
+            $inc: {
+              appointments: 1
+            }
+          },
+          (err, _cb) => {
+            if (err) console.log(err);
+            else res.redirect("/");
+          }
+        );
     });
   else
     clinic.findOne({ _id: req.params.id }, (err, c) => {
@@ -260,16 +204,7 @@ const editClinic = (req, res) => {
           },
           (err, _cb) => {
             if (err) console.log(err);
-            else if (req.body.status == "inactive")
-              doctor.updateMany(
-                { clinic_id: req.params.id },
-                { $set: { status: "inactive" } },
-                (err, _cb) => {
-                  if (err) console.log(err);
-                  else res.redirect(`/clinics/:${req.params.id}`);
-                }
-              );
-            else res.redirect(`/clinics/:${req.params.id}`);
+            else res.redirect(`/clinics/${req.params.id}`);
           }
         );
     });
@@ -284,7 +219,7 @@ const deleteClinic = (req, res) => {
       base_page: "Profile"
     });
   else
-    clinic.deleteOne({ _id: req.params.id.substring(1) }, (err, _cb) => {
+    clinic.deleteOne({ _id: req.params.id }, (err, _cb) => {
       if (err) console.log(err);
       else
         User.deleteMany({ clinic_id: req.params.id }, (err, _cb) => {
@@ -307,15 +242,10 @@ const deleteClinic = (req, res) => {
 
 module.exports = {
   getClinics,
-  getClinicById,
-  getNewPage,
-  getNewManager,
-  getNewReceptionist,
-  getEditPage,
   getHome,
+  getClinicById,
+  getEditPage,
   postClinic,
-  registerManager,
-  registerReceptionist,
   editClinic,
   deleteClinic
 };

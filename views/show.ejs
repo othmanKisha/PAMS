@@ -26,7 +26,17 @@
         <i class="fa fa-star checked w3-xlarge"></i>
         <% } if (data.rating <= i+0.75 && data.rating >= i+0.25) { %>
         <i class="fa fa-star-half checked w3-xlarge"></i> <% } } } %>
-        <span> <%= data.rating %> </span>
+        <span>
+          <%= data.rating %>
+          <button
+            type="button"
+            class="btn"
+            data-toggle="modal"
+            data-target="#revs"
+          >
+            <i class="fa fa-comments w3-xlarge"></i>
+          </button>
+        </span>
         <% } %>
       </div>
       <!-- To show the info -->
@@ -88,25 +98,45 @@
         </button>
         <% } } if (active == "Appointment") { if (data.status == "Confirmed" ) {
         %>
+        <form action="/appointments/<%= data._id %>?_method=PUT" method="POST">
+          <button class="btn btn-block btn-lg text-white bg-dark" type="submit">
+            <i class="fa fa-check-circle w3-xlarge"></i> Complete Appointment
+          </button>
+        </form>
+        <% } if (data.status == "Done") { %>
         <button
           type="button"
           class="btn btn-block bg-dark btn-lg text-white"
           data-toggle="modal"
-          data-target="#rateApp"
+          data-target="#rateCl"
         >
-          <i class="fa fa-check-circle w3-xlarge"></i>
-          Complete Appointment
+          <i class="fa fa-hospital-o w3-xlarge"></i>
+          Rate Clinic
         </button>
-        <% } } %>
+        <button
+          type="button"
+          class="btn btn-block bg-dark btn-lg text-white"
+          data-toggle="modal"
+          data-target="#rateDoc"
+        >
+          <i class="fa fa-user-md w3-xlarge"></i>
+          Rate Doctor
+        </button>
+        <%} }%>
       </div>
     </div>
   </div>
 </div>
+<!-- Showing reviews -->
+<% if (active != "Appointment") { %> <%- include('./partials/show_reviews.ejs')
+%> <% } %>
 <!-- Doctors List -->
 <%- include('./partials/doctor_list.ejs') %>
 <!-- Adding New Appointment -->
 <%- include("./partials/new_appointment.ejs") %>
-<!-- For Rating The Appointments -->
-<%- include('./partials/rate.ejs') %>
+<!-- For Rating Clinic -->
+<%- include('./partials/rate_clinic.ejs') %>
+<!-- For Rating Doctor -->
+<%- include('./partials/rate_doctor.ejs') %>
 <!-- The Footer -->
 <%- include('./partials/foot.ejs') %>

@@ -105,6 +105,64 @@ const getAppointmentById = (req, res) => {
       base_page: "Profile"
     });
 };
+const editAppointment = (req, res) => {
+  if (req.user.type == "patient")
+    appointment.findOne(
+      { _id: req.params.id, patient_id: req.user._id, status: "Confirmed" },
+      (err, app) => {
+        if (err) console.log(err);
+        else if (!app)
+          res.render("error", {
+            error: "Error: There is no appointment with this id.",
+            title: "Error",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
+        else
+          appointment.updateOne(
+            { _id: req.params.id },
+            { $set: { status: "Done" } },
+            (err, _cb) => {
+              if (err) console.log(err);
+              else res.redirect("/");
+            }
+          );
+      }
+    );
+  else if (req.user.type == "receptionist")
+    appointment.findOne(
+      { _id: req.params.id, clinic_id: req.user.clinic_id, status: "Pending" },
+      (err, app) => {
+        if (err) console.log(err);
+        else if (!app)
+          res.render("error", {
+            error: "Error: There is no appointment with this id.",
+            title: "Error",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
+        else
+          appointment.updateOne(
+            { _id: req.params.id },
+            { $set: { status: "Confirmed" } },
+            (err, _cb) => {
+              if (err) console.log(err);
+              else res.redirect("/");
+            }
+          );
+      }
+    );
+  else
+    res.render("error", {
+      error: "Error: There is no appointment with this id.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+};
 const deleteAppointment = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.findOne(
@@ -120,13 +178,10 @@ const deleteAppointment = (req, res) => {
             base_page: "Profile"
           });
         else
-          appointment.deleteOne(
-            { _id: req.params.id, clinic_id: req.user.clinic_id },
-            (err, _cb) => {
-              if (err) console.log(err);
-              else res.redirect("/");
-            }
-          );
+          appointment.deleteOne({ _id: req.params.id }, (err, _cb) => {
+            if (err) console.log(err);
+            else res.redirect("/");
+          });
       }
     );
   else
@@ -143,5 +198,6 @@ module.exports = {
   getAppointments,
   getFinishedAppointments,
   getAppointmentById,
+  editAppointment,
   deleteAppointment
 };
