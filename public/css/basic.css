@@ -28,6 +28,7 @@ html {
   /*min-height: 600px;
     max-height: 600px;*/
   opacity: 0.9;
+  overflow: auto;
 }
 
 td a {

@@ -1,7 +1,7 @@
 const express = require("express");
 const date = require("date-and-time");
 const { checkAuth } = require("./middleware/auth");
-const announcement = require("../../models/announcement");
+const announcement = require("../models/announcement");
 const router = express.Router();
 
 // REST routes for announcements
