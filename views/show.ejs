@@ -22,12 +22,12 @@
         <!-- Display the rating of Doctor or Clinic -->
         <% } if (active != "Appointment") { if (data.rating <= 0) { %> There is
         no rating yet <% } if (data.rating > 0) { for(i=0; i < data.rating; i++)
-        { if (data.rating > i+0.75) %>
-        <i class="fa fa-star checked w3-xlarge"></i> <% if (data.rating <=
-        i+0.75 && data.rating >= i+0.25) %>
-        <i class="fa fa-star-half checked w3-xlarge"></i> <% } %>
+        { if (data.rating > i+0.75) { %>
+        <i class="fa fa-star checked w3-xlarge"></i>
+        <% } if (data.rating <= i+0.75 && data.rating >= i+0.25) { %>
+        <i class="fa fa-star-half checked w3-xlarge"></i> <% } } } %>
         <span> <%= data.rating %> </span>
-        <% } } %>
+        <% } %>
       </div>
       <!-- To show the info -->
       <%- include('./partials/info.ejs') %>
@@ -90,10 +90,9 @@
         %>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-block bg-dark btn-lg text-white"
           data-toggle="modal"
           data-target="#rateApp"
-          style="color: white;"
         >
           <i class="fa fa-check-circle w3-xlarge"></i>
           Complete Appointment
