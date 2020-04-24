@@ -104,17 +104,6 @@ const getHome = (req, res) => {
     else res.json(clinicList);
   });
 };
-const getEditPage = (req, res) => {
-  if (req.user.type != "manager")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else res.render("edit", {});
-};
 const postClinic = (req, res) => {
   if (req.user.type != "admin")
     res.render("error", {
@@ -244,7 +233,6 @@ module.exports = {
   getClinics,
   getHome,
   getClinicById,
-  getEditPage,
   postClinic,
   editClinic,
   deleteClinic

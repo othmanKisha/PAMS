@@ -4,7 +4,6 @@ const {
   getClinics,
   getHome,
   getClinicById,
-  getEditPage,
   postClinic,
   editClinic,
   deleteClinic
@@ -26,7 +25,17 @@ router.get("/new", checkAuth, (req, res) => {
   else res.render("new", { edited: "clinics" });
 });
 router.get("/:id", checkAuth, getClinicById);
-router.get("/:id/edit", checkAuth, getEditPage);
+router.get("/:id/edit", checkAuth, (req, res) => {
+  if (req.user.type != "manager")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else res.render("edit", {});
+});
 router.get("/:id/manager/new", checkAuth, (req, res) => {
   if (req.user.type != "admin")
     res.render("error", {

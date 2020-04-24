@@ -25,7 +25,7 @@
         { if (data.rating > i+0.75) { %>
         <i class="fa fa-star checked w3-xlarge"></i>
         <% } if (data.rating <= i+0.75 && data.rating >= i+0.25) { %>
-        <i class="fa fa-star-half checked w3-xlarge"></i> <% } } } %>
+        <i class="fa fa-star-half checked w3-xlarge"></i> <% } } %>
         <span>
           <%= data.rating %>
           <button
@@ -37,7 +37,7 @@
             <i class="fa fa-comments w3-xlarge"></i>
           </button>
         </span>
-        <% } %>
+        <% } } %>
       </div>
       <!-- To show the info -->
       <%- include('./partials/info.ejs') %>

@@ -44,34 +44,12 @@ const getDoctorById = (req, res) => {
         active: "Doctor",
         user: type,
         doctors: "",
-        title: "Doctor",
+        title: "Doctor Info",
         page_type: "show",
         base: "/users/profile",
         base_page: "Profile"
       });
   });
-};
-const getNewPage = (req, res) => {
-  if (req.user.type != "manager")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else res.render("new", { edited: "doctor" });
-};
-const getEditPage = (req, res) => {
-  if (req.user.type != "manager")
-    res.render("error", {
-      error: "Error: You are not autherized.",
-      title: "Error",
-      page_type: "show",
-      base: "/users/profile",
-      base_page: "Profile"
-    });
-  else res.render("edit", {});
 };
 const getHome = (_req, res) => {
   doctor.find({ status: "active" }, (err, doctorList) => {
@@ -238,10 +216,8 @@ const deleteDoctor = (req, res) => {
 module.exports = {
   getDoctors,
   getDoctorById,
-  getNewPage,
   postDoctor,
   createAppointment,
-  getEditPage,
   editDoctor,
   deleteDoctor,
   getHome
