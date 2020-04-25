@@ -1,6 +1,7 @@
 const doctor = require("../../models/doctor");
 const clinic = require("../../models/clinic");
 const appointment = require("../../models/appointment");
+const { sendPendingMail } = require("../helpers/mailing");
 
 const getDoctors = (req, res) => {
   if (req.user.type != "patient")
@@ -40,7 +41,7 @@ const getDoctorById = (req, res) => {
     else
       res.render("show", {
         data: dr,
-        appData: null,
+        addData: null,
         active: "Doctor",
         user: type,
         doctors: "",
@@ -132,7 +133,7 @@ const createAppointment = (req, res) => {
                 status: "Pending"
               }).save((err, _newApp) => {
                 if (err) console.log(err);
-                else res.redirect("/");
+                else sendPendingMail(req, res);
               });
             else res.redirect("/");
           }
@@ -180,7 +181,7 @@ const editDoctor = (req, res) => {
             }
           }
         );
-        res.redirect("/");
+        res.redirect("/appointments");
       }
     });
   /*else
@@ -205,7 +206,7 @@ const editDoctor = (req, res) => {
       }
     );*/
 };
-const deleteDoctor = (req, res) => {
+const deleteDoctor = async (req, res) => {
   if (req.user.type != "manager")
     res.render("error", {
       error: "Error: You are not autherized.",
@@ -214,21 +215,14 @@ const deleteDoctor = (req, res) => {
       base: "/users/profile",
       base_page: "Profile"
     });
-  else
-    doctor.deleteOne(
-      {
-        _id: req.params.id,
-        clinic_id: req.user.clinic_id
-      },
-      (err, _cb) => {
-        if (err) console.log(err);
-        else
-          appointment.deleteOne({ doctor_id: req.params.id }, (err, _cb) => {
-            if (err) console.log(err);
-            else res.redirect("/");
-          });
-      }
-    );
+  else {
+    await doctor.deleteOne({
+      _id: req.params.id,
+      clinic_id: req.user.clinic_id
+    });
+    await appointment.deleteOne({ doctor_id: req.params.id });
+    res.redirect("/");
+  }
 };
 
 module.exports = {

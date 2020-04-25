@@ -1,6 +1,7 @@
 const appointment = require("../../models/appointment");
 const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
+const { sendDoneMail, sendConfirmationMail } = require("../helpers/mailing");
 
 const getAppointments = (req, res) => {
   if (req.user.type == "patient")
@@ -109,7 +110,7 @@ const editAppointment = (req, res) => {
   if (req.user.type == "patient")
     appointment.findOne(
       { _id: req.params.id, patient_id: req.user._id, status: "Confirmed" },
-      (err, app) => {
+      async (err, app) => {
         if (err) console.log(err);
         else if (!app)
           res.render("error", {
@@ -119,21 +120,23 @@ const editAppointment = (req, res) => {
             base: "/users/profile",
             base_page: "Profile"
           });
-        else
-          appointment.updateOne(
-            { _id: req.params.id },
-            { $set: { status: "Done" } },
-            (err, _cb) => {
-              if (err) console.log(err);
-              else res.redirect("/");
-            }
+        else {
+          await doctor.updateOne(
+            { _id: app.doctor_id },
+            { $set: { status: "active" } }
           );
+          await appointment.updateOne(
+            { _id: req.params.id },
+            { $set: { status: "Done" } }
+          );
+          sendDoneMail(req, res);
+        }
       }
     );
   else if (req.user.type == "receptionist")
     appointment.findOne(
       { _id: req.params.id, clinic_id: req.user.clinic_id, status: "Pending" },
-      (err, app) => {
+      async (err, app) => {
         if (err) console.log(err);
         else if (!app)
           res.render("error", {
@@ -143,15 +146,17 @@ const editAppointment = (req, res) => {
             base: "/users/profile",
             base_page: "Profile"
           });
-        else
-          appointment.updateOne(
-            { _id: req.params.id },
-            { $set: { status: "Confirmed" } },
-            (err, _cb) => {
-              if (err) console.log(err);
-              else res.redirect("/");
-            }
+        else {
+          await doctor.updateOne(
+            { _id: app.doctor_id },
+            { $set: { status: "busy" } }
           );
+          await appointment.updateOne(
+            { _id: req.params.id },
+            { $set: { status: "Confirmed" } }
+          );
+          sendConfirmationMail(req, res);
+        }
       }
     );
   else
@@ -167,7 +172,7 @@ const deleteAppointment = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.findOne(
       { _id: req.params.id, clinic_id: req.user.clinic_id },
-      (err, app) => {
+      async (err, app) => {
         if (err) console.log(err);
         else if (!app)
           res.render("error", {
@@ -177,11 +182,10 @@ const deleteAppointment = (req, res) => {
             base: "/users/profile",
             base_page: "Profile"
           });
-        else
-          appointment.deleteOne({ _id: req.params.id }, (err, _cb) => {
-            if (err) console.log(err);
-            else res.redirect("/");
-          });
+        else {
+          await appointment.deleteOne({ _id: req.params.id });
+          res.redirect("/");
+        }
       }
     );
   else

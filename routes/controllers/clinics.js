@@ -2,7 +2,6 @@ const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
-const { sendPendingMail, sendConfirmationMail } = require("../helpers/mailing");
 
 const getClinics = (req, res) => {
   if (req.user.type == "patient")
@@ -98,7 +97,7 @@ const getClinicById = (req, res) => {
       });
   });
 };
-const getHome = (req, res) => {
+const getHome = (_req, res) => {
   clinic.find({ status: "active" }, (err, clinicList) => {
     if (err) res.json({});
     else res.json(clinicList);
@@ -169,7 +168,7 @@ const editClinic = (req, res) => {
             $inc: { appointments: 1 }
           }
         );
-        res.redirect("/");
+        res.redirect("/appointments");
       }
     });
   /*else
@@ -205,7 +204,7 @@ const editClinic = (req, res) => {
         );
     });*/
 };
-const deleteClinic = (req, res) => {
+const deleteClinic = async (req, res) => {
   if (req.user.type != "admin")
     res.render("error", {
       error: "Error: You are not autherized.",
@@ -214,26 +213,13 @@ const deleteClinic = (req, res) => {
       base: "/users/profile",
       base_page: "Profile"
     });
-  else
-    clinic.deleteOne({ _id: req.params.id }, (err, _cb) => {
-      if (err) console.log(err);
-      else
-        User.deleteMany({ clinic_id: req.params.id }, (err, _cb) => {
-          if (err) console.log(err);
-          else
-            doctor.deleteMany({ clinic_id: req.params.id }, (err, _cb) => {
-              if (err) console.log(err);
-              else
-                appointment.deleteMany(
-                  { clinic_id: req.params.id },
-                  (err, _cb) => {
-                    if (err) console.log(err);
-                    else res.redirect("/clinics");
-                  }
-                );
-            });
-        });
-    });
+  else {
+    await clinic.deleteOne({ _id: req.params.id });
+    await User.deleteMany({ clinic_id: req.params.id });
+    await doctor.deleteMany({ clinic_id: req.params.id });
+    await appointment.deleteMany({ clinic_id: req.params.id });
+    res.redirect("/clinics");
+  }
 };
 
 module.exports = {
