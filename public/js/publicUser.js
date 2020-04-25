@@ -80,7 +80,7 @@ const viewDoctors = () => {
           $("#tableBody").append(`<tr id="trow${d._id}">`);
           if (d.rating <= 0)
             $(`#trow${d._id}`).append(
-              `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">Dr. ${d.fname} ${d.lname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
               `<td><a href="/auth/login">${d.experience} years </a></td>`,
@@ -88,7 +88,7 @@ const viewDoctors = () => {
             );
           else {
             $(`#trow${d._id}`).append(
-              `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
+              `<td><a href="/auth/login">Dr. ${d.fname} ${d.lname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
               `<td><a href="/auth/login">${d.experience} years</a></td>`,

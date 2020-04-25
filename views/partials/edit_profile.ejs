@@ -24,37 +24,35 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <div class="row">
-              <div class="d-flex align-items-center col-6">
-                <label for="fname">
-                  <i class="fa fa-address-book-o w3-large"></i> First Name
-                </label>
-                <input
-                  name="fname"
-                  placeholder="<%= data.fname %>"
-                  type="text"
-                  class="input"
-                />
-              </div>
-              <div class="d-flex align-items-center col-6">
-                <label for="lname">
-                  Last Name
-                </label>
-                <input
-                  name="lname"
-                  placeholder="<%= data.lname %>"
-                  type="text"
-                  class="input"
-                />
-              </div>
-            </div>
+            <label for="fname">
+              <i class="fa fa-address-book-o w3-large"></i> First Name
+            </label>
+            <input
+              name="fname"
+              value="<%= data.fname %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="lname">
+              <i class="fa fa-address-book-o w3-large"></i> Last Name
+            </label>
+            <input
+              name="lname"
+              value="<%= data.lname %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
             <label for="numbers">
               <i class="fa fa-phone w3-large"></i> Phone number
             </label>
             <input
-              placeholder="<%= data.numbers %>"
-              name="number"
-              type="number"
+              value="<%= data.numbers %>"
+              name="numbers"
+              type="text"
               class="input"
               pattern="[0]{1}[5]{1}[0-9]{8}"
               ,
