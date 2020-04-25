@@ -65,7 +65,7 @@
           <th scope="col">Status</th>
           <% } %>
         </thead>
-        <tbody>
+        <tbody id="tableContent">
           <% if (active == "clinics") { %> <% data.forEach(d => { %>
           <tr>
             <td><a href="/clinics/<%= d._id %>"> <%= d.name %> </a></td>

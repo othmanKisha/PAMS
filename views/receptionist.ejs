@@ -46,7 +46,7 @@
           <th scope="col">Clinic Rating</th>
           <% } %>
         </thead>
-        <tbody>
+        <tbody id="tableContent">
           <% if (active == "pending") { data.forEach(d => { %>
           <tr>
             <td><a> <%= d.date %> </a></td>

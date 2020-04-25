@@ -39,6 +39,12 @@ $(document).ready(() => {
   $("#announce").on("click", () => {
     getAnnouncements();
   });
-
-  // Search Functionality should be added
+  $("#searchinp").on("keyup", function(){
+    var value = $(this)[0].value.toLowerCase();
+    console.log(value)
+    $("#tableContent tr, #tableBody tr").filter(function(){
+      console.log($(this).text().toLowerCase())
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
