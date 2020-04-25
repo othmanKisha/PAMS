@@ -4,6 +4,7 @@ var clinics, doctors;
 
 const viewClinics = () => {
   fetch("http://localhost:3000/clinics/Home")
+    //fetch("https://pams-habboush-kisha.azurewebsites.net/clinics/Home")
     .then(response => {
       return response.json();
     })
@@ -57,6 +58,7 @@ const viewClinics = () => {
 
 const viewDoctors = () => {
   fetch("http://localhost:3000/doctors/Home")
+    //fetch("https://pams-habboush-kisha.azurewebsites.net/doctors/Home")
     .then(response => {
       return response.json();
     })

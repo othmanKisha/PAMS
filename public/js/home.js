@@ -3,7 +3,8 @@ var hide = true;
 var announcements;
 
 const getAnnouncements = () => {
-  fetch("http://localhost:3000/announcements/Home")
+  fetch("https://localhost:3000/announcements/Home")
+    //fetch("https://pams-habboush-kisha.azurewebsites.net/announcements/Home")
     .then(response => {
       return response.json();
     })
