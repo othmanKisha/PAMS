@@ -6,6 +6,8 @@ const appointment = new mongoose.Schema({
   patient_id: String,
   doctor_id: String,
   clinic_id: String,
+  doctor_reviewed: Boolean,
+  clinic_reviewed: Boolean,
   status: String
 });
 appointment.plugin(beautifyUnique);

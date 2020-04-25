@@ -83,7 +83,7 @@ router.post("/:id/manager", checkAuth, (req, res) => {
       base_page: "Profile"
     });
   else
-    require("./registeration")(
+    require("./controllers/registeration")(
       req,
       res,
       `/clinics/${req.params.id}/manager`,
@@ -101,7 +101,7 @@ router.post("/:id/receptionist", checkAuth, (req, res) => {
       base_page: "Profile"
     });
   else
-    require("./registeration")(
+    require("./controllers/registeration")(
       req,
       res,
       `/clinics/${req.params.id}/receptionist`,

@@ -103,7 +103,7 @@
             <i class="fa fa-check-circle w3-xlarge"></i> Complete Appointment
           </button>
         </form>
-        <% } if (data.status == "Done") { %>
+        <% } if (data.status == "Done" && !data.clinic_reviewed) { %>
         <button
           type="button"
           class="btn btn-block bg-dark btn-lg text-white"
@@ -113,6 +113,7 @@
           <i class="fa fa-hospital-o w3-xlarge"></i>
           Rate Clinic
         </button>
+        <% } if (data.status == "Done" && !data.doctor_reviewed) { %>
         <button
           type="button"
           class="btn btn-block bg-dark btn-lg text-white"

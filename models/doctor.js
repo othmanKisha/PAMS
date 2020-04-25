@@ -3,7 +3,7 @@ const beautifyUnique = require("mongoose-beautiful-unique-validation");
 const doctor = new mongoose.Schema({
   fname: String,
   lname: String,
-  email: { type: String, unique: true, uniqueCaseInsensitive: true },
+  email: String,
   profile: String,
   status: String,
   numbers: String,

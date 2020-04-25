@@ -125,7 +125,7 @@ const postClinic = (req, res) => {
       appointments: 0,
       rating: -1,
       status: "inactive"
-    }).save((err, cb) => {
+    }).save((err, _cb) => {
       if (err) console.log(err);
       else res.redirect("/clinics");
     });
@@ -140,10 +140,21 @@ const editClinic = (req, res) => {
       base_page: "Profile"
     });
   else if (req.user.type == "patient")
-    clinic.findOne({ _id: req.params.id }, (err, c) => {
+    clinic.findOne({ _id: req.params.id }, async (err, c) => {
       if (err) console.log(err);
-      else
-        clinic.updateOne(
+      else {
+        await appointment.updateOne(
+          {
+            clinic_id: req.params.id,
+            patient_id: req.user.id,
+            clinic_reviewed: false,
+            status: "Done"
+          },
+          {
+            $set: { clinic_reviewed: true }
+          }
+        );
+        await clinic.updateOne(
           { _id: req.params.id },
           {
             $set: {
@@ -155,17 +166,13 @@ const editClinic = (req, res) => {
             $push: {
               reviews: ` Reviewer: ${req.user.fname} ${req.user.lname}, Rating: ${req.body.clinic_rating}, Review: ${req.body.clinic_review}`
             },
-            $inc: {
-              appointments: 1
-            }
-          },
-          (err, _cb) => {
-            if (err) console.log(err);
-            else res.redirect("/");
+            $inc: { appointments: 1 }
           }
         );
+        res.redirect("/");
+      }
     });
-  else
+  /*else
     clinic.findOne({ _id: req.params.id }, (err, c) => {
       if (err) console.log(err);
       else if (c._id != req.user.clinic_id)
@@ -196,7 +203,7 @@ const editClinic = (req, res) => {
             else res.redirect(`/clinics/${req.params.id}`);
           }
         );
-    });
+    });*/
 };
 const deleteClinic = (req, res) => {
   if (req.user.type != "admin")

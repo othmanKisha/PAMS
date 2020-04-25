@@ -67,8 +67,16 @@ const postDoctor = (req, res) => {
       base_page: "Profile"
     });
   else
-    clinic.findOne({ _id: req.user.clinic_id }, (err, c) => {
+    clinic.findOne({ _id: req.user.clinic_id, status: "active" }, (err, c) => {
       if (err) console.log(err);
+      else if (!c)
+        res.render("error", {
+          error: "Error: Clinic is not active, please assign a receptionist.",
+          title: "Error",
+          page_type: "show",
+          base: "/users/profile",
+          base_page: "Profile"
+        });
       else
         new doctor({
           fname: req.body.fname,
@@ -82,7 +90,7 @@ const postDoctor = (req, res) => {
           clinic_id: req.user.clinic_id,
           appointments: 0,
           rating: -1,
-          status: c.status
+          status: "active"
         }).save((err, _cb) => {
           if (err) console.log(err);
           else res.redirect(`/clinics/${req.user.clinic_id}`);
@@ -114,10 +122,11 @@ const createAppointment = (req, res) => {
               new appointment({
                 date: req.body.date,
                 time: req.body.time,
-                reviewed: false,
                 patient_id: req.user._id,
                 doctor_id: req.params.id,
                 clinic_id: dr.clinic_id,
+                doctor_reviewed: false,
+                clinic_reviewed: false,
                 doctor_rating: 0,
                 clinic_rating: 0,
                 status: "Pending"
@@ -140,10 +149,21 @@ const editDoctor = (req, res) => {
       base_page: "Profile"
     });
   else if (req.user.type == "patient")
-    doctor.findOne({ _id: req.params.id }, (err, d) => {
+    doctor.findOne({ _id: req.params.id }, async (err, d) => {
       if (err) console.log(err);
-      else
-        doctor.updateOne(
+      else {
+        await appointment.updateOne(
+          {
+            doctor_id: req.params.id,
+            patient_id: req.user.id,
+            doctor_reviewed: false,
+            status: "Done"
+          },
+          {
+            $set: { doctor_reviewed: true }
+          }
+        );
+        await doctor.updateOne(
           { _id: req.params.id },
           {
             $set: {
@@ -158,14 +178,12 @@ const editDoctor = (req, res) => {
             $inc: {
               appointments: 1
             }
-          },
-          (err, _cb) => {
-            if (err) console.log(err);
-            else res.redirect("/");
           }
         );
+        res.redirect("/");
+      }
     });
-  else
+  /*else
     doctor.updateOne(
       { _id: req.params.id },
       {
@@ -185,7 +203,7 @@ const editDoctor = (req, res) => {
         if (err) console.log(err);
         else res.redirect(`/doctors/${req.params.id}`);
       }
-    );
+    );*/
 };
 const deleteDoctor = (req, res) => {
   if (req.user.type != "manager")

@@ -17,19 +17,19 @@ const viewClinics = () => {
       var h2 = $("<th scope='col'></th>").text("Profile");
       var h3 = $("<th scope='col'></th>").text("Servics");
       var h4 = $("<th scope='col'></th>").text("Rating");
-      $("#tableHead").append("<tr>", h1, h2, h3, h4, "</tr>");
+      $("#tableHead").append(h1, h2, h3, h4);
       if (cs != undefined)
         cs.forEach(c => {
-          $("#tableBody").append(`<tr id="trow">`);
+          $("#tableBody").append(`<tr id="trow${c._id}">`);
           if (c.rating <= 0)
-            $("#trow").append(
+            $(`#trow${c._id}`).append(
               `<td><a href="/auth/login">${c.name}</a></td>`,
               `<td><a href="/auth/login">${c.profile}</a></td>`,
               `<td><a href="/auth/login">${c.services}</a></td>`,
               `<td><a href="/auth/login"> There is no rating yet. </a></td>`
             );
           else {
-            $("#trow").append(
+            $(`#trow${c._id}`).append(
               `<td><a href="/auth/login">${c.name}</a></td>`,
               `<td><a href="/auth/login">${c.profile}</a></td>`,
               `<td><a href="/auth/login">${c.services}</a></td>`,
@@ -46,7 +46,7 @@ const viewClinics = () => {
                 );
               }
             }
-            $("#tcol").append(` ${c.rating} `);
+            $("#tcol").append(` ${c.rating} </tr>`);
           }
         });
     })
@@ -71,12 +71,12 @@ const viewDoctors = () => {
       var h3 = $("<th scope='col'></th>").text("Speciality");
       var h4 = $("<th scope='col'></th>").text("Experience");
       var h5 = $("<th scope='col'></th>").text("Rating");
-      $("#tableHead").append("<tr>", h1, h2, h3, h4, h5, "</tr>");
+      $("#tableHead").append(h1, h2, h3, h4, h5);
       if (ds != undefined)
         ds.forEach(d => {
-          $("#tableBody").append(`<tr id="trow">`);
+          $("#tableBody").append(`<tr id="trow${d._id}">`);
           if (d.rating <= 0)
-            $("#trow").append(
+            $(`#trow${d._id}`).append(
               `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
@@ -84,7 +84,7 @@ const viewDoctors = () => {
               `<td><a href="/auth/login"> There is no rating yet. </a></td>`
             );
           else {
-            $("#trow").append(
+            $(`#trow${d._id}`).append(
               `<td><a href="/auth/login">Dr. ${d.lname} ${d.fname}</a></td>`,
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
@@ -102,7 +102,7 @@ const viewDoctors = () => {
                 );
               }
             }
-            $("#tcol").append(` ${d.rating} `);
+            $("#tcol").append(` ${d.rating} </tr>`);
           }
         });
     })
