@@ -2,6 +2,7 @@ const mail = require("../../config/nodemailer");
 const appointment = require("../../models/appointment");
 const User = require("../../models/user");
 const doctor = require("../../models/doctor");
+const serviceMail = require("../../config/keys").EMAIL;
 
 const sendPendingMail = (req, res) => {
   appointment.findOne({ _id: req.params.id }, (err, app) => {
@@ -18,7 +19,7 @@ const sendPendingMail = (req, res) => {
                 users.forEach(u => {
                   if (u.type == "patient")
                     mail.sendMail({
-                      from: "pams.Habboush.Kisha@gmail.com",
+                      from: serviceMail.email,
                       to: u.email,
                       subject: `A New Appointment Pending`,
                       text: `Dear Mr. ${u.name},\n
@@ -29,7 +30,7 @@ const sendPendingMail = (req, res) => {
                     });
                   else
                     mail.sendMail({
-                      from: "pams.Habboush.Kisha@gmail.com",
+                      from: serviceMail.email,
                       to: u.email,
                       subject: `A New Appointment Pending`,
                       text: `Dear Mr. ${u.name},\n
@@ -60,7 +61,7 @@ const sendConfirmationMail = (req, res) => {
               else {
                 users.forEach(u => {
                   mail.sendMail({
-                    from: "pams.Habboush.Kisha@gmail.com",
+                    from: serviceMail.email,
                     to: u.email,
                     subject: `Appointment Confirmed`,
                     text: `Dear Mr. ${u.name},\n
@@ -91,7 +92,7 @@ const sendDoneMail = (req, res) => {
               else {
                 users.forEach(u => {
                   mail.sendMail({
-                    from: "pams.Habboush.Kisha@gmail.com",
+                    from: serviceMail.email,
                     to: u.email,
                     subject: `Appointment Finished`,
                     text: `Dear Mr. ${u.name},\n

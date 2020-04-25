@@ -34,20 +34,21 @@ const viewClinics = () => {
               `<td><a href="/auth/login">${c.name}</a></td>`,
               `<td><a href="/auth/login">${c.profile}</a></td>`,
               `<td><a href="/auth/login">${c.services}</a></td>`,
-              `<td><a href="/auth/login" id="tcol"></a></td>`
+              `<td><a href="/auth/login" id="tcol${c._id}"></a></td>`
             );
             for (i = 0; i < c.rating; i++) {
               if (c.rating - i > 0.75) {
-                $("#tcol").append(
+                $(`#tcol${c._id}`).append(
                   `<i class="fa fa-star checked w3-xlarge"></i>`
                 );
               } else if (c.rating - i <= 0.75 && c.rating - i >= 0.25) {
-                $("#tcol").append(
+                $(`#tcol${c._id}`).append(
                   `<i class="fa fa-star-half checked w3-xlarge"></i>`
                 );
               }
             }
-            $("#tcol").append(` ${c.rating} </tr>`);
+            $(`#tcol${c._id}`).append(` ${c.rating} `);
+            $("#tableBody").append(`</tr>`);
           }
         });
     })
@@ -91,20 +92,21 @@ const viewDoctors = () => {
               `<td><a href="/auth/login">${d.profile}</a></td>`,
               `<td><a href="/auth/login">${d.speciality}</a></td>`,
               `<td><a href="/auth/login">${d.experience} years</a></td>`,
-              `<td><a href="/auth/login" id="tcol"></a></td>`
+              `<td><a href="/auth/login" id="tcol${d._id}"></a></td>`
             );
             for (i = 0; i < d.rating; i++) {
               if (d.rating > i + 0.75) {
-                $("#tcol").append(
+                $(`#tcol${d._id}`).append(
                   `<i class="fa fa-star checked w3-xlarge"></i>`
                 );
               } else if (d.rating <= i + 0.75 && d.rating >= i + 0.25) {
-                $("#tcol").append(
+                $(`#tcol${d._id}`).append(
                   `<i class="fa fa-star-half checked w3-xlarge"></i>`
                 );
               }
             }
-            $("#tcol").append(` ${d.rating} </tr>`);
+            $(`#tcol${d._id}`).append(` ${d.rating} `);
+            $("#tableBody").append(`</tr>`);
           }
         });
     })

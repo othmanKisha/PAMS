@@ -16,23 +16,19 @@ router.get("/profile", checkAuth, (req, res) => {
     });
   });
 });
-router.put("/profile", checkAuth, (req, res) => {
+router.put("/profile", checkAuth, async (req, res) => {
   // Maybe check for the password ??
-  User.updateOne(
+  await User.updateOne(
     { _id: req.user._id },
     {
       $set: {
-        email: req.body.email,
         numbers: req.body.numbers,
         fname: req.body.fname,
         lname: req.body.lname
       }
-    },
-    (err, _cb) => {
-      if (err) console.log(err);
-      else res.redirect("/users/profile");
     }
   );
+  res.redirect("/users/profile");
 });
 
 module.exports = router;
