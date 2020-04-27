@@ -2,6 +2,7 @@ const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
+const rate = require("../helpers/rate");
 
 const getClinics = (req, res) => {
   if (req.user.type == "patient")
@@ -240,10 +241,7 @@ const editClinic = (req, res) => {
           { _id: req.params.id },
           {
             $set: {
-              rating: (
-                (c.appointments * c.rating + Number(req.body.clinic_rating)) /
-                (c.appointments + 1)
-              ).toFixed(3)
+              rating: rate(c.appointments, req.body.clinic_rating, c.rating)
             },
             $push: {
               reviews: ` Reviewer: ${req.user.fname} ${req.user.lname}, Rating: ${req.body.clinic_rating}, Review: ${req.body.clinic_review}`

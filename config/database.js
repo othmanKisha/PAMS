@@ -1,5 +1,5 @@
-const database = require("./keys").DATABASE;
-const DATABASE_URL = database.url;
+const DATABASE_URL = require("./keys").DATABASE.url;
+
 module.exports = mongoose => {
   mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,

@@ -1,6 +1,7 @@
 const doctor = require("../../models/doctor");
 const clinic = require("../../models/clinic");
 const appointment = require("../../models/appointment");
+const rate = require("../helpers/rate");
 const { sendPendingMail } = require("../helpers/mailing");
 
 const getDoctors = (req, res) => {
@@ -179,10 +180,7 @@ const editDoctor = async (req, res) => {
           { _id: req.params.id },
           {
             $set: {
-              rating: (
-                (d.appointments * d.rating + Number(req.body.doctor_rating)) /
-                (d.appointments + 1)
-              ).toFixed(3)
+              rating: rate(d.appointments, req.body.doctor_rating, d.rating)
             },
             $push: {
               reviews: ` Reviewer: ${req.user.fname} ${req.user.lname}, Rating: ${req.body.doctor_rating}, Review: ${req.body.doctor_review}`
