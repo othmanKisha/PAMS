@@ -2,7 +2,6 @@ const doctor = require("../../models/doctor");
 const clinic = require("../../models/clinic");
 const appointment = require("../../models/appointment");
 const rate = require("../helpers/rate");
-const { sendPendingMail } = require("../helpers/mailing");
 
 const getDoctors = (req, res) => {
   if (req.user.type != "patient")
@@ -129,10 +128,10 @@ const createAppointment = (req, res) => {
             date: req.body.data,
             time: req.body.time
           },
-          (err, app) => {
+          async (err, app) => {
             if (err) console.log(err);
-            else if (!app)
-              new appointment({
+            else if (!app) {
+              await new appointment({
                 date: req.body.date,
                 time: req.body.time,
                 patient_id: req.user._id,
@@ -143,11 +142,9 @@ const createAppointment = (req, res) => {
                 doctor_rating: 0,
                 clinic_rating: 0,
                 status: "Pending"
-              }).save((err, _newApp) => {
-                if (err) console.log(err);
-                else sendPendingMail(req, res);
-              });
-            else res.redirect("/");
+              }).save();
+              res.redirect("/");
+            } else res.redirect("/");
           }
         );
     });

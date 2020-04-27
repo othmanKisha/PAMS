@@ -2,7 +2,6 @@ const appointment = require("../../models/appointment");
 const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const User = require("../../models/user");
-const { sendDoneMail, sendConfirmationMail } = require("../helpers/mailing");
 const asyncForEach = require("../helpers/asyncForEach");
 
 const getAppointments = (req, res) => {
@@ -164,7 +163,7 @@ const editAppointment = (req, res) => {
             { _id: req.params.id },
             { $set: { status: "Done" } }
           );
-          sendDoneMail(req, res);
+          res.redirect("/");
         }
       }
     );
@@ -190,7 +189,7 @@ const editAppointment = (req, res) => {
             { _id: req.params.id },
             { $set: { status: "Confirmed" } }
           );
-          sendConfirmationMail(req, res);
+          res.redirect("/");
         }
       }
     );
