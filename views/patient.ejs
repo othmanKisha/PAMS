@@ -60,6 +60,8 @@
           <th scope="col" style="width:20%">Experience</th>
           <th scope="col" style="width:18%">Rating</th>
           <% } %> <% if (active == "appointments") { %>
+          <th scope="col" style="width:30%">Doctor</th>
+          <th scope="col" style="width:30%">Clinic</th>
           <th scope="col" style="width:30%">Date</th>
           <th scope="col" style="width:30%">Time</th>
           <th scope="col" style="width:40%">Status</th>
@@ -112,9 +114,21 @@
           </tr>
           <% }) } if (active == "appointments") { %> <% data.forEach(d => { %>
           <tr>
-            <td><a href="/appointments/<%= d._id %>"> <%= d.date %> </a></td>
-            <td><a href="/appointments/<%= d._id %>"> <%= d.time %> </a></td>
-            <td><a href="/appointments/<%= d._id %>"> <%= d.status %> </a></td>
+            <td>
+              <a href="/appointments/<%= d.app._id %>"> <%= d.doctor %> </a>
+            </td>
+            <td>
+              <a href="/appointments/<%= d.app._id %>"> <%= d.clinic %> </a>
+            </td>
+            <td>
+              <a href="/appointments/<%= d.app._id %>"> <%= d.app.date %> </a>
+            </td>
+            <td>
+              <a href="/appointments/<%= d.app._id %>"> <%= d.app.time %> </a>
+            </td>
+            <td>
+              <a href="/appointments/<%= d.app._id %>"> <%= d.app.status %> </a>
+            </td>
           </tr>
           <% }) } %>
         </tbody>

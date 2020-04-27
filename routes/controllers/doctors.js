@@ -58,6 +58,17 @@ const getHome = (_req, res) => {
     else res.json(doctorList);
   });
 };
+const getNewPage = (req, res) => {
+  if (req.user.type != "manager")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else res.render("new", { edited: "doctor" });
+};
 const postDoctor = (req, res) => {
   if (req.user.type != "manager")
     res.render("error", {
@@ -140,7 +151,7 @@ const createAppointment = (req, res) => {
         );
     });
 };
-const editDoctor = (req, res) => {
+const editDoctor = async (req, res) => {
   if (req.user.type != "manager" && req.user.type != "patient")
     res.render("error", {
       error: "Error: You are not autherized.",
@@ -184,8 +195,8 @@ const editDoctor = (req, res) => {
         res.redirect("/appointments");
       }
     });
-  /*else
-    doctor.updateOne(
+  else {
+    await doctor.updateOne(
       { _id: req.params.id },
       {
         $set: {
@@ -199,12 +210,10 @@ const editDoctor = (req, res) => {
           office: req.body.office,
           status: req.body.status
         }
-      },
-      (err, _cb) => {
-        if (err) console.log(err);
-        else res.redirect(`/doctors/${req.params.id}`);
       }
-    );*/
+    );
+    res.redirect(`/doctors/${req.params.id}`);
+  }
 };
 const deleteDoctor = async (req, res) => {
   if (req.user.type != "manager")
@@ -228,6 +237,7 @@ const deleteDoctor = async (req, res) => {
 module.exports = {
   getDoctors,
   getDoctorById,
+  getNewPage,
   postDoctor,
   createAppointment,
   editDoctor,

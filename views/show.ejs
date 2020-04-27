@@ -47,12 +47,12 @@
         <div class="row">
           <% if (user == "manager") { %>
           <div class="col">
-            <button class="btn bg-dark btn-block btn-lg">
-              <a
-                class="links"
-                href="/clinics/<%= data._id %>/edit"
-                style="color: white;"
-              >
+            <button
+              class="btn bg-dark btn-block btn-lg"
+              data-toggle="modal"
+              data-target="#editcl"
+            >
+              <a class="links" style="color: white;">
                 <i class="fa fa-edit w3-xlarge"></i>
                 Edit Clinic Info
               </a>
@@ -78,7 +78,7 @@
               data-toggle="modal"
               data-target="#dctlst"
             >
-              <a class="links" href="#" style="color: white;">
+              <a class="links" style="color: white;">
                 <i class="fa fa-user-md w3-xlarge"></i>
                 Show Doctors List
               </a>
@@ -91,9 +91,20 @@
           data-toggle="modal"
           data-target="#newApp"
         >
-          <a class="links" href="#" style="color: white;">
+          <a class="links" style="color: white;">
             <i class="fa fa-calendar w3-xlarge"></i>
             Create Appointment
+          </a>
+        </button>
+        <% } if (user == "manager") { %>
+        <button
+          class="btn bg-dark btn-block btn-lg text-white"
+          data-toggle="modal"
+          data-target="#editdr"
+        >
+          <a class="links" style="color: white;">
+            <i class="fa fa-edit w3-xlarge"></i>
+            Edit Doctor Info
           </a>
         </button>
         <% } } if (active == "Appointment") { if (data.status == "Confirmed" ) {
@@ -128,9 +139,13 @@
     </div>
   </div>
 </div>
+<% if (active != "Appointment") { %>
 <!-- Showing reviews -->
-<% if (active != "Appointment") { %> <%- include('./partials/show_reviews.ejs')
-%> <% } %>
+<%- include('./partials/show_reviews.ejs')%> <% } %>
+<!-- Edit Clinic -->
+<%- include("./partials/edit_clinic.ejs") %>
+<!-- Edit Doctor -->
+<%- include("./partials/edit_doctor.ejs") %>
 <!-- Doctors List -->
 <%- include('./partials/doctor_list.ejs') %>
 <!-- Adding New Appointment -->

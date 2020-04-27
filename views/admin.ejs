@@ -74,9 +74,9 @@
         <tbody id="tableContent">
           <% if (active == "clinics") { data.forEach(d => { %>
           <tr>
-            <td><a href="/clinics/<%= d._id %>"> <%= d.name %> </a></td>
-            <td><a href="/clinics/<%= d._id %>"> <%= d.services %> </a></td>
-            <td><a href="/clinics/<%= d._id %>"> <%= d.location %> </a></td>
+            <td><a> <%= d.name %> </a></td>
+            <td><a> <%= d.services %> </a></td>
+            <td><a> <%= d.location %> </a></td>
             <td>
               <form action="/clinics/<%= d._id %>?_method=DELETE" method="POST">
                 <div class="btn-group dropleft">

@@ -46,7 +46,7 @@
             <th scope="col">Speciality</th>
             <th scope="col">Rating</th>
             <% if (user == "manager") { %>
-            <th scope="col">Action</th>
+            <th scope="col">Delete</th>
             <% } %>
           </thead>
           <tbody>
@@ -80,37 +80,11 @@
                   action="/doctors/<%= d._id %>?_method=DELETE"
                   method="POST"
                 >
-                  <div class="btn-group dropleft">
-                    <button
-                      class="btn"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i
-                        class="fa fa-wrench w3-large"
-                        style="padding-left: 10px;"
-                      ></i>
-                    </button>
-                    <div
-                      class="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      <a
-                        class="dropdown-item"
-                        href="/doctors/<%= d._id %>/edit"
-                      >
-                        <i class="fa fa-edit w3-xlarge"></i> edit
-                      </a>
-                      <button type="submit" class="dropdown-item">
-                        <a class="links">
-                          <i class="fa fa-trash w3-xlarge"></i> remove
-                        </a>
-                      </button>
-                    </div>
-                  </div>
+                  <button type="submit" class="dropdown-item">
+                    <a class="links">
+                      <i class="fa fa-trash w3-xlarge"></i>
+                    </a>
+                  </button>
                 </form>
               </td>
               <% } %>

@@ -1,36 +1,60 @@
 const appointment = require("../../models/appointment");
 const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
+const User = require("../../models/user");
 const { sendDoneMail, sendConfirmationMail } = require("../helpers/mailing");
+const asyncForEach = require("../helpers/asyncForEach");
 
 const getAppointments = (req, res) => {
   if (req.user.type == "patient")
-    appointment.find({ patient_id: req.user._id }, (err, appList) => {
+    appointment.find({ patient_id: req.user._id }, async (err, appList) => {
       if (err) console.log(err);
-      else
+      else {
+        var data = new Array();
+        await asyncForEach(appList, async a => {
+          cl = await clinic.findOne({ _id: a.clinic_id }, "name");
+          dr = await doctor.findOne({ _id: a.doctor_id }, "fname lname");
+          data.push({
+            app: a,
+            clinic: cl.name,
+            doctor: "Dr. " + dr.fname + " " + dr.lname
+          });
+        });
         res.render("patient", {
-          data: appList,
+          data: data,
           active: "appointments",
           title: "Appointments Page",
           page_type: "home",
           base: "/users/profile",
           base_page: "Profile"
         });
+      }
     });
   else if (req.user.type == "receptionist")
     appointment.find(
       { clinic_id: req.user.clinic_id, status: "Pending" },
-      (err, appList) => {
+      async (err, appList) => {
         if (err) console.log(err);
-        else
+        else {
+          var data = new Array();
+          await asyncForEach(appList, async a => {
+            p = await User.findOne({ _id: a.patient_id }, "fname lname");
+            dr = await doctor.findOne({ _id: a.doctor_id }, "fname lname");
+            data.push({
+              app: a,
+              patient: p.fname + " " + p.lname,
+              doctor: "Dr. " + dr.fname + " " + dr.lname
+            });
+          });
           res.render("receptionist", {
-            data: appList,
+            data: data,
             active: "pending",
             title: "Pending Appointments",
             page_type: "home",
             base: "/users/profile",
             base_page: "Profile"
           });
+        }
       }
     );
   else
@@ -46,17 +70,28 @@ const getFinishedAppointments = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.find(
       { clinic_id: req.user.clinic_id, status: "Done" },
-      (err, appList) => {
+      async (err, appList) => {
         if (err) console.log(err);
-        else
+        else {
+          var data = new Array();
+          await asyncForEach(appList, async a => {
+            p = await User.findOne({ _id: a.patient_id }, "fname lname");
+            dr = await doctor.findOne({ _id: a.doctor_id }, "fname lname");
+            data.push({
+              app: a,
+              patient: p.fname + " " + p.lname,
+              doctor: "Dr. " + dr.fname + " " + dr.lname
+            });
+          });
           res.render("receptionist", {
-            data: appList,
+            data: data,
             active: "finished",
             title: "Finished Appointments",
             page_type: "home",
             base: "/users/profile",
             base_page: "Profile"
           });
+        }
       }
     );
   else

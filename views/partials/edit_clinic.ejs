@@ -1,0 +1,127 @@
+<div
+  class="modal fade"
+  id="editcl"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="editclLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="/clinics/<%= data._id %>/edit?_method=PUT" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editclLabel">
+            Edit Clinic
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">
+              <i class="fa fa-address-book-o w3-large"></i> Name
+            </label>
+            <input
+              name="name"
+              value="<%= data.name %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="profile">
+              <i class="fa fa-lightbulb-o w3-large"></i> Profile
+            </label>
+            <input
+              name="profile"
+              value="<%= data.profile %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="services">
+              <i class="fa fa-tags w3-large"></i> Services
+            </label>
+            <input
+              name="services"
+              value="<%= data.services %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="location">
+              <i class="fa fa-map-marker w3-large"></i> Location
+            </label>
+            <input
+              name="location"
+              value="<%= data.location %>"
+              type="text"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="website">
+              <i class="fa fa-globe w3-large"></i> Website
+            </label>
+            <input
+              name="website"
+              value="<%= data.website %>"
+              type="url"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">
+              <i class="fa fa-envelope w3-large"></i> Email
+            </label>
+            <input
+              name="email"
+              value="<%= data.email %>"
+              type="email"
+              class="input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="numbers">
+              <i class="fa fa-phone w3-large"></i> Phone number
+            </label>
+            <input
+              value="<%= data.numbers %>"
+              name="numbers"
+              type="text"
+              class="input"
+              pattern="[0]{1}[5]{1}[0-9]{8}"
+              ,
+              title="Invalid number"
+            />
+          </div>
+          <div class="form-group">
+            <label for="status">
+              <i class="fa fa-question-circle w3-large"></i> Status
+            </label>
+            <select class="form-control" id="status" name="status">
+              <option value="active"> Active </option>
+              <option value="inactive"> Inactive </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

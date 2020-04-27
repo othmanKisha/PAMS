@@ -97,11 +97,58 @@ const getClinicById = (req, res) => {
       });
   });
 };
+const getNewPage = (req, res) => {
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else res.render("new", { edited: "clinics" });
+};
 const getHome = (_req, res) => {
   clinic.find({ status: "active" }, (err, clinicList) => {
     if (err) res.json({});
     else res.json(clinicList);
   });
+};
+const getNewManagerPage = (req, res) => {
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    res.render("register", {
+      e_msg: "",
+      expand: false,
+      route: `/clinics/${req.params.id}/manager`,
+      type: "manager",
+      id: req.params.id
+    });
+};
+const getNewReceptionistPage = (req, res) => {
+  if (req.user.type != "manager")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    res.render("register", {
+      e_msg: "",
+      expand: false,
+      route: `/clinics/${req.params.id}/receptionist`,
+      type: "receptionist",
+      id: req.params.id
+    });
 };
 const postClinic = (req, res) => {
   if (req.user.type != "admin")
@@ -128,6 +175,42 @@ const postClinic = (req, res) => {
       if (err) console.log(err);
       else res.redirect("/clinics");
     });
+};
+const postManager = (req, res) => {
+  if (req.user.type != "admin")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    require("./controllers/registeration")(
+      req,
+      res,
+      `/clinics/${req.params.id}/manager`,
+      "manager",
+      req.params.id
+    );
+};
+const postReceptionist = (req, res) => {
+  if (req.user.type != "manager")
+    res.render("error", {
+      error: "Error: You are not autherized.",
+      title: "Error",
+      page_type: "show",
+      base: "/users/profile",
+      base_page: "Profile"
+    });
+  else
+    require("./controllers/registeration")(
+      req,
+      res,
+      `/clinics/${req.params.id}/receptionist`,
+      "receptionist",
+      req.params.id
+    );
 };
 const editClinic = (req, res) => {
   if (req.user.type != "manager" && req.user.type != "patient")
@@ -171,8 +254,8 @@ const editClinic = (req, res) => {
         res.redirect("/appointments");
       }
     });
-  /*else
-    clinic.findOne({ _id: req.params.id }, (err, c) => {
+  else
+    clinic.findOne({ _id: req.params.id }, async (err, c) => {
       if (err) console.log(err);
       else if (c._id != req.user.clinic_id)
         res.render("error", {
@@ -182,8 +265,13 @@ const editClinic = (req, res) => {
           base: "/users/profile",
           base_page: "Profile"
         });
-      else
-        clinic.updateOne(
+      else {
+        if (req.body.status == "inactive")
+          await doctor.updateMany(
+            { clinic_id: req.user.clinic_id },
+            { $set: { status: "inactive" } }
+          );
+        await clinic.updateOne(
           { _id: req.params.id },
           {
             $set: {
@@ -196,13 +284,11 @@ const editClinic = (req, res) => {
               website: req.body.website,
               status: req.body.status
             }
-          },
-          (err, _cb) => {
-            if (err) console.log(err);
-            else res.redirect(`/clinics/${req.params.id}`);
           }
         );
-    });*/
+        res.redirect(`/clinics/${req.params.id}`);
+      }
+    });
 };
 const deleteClinic = async (req, res) => {
   if (req.user.type != "admin")
@@ -225,8 +311,13 @@ const deleteClinic = async (req, res) => {
 module.exports = {
   getClinics,
   getHome,
+  getNewPage,
   getClinicById,
+  getNewManagerPage,
+  getNewReceptionistPage,
   postClinic,
+  postManager,
+  postReceptionist,
   editClinic,
   deleteClinic
 };
