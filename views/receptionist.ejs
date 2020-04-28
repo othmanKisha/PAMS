@@ -7,18 +7,18 @@
         <a> <i class="fa fa-calendar"></i> Pending Appointments </a>
       </li>
       <li>
-        <a href="/appointments/finished">
-          <i class="fa fa-calendar-check-o"></i> Finished Appointments
+        <a href="/appointments/confirmed">
+          <i class="fa fa-calendar-check-o"></i> Confirmed Appointments
         </a>
       </li>
-      <% } if (active == "finished") { %>
+      <% } if (active == "confirmed") { %>
       <li>
         <a href="/appointments">
           <i class="fa fa-calendar"></i> Pending Appointments</a
         >
       </li>
       <li class="active">
-        <a> <i class="fa fa-calendar-check-o"></i> Finished Appointments</a>
+        <a> <i class="fa fa-calendar-check-o"></i> Confirmed Appointments</a>
       </li>
       <% } %>
     </ul>
@@ -43,6 +43,8 @@
           <th scope="col">Time</th>
           <% if (active == "pending") { %>
           <th scope="col">Action</th>
+          <% } if (active == "confirmed") { %>
+          <th scope="col">Status</th>
           <% } %>
         </thead>
         <tbody id="tableContent">
@@ -52,7 +54,26 @@
             <td><a> <%= d.doctor %> </a></td>
             <td><a> <%= d.app.date %> </a></td>
             <td><a> <%= d.app.time %> </a></td>
-            <% if (active == "pending") { %>
+            <% if (active == "confirmed") { %>
+            <td>
+              <% if (d.app.status != "Confirmed") { %> <%= d.app.status %>
+              <!-- If the appointment confirmed you can complete it-->
+              <% } if (d.app.status == "Confirmed") { %>
+              <form
+                action="/appointments/<%= d.app._id %>?_method=PUT"
+                method="POST"
+              >
+                <button
+                  class="btn"
+                  type="submit"
+                  style="background: transparent;"
+                >
+                  Confirmed <i class="fa fa-check-square-o w3-xlarge"></i>
+                </button>
+              </form>
+              <% } %>
+            </td>
+            <% } if (active == "pending") { %>
             <td>
               <div class="btn-group" role="group" aria-label="Basic example">
                 <form

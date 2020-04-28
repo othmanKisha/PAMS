@@ -107,11 +107,12 @@
             Edit Doctor Info
           </a>
         </button>
-        <% } } if (active == "Appointment") { if (data.status == "Confirmed" ) {
-        %>
+        <% } } if (active == "Appointment") { %>
+        <!-- If it is confirmed or pending the patient can cancel it-->
+        <% if (data.status != "Done" && data.status != "Canceled") { %>
         <form action="/appointments/<%= data._id %>?_method=PUT" method="POST">
           <button class="btn btn-block btn-lg text-white bg-dark" type="submit">
-            <i class="fa fa-check-circle w3-xlarge"></i> Complete Appointment
+            <i class="fa fa-remove w3-xlarge"></i> Cancel Appointment
           </button>
         </form>
         <% } if (data.status == "Done" && !data.clinic_reviewed) { %>

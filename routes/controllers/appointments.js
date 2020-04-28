@@ -65,10 +65,10 @@ const getAppointments = (req, res) => {
       base_page: "Profile"
     });
 };
-const getFinishedAppointments = (req, res) => {
+const getConfirmedAppointments = (req, res) => {
   if (req.user.type == "receptionist")
     appointment.find(
-      { clinic_id: req.user.clinic_id, status: "Done" },
+      { clinic_id: req.user.clinic_id, status: { $ne: "Pending" } },
       async (err, appList) => {
         if (err) console.log(err);
         else {
@@ -84,8 +84,8 @@ const getFinishedAppointments = (req, res) => {
           });
           res.render("receptionist", {
             data: data,
-            active: "finished",
-            title: "Finished Appointments",
+            active: "confirmed",
+            title: "Confirmed Appointments",
             page_type: "home",
             base: "/users/profile",
             base_page: "Profile"
@@ -141,9 +141,58 @@ const getAppointmentById = (req, res) => {
     });
 };
 const editAppointment = (req, res) => {
-  if (req.user.type == "patient")
+  if (req.user.type == "receptionist")
     appointment.findOne(
-      { _id: req.params.id, patient_id: req.user._id, status: "Confirmed" },
+      {
+        _id: req.params.id,
+        clinic_id: req.user.clinic_id,
+        status: { $ne: "Canceled" }
+      },
+      async (err, app) => {
+        if (err) console.log(err);
+        else if (!app)
+          res.render("error", {
+            error: "Error: There is no appointment with this id.",
+            title: "Error",
+            page_type: "show",
+            base: "/users/profile",
+            base_page: "Profile"
+          });
+        else {
+          if (app.status == "Pending") {
+            await doctor.updateOne(
+              { _id: app.doctor_id },
+              { $set: { status: "busy" } }
+            );
+            await appointment.updateOne(
+              { _id: req.params.id },
+              { $set: { status: "Confirmed" } }
+            );
+            res.redirect("/appointments");
+          } else if (app.status == "Confirmed") {
+            await doctor.updateOne(
+              { _id: app.doctor_id },
+              { $set: { status: "active" } }
+            );
+            await appointment.updateOne(
+              { _id: req.params.id },
+              { $set: { status: "Done" } }
+            );
+            res.redirect("/appointments/confirmed");
+          } else
+            res.render("error", {
+              error: "Error: You make an action for this appointment.",
+              title: "Error",
+              page_type: "show",
+              base: "/users/profile",
+              base_page: "Profile"
+            });
+        }
+      }
+    );
+  else if (req.user.type == "patient")
+    appointment.findOne(
+      { _id: req.params.id, patient_id: req.user._id },
       async (err, app) => {
         if (err) console.log(err);
         else if (!app)
@@ -161,35 +210,9 @@ const editAppointment = (req, res) => {
           );
           await appointment.updateOne(
             { _id: req.params.id },
-            { $set: { status: "Done" } }
+            { $set: { status: "Canceled" } }
           );
-          res.redirect("/");
-        }
-      }
-    );
-  else if (req.user.type == "receptionist")
-    appointment.findOne(
-      { _id: req.params.id, clinic_id: req.user.clinic_id, status: "Pending" },
-      async (err, app) => {
-        if (err) console.log(err);
-        else if (!app)
-          res.render("error", {
-            error: "Error: There is no appointment with this id.",
-            title: "Error",
-            page_type: "show",
-            base: "/users/profile",
-            base_page: "Profile"
-          });
-        else {
-          await doctor.updateOne(
-            { _id: app.doctor_id },
-            { $set: { status: "busy" } }
-          );
-          await appointment.updateOne(
-            { _id: req.params.id },
-            { $set: { status: "Confirmed" } }
-          );
-          res.redirect("/");
+          res.redirect("/appointments");
         }
       }
     );
@@ -234,7 +257,7 @@ const deleteAppointment = (req, res) => {
 
 module.exports = {
   getAppointments,
-  getFinishedAppointments,
+  getConfirmedAppointments,
   getAppointmentById,
   editAppointment,
   deleteAppointment
