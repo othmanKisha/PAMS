@@ -1,5 +1,4 @@
 const express = require("express");
-const passport = require("passport");
 
 const app = express()
   .set("view engine", "ejs")
@@ -13,13 +12,11 @@ const app = express()
       resave: true,
       saveUninitialized: false
     })
-  )
-  .use(passport.initialize())
-  .use(passport.session());
+  );
 
 // Config DataBase and Passport auth
 require("./config/database")(require("mongoose"));
-require("./config/passport")(passport);
+require("./config/passport")(app, require("passport"));
 
 // REST Routes
 app.get("/", (req, res) => {

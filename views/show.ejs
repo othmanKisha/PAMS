@@ -40,7 +40,7 @@
         <% } } %>
       </div>
       <!-- To show the info -->
-      <%- include('./partials/show_info.ejs') %>
+      <%- include('./partials/show/show_info.ejs') %>
       <div class="container">
         <% if (active == "Clinic") { %>
         <!-- If there are doctors show them -->
@@ -142,18 +142,18 @@
 </div>
 <% if (active != "Appointment") { %>
 <!-- Showing reviews -->
-<%- include('./partials/show_reviews.ejs')%> <% } %>
+<%- include('./partials/show/show_reviews.ejs')%> <% } %>
 <!-- Edit Clinic -->
-<%- include("./partials/edit_clinic.ejs") %>
+<%- include("./partials/edit/edit_clinic.ejs") %>
 <!-- Edit Doctor -->
-<%- include("./partials/edit_doctor.ejs") %>
+<%- include("./partials/edit/edit_doctor.ejs") %>
 <!-- Doctors List -->
-<%- include('./partials/doctor_list.ejs') %>
+<%- include('./partials/show/show_doctors.ejs') %>
 <!-- Adding New Appointment -->
-<%- include("./partials/new_appointment.ejs") %>
+<%- include("./partials/new/new_appointment.ejs") %>
 <!-- For Rating Clinic -->
-<%- include('./partials/rate_clinic.ejs') %>
+<%- include('./partials/rate/rate_clinic.ejs') %>
 <!-- For Rating Doctor -->
-<%- include('./partials/rate_doctor.ejs') %>
+<%- include('./partials/rate/rate_doctor.ejs') %>
 <!-- The Footer -->
 <%- include('./partials/foot.ejs') %>

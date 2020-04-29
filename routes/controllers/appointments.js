@@ -19,7 +19,7 @@ const getAppointments = (req, res) => {
             doctor: "Dr. " + dr.fname + " " + dr.lname
           });
         });
-        res.render("patient", {
+        res.render("users/patient", {
           data: data,
           active: "appointments",
           title: "Appointments Page",
@@ -45,7 +45,7 @@ const getAppointments = (req, res) => {
               doctor: "Dr. " + dr.fname + " " + dr.lname
             });
           });
-          res.render("receptionist", {
+          res.render("users/receptionist", {
             data: data,
             active: "pending",
             title: "Pending Appointments",
@@ -82,7 +82,7 @@ const getConfirmedAppointments = (req, res) => {
               doctor: "Dr. " + dr.fname + " " + dr.lname
             });
           });
-          res.render("receptionist", {
+          res.render("users/receptionist", {
             data: data,
             active: "confirmed",
             title: "Confirmed Appointments",

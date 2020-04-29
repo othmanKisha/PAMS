@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/profile", checkAuth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, user) => {
     if (err) console.log(err);
-    res.render("profile", {
+    res.render("users/profile", {
       data: user,
       title: "Profile",
       page_type: "show",

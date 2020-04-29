@@ -12,6 +12,6 @@
 
 ## Conclusion
 
-**Have fun with our website**
+- **Have fun with our website and don't forget to review your appointments**
 
 _Othman Kisha & Mahmoud Habboush_

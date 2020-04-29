@@ -2,6 +2,7 @@ const clinic = require("../../models/clinic");
 const doctor = require("../../models/doctor");
 const User = require("../../models/user");
 const appointment = require("../../models/appointment");
+const { register } = require("./auth");
 const rate = require("../helpers/rate");
 
 const getClinics = (req, res) => {
@@ -9,7 +10,7 @@ const getClinics = (req, res) => {
     clinic.find({ status: "active" }, (err, clinicList) => {
       if (err) console.log(err);
       else
-        res.render(`patient`, {
+        res.render(`users/patient`, {
           active: "clinics",
           data: clinicList,
           title: "Clinics Page",
@@ -22,7 +23,7 @@ const getClinics = (req, res) => {
     clinic.find({}, (err, clinicList) => {
       if (err) console.log(err);
       else
-        res.render(`admin`, {
+        res.render(`users/admin`, {
           active: "clinics",
           data: clinicList,
           title: "Clinics Page",
@@ -187,7 +188,7 @@ const postManager = (req, res) => {
       base_page: "Profile"
     });
   else
-    require("./controllers/registeration")(
+    register(
       req,
       res,
       `/clinics/${req.params.id}/manager`,
@@ -205,7 +206,7 @@ const postReceptionist = (req, res) => {
       base_page: "Profile"
     });
   else
-    require("./controllers/registeration")(
+    register(
       req,
       res,
       `/clinics/${req.params.id}/receptionist`,

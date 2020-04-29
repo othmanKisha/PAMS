@@ -18,7 +18,7 @@ router.get("/", checkAuth, (req, res) => {
     announcement.find({}, (err, annList) => {
       if (err) console.log(err);
       else
-        res.render("admin", {
+        res.render("users/admin", {
           data: annList,
           active: "announcements",
           title: "Announcements Page",

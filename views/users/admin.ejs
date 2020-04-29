@@ -1,5 +1,5 @@
 <!-- Header for the page -->
-<%- include('./partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 <div class="wrapper">
   <nav id="sidebar">
     <ul class="list-unstyled components">
@@ -126,7 +126,7 @@
             <td><a> <%= d.date %> </a></td>
             <td>
               <form
-                action="/announcements/:<%= d._id %>?_method=DELETE"
+                action="/announcements/<%= d._id %>?_method=DELETE"
                 method="POST"
               >
                 <button
@@ -146,6 +146,6 @@
   </div>
 </div>
 <!-- For Adding a new Assignment -->
-<%- include('./partials/new_announcement.ejs') %>
+<%- include('../partials/new/new_announcement.ejs') %>
 <!-- Footer for the page -->
-<%- include('./partials/foot.ejs') %>
+<%- include('../partials/foot.ejs') %>

@@ -39,11 +39,11 @@
       <div class="card-body">
         <% if (edited == "clinics") { %>
         <form action="/clinics" method="POST">
-          <%- include("./partials/new_clinic.ejs") %>
+          <%- include("./partials/new/new_clinic.ejs") %>
         </form>
         <% } if (edited == "doctor") { %>
         <form action="/doctors" method="POST">
-          <%- include("./partials/new_doctor.ejs") %>
+          <%- include("./partials/new/new_doctor.ejs") %>
         </form>
         <% } %>
       </div>

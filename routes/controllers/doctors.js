@@ -16,7 +16,7 @@ const getDoctors = (req, res) => {
     doctor.find({ status: "active" }, (err, doctorList) => {
       if (err) console.log(err);
       else
-        res.render("patient", {
+        res.render("users/patient", {
           active: "doctors",
           data: doctorList,
           title: "Doctors",

@@ -4,7 +4,44 @@ const doctor = require("../../models/doctor");
 const passport = require("passport");
 const date = require("date-and-time");
 
-module.exports = (req, res, route, type, id) => {
+//Login logic
+const getLogin = (req, res) => {
+  res.render("login", { e_msg: "", expand: false });
+};
+const login = (req, res) => {
+  passport.authenticate("local", (err, user, _cb) => {
+    if (err)
+      return res.render("login", {
+        e_msg: "Internal error, please try again later",
+        expand: true
+      });
+    else if (!user)
+      return res.render("login", {
+        e_msg: "Please check your email and/or password",
+        expand: true
+      });
+    else
+      req.login(user, loginErr => {
+        if (loginErr)
+          return res.render("login", {
+            e_msg: "Internal error, please try again later",
+            expand: true
+          });
+        else res.redirect("/");
+      });
+  })(req, res);
+};
+//Register logic
+const getRegister = (req, res) => {
+  res.render("register", {
+    e_msg: "",
+    expand: false,
+    route: `/auth/register`,
+    type: "patient",
+    id: null
+  });
+};
+const register = (req, res, route, type, id) => {
   e = req.body.email;
   f = req.body.fname;
   l = req.body.lname;
@@ -72,8 +109,7 @@ module.exports = (req, res, route, type, id) => {
     }),
     p,
     (err, _cb) => {
-      if (err) {
-        console.log(err);
+      if (err)
         res.render("register", {
           e_msg: "Email is already used",
           expand: true,
@@ -81,7 +117,7 @@ module.exports = (req, res, route, type, id) => {
           type: type,
           id: id
         });
-      } else
+      else
         passport.authenticate("local")(req, res, () => {
           if (type == "receptionist")
             clinic.updateOne(
@@ -105,3 +141,10 @@ module.exports = (req, res, route, type, id) => {
     }
   );
 };
+//signout
+const signout = (req, res) => {
+  req.logOut();
+  res.redirect("/");
+};
+
+module.exports = { getLogin, login, getRegister, register, signout };
